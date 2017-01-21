@@ -1,18 +1,18 @@
 package biz.bagira.auction.dao;
 
-import java.util.Set;
+import java.util.Collection;
 
 /**
  * Created by Dmitriy on 18.01.2017.
  */
 public interface AbstractDAO<T> {
-     T create(T entity);
+     void create(T entity);
 
      void delete(T entity);
 
-     T edit(T entity);
+     void edit(T entity);
 
      T getById(Integer id);
 
-      Set<T> getAll();
+      Collection<T> getAll();
 }

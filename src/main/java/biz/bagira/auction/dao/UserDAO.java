@@ -16,17 +16,15 @@ import java.util.Set;
  * Created by Dmitriy on 19.01.2017.
  */
 
-//@Repository
+@Repository
+//@Qualifier(value = "userDAO")
 public class UserDAO implements AbstractDAO<User> {
 
     private static final Logger logger = LoggerFactory.getLogger(UserDAO.class);
+    @Autowired
+    private SessionFactory sessionFactory;
 
-    private final SessionFactory sessionFactory;
 
-  //  @Autowired
-    public UserDAO(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
 
 
     public void create(User entity) {
@@ -69,4 +67,11 @@ public class UserDAO implements AbstractDAO<User> {
         List list = sessionFactory.getCurrentSession().createQuery("from users").list();
         return new HashSet<User>(list);
     }
+
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+    public void setSessionFactory(SessionFactory sessionFactory) {
+           this.sessionFactory = sessionFactory;
+       }
 }

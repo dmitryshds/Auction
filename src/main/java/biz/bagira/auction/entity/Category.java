@@ -17,17 +17,18 @@ public class Category {
 
     @Column(name = "TYPE")
     private String type;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="ITEMS", joinColumns = @JoinColumn(name="CATEGORY_ID"))
-    private Set<Item> itemList;
+
+//    @ManyToMany(cascade = CascadeType.ALL)
+//    @JoinTable(name="ITEMS", joinColumns = @JoinColumn(name="CATEGORY_ID"))
+//    private Set<Item> itemList;
 
 
-    public void addItem(Item item) {
-        if (itemList == null) {
-            itemList = new HashSet<Item>();
-        }
-        itemList.add(item);
-    }
+//    public void addItem(Item item) {
+//        if (itemList == null) {
+//            itemList = new HashSet<Item>();
+//        }
+//        itemList.add(item);
+//    }
 
     public Integer getCategoryId() {
         return categoryId;
@@ -45,13 +46,13 @@ public class Category {
         this.type = type;
     }
 
-    public Set<Item> getItemList() {
-        return itemList;
-    }
-
-    public void setItemList(Set<Item> itemList) {
-        this.itemList = itemList;
-    }
+//    public Set<Item> getItemList() {
+//        return itemList;
+//    }
+//
+//    public void setItemList(Set<Item> itemList) {
+//        this.itemList = itemList;
+//    }
 
     @Override
     public boolean equals(Object o) {

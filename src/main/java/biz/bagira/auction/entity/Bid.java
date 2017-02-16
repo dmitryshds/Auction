@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * Created by Dmitriy on 18.01.2017.
  */
-@Embeddable
+//@Embeddable
 @Entity
 @Table(name = "BIDS")
 public class Bid {
@@ -18,13 +18,14 @@ public class Bid {
     private Integer bidId;
 
     @Column(name = "ITEM_ID")
-    @ManyToOne
-    @JoinTable(name = "ITEMS")
-    //@JoinTable(name = "ITEMS", joinColumns = @JoinColumn(name = ""))
-    private Item item;
+//    @ManyToOne
+//    @JoinTable(name = "ITEMS", joinColumns = @JoinColumn(name = "ID_ITEMS"))
+    private Integer itemId;
 
     @Column(name = "USER_ID")
-    private User bidder;
+    //@ManyToOne
+//    @JoinTable(name = "USERS", joinColumns = @JoinColumn(name = "ID_USERS"))
+    private Integer bidderId;
 
     @Column(name = "BID")
     private BigDecimal bidValue;
@@ -41,20 +42,20 @@ public class Bid {
         this.bidId = bidId;
     }
 
-    public Item getItem() {
-        return item;
+    public Integer getItemId() {
+        return itemId;
     }
 
-    public void setItem(Item item) {
-        this.item = item;
+    public void setItemId(Integer item) {
+        this.itemId = item;
     }
 
-    public User getBidder() {
-        return bidder;
+    public Integer getBidderId() {
+        return bidderId;
     }
 
-    public void setBidder(User bidder) {
-        this.bidder = bidder;
+    public void setBidderId(Integer bidder) {
+        this.bidderId = bidder;
     }
 
     public BigDecimal getBidValue() {
@@ -81,14 +82,14 @@ public class Bid {
         Bid bid = (Bid) o;
 
         if (bidId != null ? !bidId.equals(bid.bidId) : bid.bidId != null) return false;
-        return item != null ? item.equals(bid.item) : bid.item == null;
+        return itemId != null ? itemId.equals(bid.itemId) : bid.itemId == null;
 
     }
 
     @Override
     public int hashCode() {
         int result = bidId != null ? bidId.hashCode() : 0;
-        result = 31 * result + (item != null ? item.hashCode() : 0);
+        result = 31 * result + (itemId != null ? itemId.hashCode() : 0);
         return result;
     }
 }

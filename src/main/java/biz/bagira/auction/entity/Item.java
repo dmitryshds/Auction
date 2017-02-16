@@ -3,7 +3,6 @@ package biz.bagira.auction.entity;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Set;
 
 /**
  * Created by Dmitriy on 18.01.2017.
@@ -19,11 +18,14 @@ public class Item {
     private Integer itemId;
 
     @Column(name = "OWNER_ID")
-    private User owner;
+//    @ManyToOne
+//    @JoinTable(name = "USERS", joinColumns = @JoinColumn(name = "ID_USERS"))
+    private Integer ownerId;
 
-    @ManyToMany(mappedBy = "itemList")
+//    @ManyToOne
     @Column(name = "CATEGORY_ID")
-    private Category category;
+//    @JoinTable(name = "CATEGORY", joinColumns = @JoinColumn(name = "ID_CATEGORY"))
+    private Integer categoryId;
 
     @Column(name = "NAME")
     private String name;
@@ -48,8 +50,8 @@ public class Item {
     @Column(name="PICTURES")
     private String pathToImages;
 
-    @OneToMany(mappedBy = "item")
-    private Set<Bid> bidList;
+//    @OneToMany(mappedBy = "item")
+//    private Set<Bid> bidList;
 
     public Integer getItemId() {
         return itemId;
@@ -59,20 +61,20 @@ public class Item {
         this.itemId = itemId;
     }
 
-    public User getOwner() {
-        return owner;
+    public Integer getOwnerId() {
+        return ownerId;
     }
 
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public void setOwnerId(Integer owner) {
+        this.ownerId = owner;
     }
 
-    public Category getCategory() {
-        return category;
+    public Integer getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategoryId(Integer category) {
+        this.categoryId = category;
     }
 
     public String getName() {
@@ -131,13 +133,13 @@ public class Item {
         this.pathToImages = pathToImages;
     }
 
-    public Set<Bid> getBidList() {
-        return bidList;
-    }
-
-    public void setBidList(Set<Bid> bidList) {
-        this.bidList = bidList;
-    }
+//    public Set<Bid> getBidList() {
+//        return bidList;
+//    }
+//
+//    public void setBidList(Set<Bid> bidList) {
+//        this.bidList = bidList;
+//    }
 
     @Override
     public boolean equals(Object o) {
@@ -147,16 +149,16 @@ public class Item {
         Item item = (Item) o;
 
         if (itemId != null ? !itemId.equals(item.itemId) : item.itemId != null) return false;
-        if (owner != null ? !owner.equals(item.owner) : item.owner != null) return false;
-        return category != null ? category.equals(item.category) : item.category == null;
+        if (ownerId != null ? !ownerId.equals(item.ownerId) : item.ownerId != null) return false;
+        return categoryId != null ? categoryId.equals(item.categoryId) : item.categoryId == null;
 
     }
 
     @Override
     public int hashCode() {
         int result = itemId != null ? itemId.hashCode() : 0;
-        result = 31 * result + (owner != null ? owner.hashCode() : 0);
-        result = 31 * result + (category != null ? category.hashCode() : 0);
+        result = 31 * result + (ownerId != null ? ownerId.hashCode() : 0);
+        result = 31 * result + (categoryId != null ? categoryId.hashCode() : 0);
         return result;
     }
 }

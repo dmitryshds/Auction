@@ -1,7 +1,6 @@
 package biz.bagira.auction.entity;
 
 import javax.persistence.*;
-import java.util.Set;
 
 /**
  * Created by Dmitriy on 18.01.2017.
@@ -21,6 +20,9 @@ public class User {
     @Column(name="PASSWORD")
     private String password;
 
+    @Column(name = "PSW_SALT")
+    private byte[] salt;
+
     @Column(name="FIRST_NAME")
     private String firstName;
 
@@ -30,9 +32,10 @@ public class User {
     @Column(name="EMAIL")
     private String email;
 
-    @OneToOne
+//    @OneToOne
     @Column(name ="ADDRESS")
-    private Address address;
+//    @JoinTable(name = "ADDRESS", joinColumns = @JoinColumn(name = "USER_ID"))
+    private Integer addressId;
 
     @Column(name="VALIDATE_EMAIL")
     private Boolean validateEmail;
@@ -40,9 +43,9 @@ public class User {
     @Column(name = "PICTURE")
     private String pathToAvatar;
 
-    @ElementCollection
-    @CollectionTable(name = "BIDS", joinColumns = @JoinColumn(name = "USER_ID"))
-    private Set<Bid> bidList;
+//    @ElementCollection
+//    @CollectionTable(name = "BIDS", joinColumns = @JoinColumn(name = "USER_ID"))
+//    private Set<Bid> bidList;
 
     public User() {
         validateEmail = false;
@@ -96,12 +99,12 @@ public class User {
         this.email = email;
     }
 
-    public Address getAddress() {
-        return address;
+    public Integer getAddressId() {
+        return addressId;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setAddressId(Integer address) {
+        this.addressId = address;
     }
 
     public Boolean getValidateEmail() {
@@ -120,13 +123,21 @@ public class User {
         this.pathToAvatar = pathToAvatar;
     }
 
-    public Set<Bid> getBidList() {
-        return bidList;
+    public byte[] getSalt() {
+        return salt;
     }
 
-    public void setBidList(Set<Bid> bidList) {
-        this.bidList = bidList;
+    public void setSalt(byte[] salt) {
+        this.salt = salt;
     }
+
+    //    public Set<Bid> getBidList() {
+//        return bidList;
+//    }
+//
+//    public void setBidList(Set<Bid> bidList) {
+//        this.bidList = bidList;
+//    }
 
     @Override
     public boolean equals(Object o) {

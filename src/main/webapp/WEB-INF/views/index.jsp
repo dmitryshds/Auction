@@ -5,12 +5,35 @@
   Time: 17:35
   To change this template use File | Settings | File Templates.
 --%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
     <head>
-        <title>Title</title>
+        <title>Index</title>
+        <link type="text/css" rel="stylesheet" href="<c:url value="/resources/css/style.css" />"/>
+        <link type="text/css" rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css" />"/>
+        <link type="text/css" rel="stylesheet" href="<c:url value="/resources/css/fontello.css" />"/>
+		<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,700,900,700italic,500italic' rel='stylesheet' type='text/css'>
     </head>
     <body>
-        <h1>HELLO WORLD</h1>
+		<div class="container" >
+		   <div>
+			   <c:import url="template/header.jsp"/>
+		   </div>
+
+			<div >
+				<c:import url="template/content.jsp"/>
+
+		   </div>
+
+			<div >
+				<c:import url="template/footer.jsp"/>
+		   </div>
+
+
+		</div>
+
+
     </body>
 </html>

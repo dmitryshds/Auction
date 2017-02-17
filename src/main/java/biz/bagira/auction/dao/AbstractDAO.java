@@ -10,6 +10,8 @@ public interface AbstractDAO<T> {
 
      void delete(T entity);
 
+     void delete(Integer id);
+
      void edit(T entity);
 
      T getById(Integer id);

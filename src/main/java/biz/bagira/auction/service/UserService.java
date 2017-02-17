@@ -1,7 +1,7 @@
 package biz.bagira.auction.service;
 
 import biz.bagira.auction.dao.UserDAO;
-import biz.bagira.auction.entity.User;
+import biz.bagira.auction.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -12,13 +12,15 @@ import java.util.Set;
 /**
  * Created by Dmitriy on 20.01.2017.
  */
-@Service
-@Qualifier(value = "userService")
+@Service ("userService")
 @Transactional
 public class UserService  {
 
+
     @Autowired
+    @Qualifier(value = "userDAO")
      private UserDAO userDAO;
+
 
 
     public void create(User entity) {
@@ -46,8 +48,9 @@ public class UserService  {
         return userDAO.getAll();
     }
 
-    public UserDAO getUserDAO() {
-        return userDAO;
+
+    public User getByName(String name){
+        return userDAO.getByName(name);
     }
 
 }

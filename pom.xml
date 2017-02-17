@@ -5,14 +5,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>biz.bagira.auction</groupId>
-    <artifactId>auction</artifactId>
+    <artifactId>auctiontest</artifactId>
     <version>1.0-SNAPSHOT</version>
-     <packaging>war</packaging>
+    <packaging>war</packaging>
 
 
     <properties>
-        <spring-framework-version>4.1.5.RELEASE</spring-framework-version>
-        <springsecurity-version>3.2.6.RELEASE</springsecurity-version>
+        <!--<spring-framework-version>4.1.5.RELEASE</spring-framework-version>-->
+        <spring-framework-version>4.2.5.RELEASE</spring-framework-version>
+        <!--<springsecurity-version>3.2.6.RELEASE</springsecurity-version>-->
+        <springsecurity-version>4.0.4.RELEASE</springsecurity-version>
+        <jackson.version>2.8.6</jackson.version>
         <slf4j-version>1.6.1</slf4j-version>
         <hibernate-version>4.3.8.Final</hibernate-version>
         <mysqlconnector-version>5.1.38</mysqlconnector-version>
@@ -68,18 +71,24 @@
             <artifactId>spring-security-config</artifactId>
             <version>${springsecurity-version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>${springsecurity-version}</version>
+        </dependency>
 
         <!--Test-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>${spring-framework-version}</version>
+            <!--<version>4.2.9.RELEASE</version>-->
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>4.11</version>
             <scope>test</scope>
         </dependency>
 
@@ -144,36 +153,22 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!--Servlet-->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
-            <scope>provided</scope>
-        </dependency>
-
         <!--Hibernate-->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>${hibernate-version}</version>
         </dependency>
-        <!--<dependency>-->
-        <!--<groupId>org.hibernate</groupId>-->
-        <!--<artifactId>hibernate-entitymanager</artifactId>-->
-        <!--<version>${hibernate-version}</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>org.hibernate</groupId>-->
-        <!--<artifactId>hibernate-annotations</artifactId>-->
-        <!--<version>3.5.6-Final</version>-->
-        <!--</dependency>-->
-
 
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-tools</artifactId>
             <version>4.3.1.CR1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>javax.persistence</artifactId>
+            <version>2.1.0</version>
         </dependency>
 
         <!--Driver MySQL-->
@@ -195,10 +190,52 @@
             <artifactId>commons-dbcp</artifactId>
             <version>1.4</version>
         </dependency>
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.2.1</version>
+        </dependency>
+        <!-- javassist is used for http://stackoverflow.com/questions/7297565/javassist-what-is-the-main-idea-and-where-real-use/7297838 -->
+        <!--<dependency>-->
+        <!--<groupId>javassist</groupId>-->
+        <!--<artifactId>javassist</artifactId>-->
+        <!--<version>3.12.1.GA</version>-->
+        <!--</dependency>-->
+
+        <!-- Need this for json to/from object -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
         <finalName>auction</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <warSourceDirectory>src/main/webapp</warSourceDirectory>
+                    <warName>auction</warName>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+        </plugins>
+
     </build>
 
 

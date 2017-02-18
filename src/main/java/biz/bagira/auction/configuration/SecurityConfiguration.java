@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationTrustResolver;
+import org.springframework.security.authentication.AuthenticationTrustResolverImpl;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,6 +14,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 /**
  * Created by Dmitriy on 17.02.2017.
@@ -32,6 +36,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Qualifier("customUserDetailsService")
     UserDetailsService userDetailsService;
 
+    @Autowired
+    @Qualifier("tokenDAO")
+    PersistentTokenRepository tokenRepository;
+
+
     /**
      * It allows configuring web based security for specific http requests.
      * By default it will be applied to all requests, but can be restricted
@@ -42,16 +51,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/index", "/login", "/register")
-                .access("permitAll")
+                .permitAll()
                 .and()
                 .formLogin().
                 loginPage("/login").
-                defaultSuccessUrl("/index",true)
+                defaultSuccessUrl("/index")
                 .failureUrl("/login?error=true")
                 .loginProcessingUrl("/login")
                 .usernameParameter("login")
                 .passwordParameter("password")
+                .and()
+                .rememberMe()
+                .rememberMeParameter("remember-me")
+                .tokenRepository(tokenRepository)
+                .tokenValiditySeconds(604800)
                 .and().csrf();
+
 
     }
 
@@ -89,5 +104,28 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService);
         auth.authenticationProvider(authenticationProvider());
     }
+
+    /**
+     * RememberMeServices implementation based on Barry Jaspan's Improved Persistent Login Cookie Best Practice
+     * see more http://jaspan.com/improved_persistent_login_cookie_best_practice
+     */
+
+    @Bean
+    public PersistentTokenBasedRememberMeServices getPersistentTokenBasedRememberMeServices() {
+        PersistentTokenBasedRememberMeServices tokenBasedservice = new PersistentTokenBasedRememberMeServices(
+                "remember-me", userDetailsService, tokenRepository);
+        return tokenBasedservice;
+    }
+
+    /**
+     * This interface provides an isAnonymous(Authentication)  method,
+     * which allows interested classes to take into account
+     * this special type of authentication status
+     */
+    @Bean
+    public AuthenticationTrustResolver getAuthenticationTrustResolver() {
+        return new AuthenticationTrustResolverImpl();
+    }
+
 
 }

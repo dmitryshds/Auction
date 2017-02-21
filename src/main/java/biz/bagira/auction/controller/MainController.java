@@ -1,32 +1,33 @@
 package biz.bagira.auction.controller;
 
-import biz.bagira.auction.entities.Category;
-import biz.bagira.auction.entities.Item;
-import biz.bagira.auction.entities.JSONItems;
-import biz.bagira.auction.entities.User;
-import biz.bagira.auction.service.CategoryService;
-import biz.bagira.auction.service.ItemService;
-import biz.bagira.auction.service.ProfileService;
-import biz.bagira.auction.service.UserService;
+import biz.bagira.auction.entities.*;
+import biz.bagira.auction.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 /**
  * Created by Dmitriy on 22.01.2017.
  */
 @Controller
-@SessionAttributes("roles")
 public class MainController {
 
     private static final Logger logger = LoggerFactory.getLogger(MainController.class);
@@ -39,6 +40,14 @@ public class MainController {
     private ItemService itemService;
     @Autowired
     private ProfileService profileService;
+    @Autowired
+    AddressService addressService;
+    @Autowired
+    @Qualifier("tokenDAO")
+    private PersistentTokenRepository persistentTokenRepository;
+
+    @Autowired
+    PersistentTokenBasedRememberMeServices persistentTokenBasedRememberMeServices;
 //    @Autowired
 //    AuthenticationTrustResolver authenticationTrustResolver;
 
@@ -53,8 +62,6 @@ public class MainController {
 
     @RequestMapping(value = "/register", method = {RequestMethod.GET, RequestMethod.POST})
     public String register(ModelMap modelMap) {
-        logger.info("<><><><><><><> IN REGISTER");
-
         modelMap.addAttribute("user", new User());
         return "register";
     }
@@ -64,16 +71,62 @@ public class MainController {
                           BindingResult result, ModelMap model) {
 
         logger.info("<><><><>NEW USER : " + user);
-
+        if (result.hasErrors()) {
+            return "register";
+        }
         User byName = userService.getByName(user.getLogin());
 
         if (byName == null) {
 
             user.addUserProfile(profileService.getById(1));
             userService.create(user);
-            logger.info("<><><><>NEW USER CREATED");
+            logger.info("NEW USER CREATED : " +user.getLogin());
         }
-        return "redirect:/index";
+        logger.info("userId" + user.getIdUsers());
+        model.addAttribute("userId", user.getIdUsers());
+        model.addAttribute("address", new Address());
+//        return "redirect:/index";
+        return "/stepTwo";
+    }
+
+    @RequestMapping(value = "/stepTwo", method = {RequestMethod.POST})
+    public String newUserStep2(@Validated Address address,
+                               @RequestParam("chosenSel")String chosenSel,
+                               @RequestParam("firstName")String firstName,
+                               @RequestParam("lastName")String lastName,
+                               @RequestParam("postalCode")String postalCode,
+                               ModelMap model){
+           logger.info("adress : " + address);
+            logger.info("chosenSel: "+ chosenSel+"firstName: "+ firstName +"lastName "+lastName+"postalCode "+postalCode);
+        Integer userId = address.getUserId();
+        User user = userService.getById(userId);
+         user.setFirstName(chosenSel+" "+firstName);
+        user.setLastName(lastName);
+        address.setCity(postalCode+" "+address.getCity());
+        user.setAddress(address);
+        address.setUser(user);
+        logger.info("USER BEFORE UPDATE : " +user);
+//        userService.edit(user);
+         addressService.create(address);
+         model.addAttribute("userId",userId);
+        return "/stepThree";
+    }
+
+    @RequestMapping(value = "/stepThree", method = RequestMethod.POST)
+    public String newUserStep3(@RequestParam("userId")Integer userId, @RequestParam("file") MultipartFile file ) {
+         logger.info("userId : "+userId);
+        logger.info("file : "+file);
+        if (file!=null)
+        {
+            try {
+                byte[] bytes = file.getBytes();
+                logger.info("file length: "+ bytes.length);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+            // put to model username here
+        return "redirect:/login";
     }
 
 
@@ -90,14 +143,27 @@ public class MainController {
         if (error != null) {
             model.addObject("error", "Invalid username or password!");
         }
-//        model.addObject("user",new User());
         model.setViewName("login");
 
         return model;
 
     }
 
-    @RequestMapping(value = "/cat/{id}/{startPos}/{quantity}", method = RequestMethod.POST)
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        logger.info("<><><><><><>AUTH NAME: " + auth.getName());
+
+        if (auth != null) {
+
+            persistentTokenBasedRememberMeServices.logout(request, response, auth);
+            SecurityContextHolder.getContext().setAuthentication(null);
+
+        }
+        return "redirect:/index";
+    }
+
+    @RequestMapping(value = "/cat/{id}/{startPos}/{quantity}", method = RequestMethod.GET)
     public
     @ResponseBody
     JSONItems getItemsByCategory(@PathVariable("id") Integer categoryId, @PathVariable Integer startPos, @PathVariable Integer quantity) {

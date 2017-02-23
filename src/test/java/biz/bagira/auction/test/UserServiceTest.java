@@ -1,19 +1,28 @@
 package biz.bagira.auction.test;
 
+import biz.bagira.auction.configuration.ApplicationConfig;
+import biz.bagira.auction.configuration.HibernateConfiguration;
+import biz.bagira.auction.configuration.SecurityConfiguration;
+import biz.bagira.auction.entities.Address;
+import biz.bagira.auction.entities.User;
 import biz.bagira.auction.service.*;
+import biz.bagira.auction.util.ImageUtil;
+import org.hibernate.SessionFactory;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 /**
  * Created by Dmitriy on 20.01.2017.
  */
 
 
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@ContextConfiguration( classes = {ApplicationInitializer.class,ApplicationConfig.class, HibernateConfiguration.class})
-//@ContextConfiguration(locations = {ApplicationConfig.class})
-//@ContextConfiguration(locations = {"classpath: biz/bagira/auction/test/config/applicationContextTest.xml", "classpath:biz/bagira/auction/test/config/dispatcher-servletTest.xml", "classpath:biz/bagira/auction/test/config/security-configTest.xml", "classpath:hibernate.cfg.xml"})
-//@TransactionConfiguration(defaultRollback = true, transactionManager = "transactionManager")
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {ApplicationConfig.class, HibernateConfiguration.class, SecurityConfiguration.class})
+@WebAppConfiguration
 public class UserServiceTest {
     @Autowired
     @Qualifier(value = "userService")
@@ -34,11 +43,23 @@ public class UserServiceTest {
     @Autowired
     @Qualifier(value = "bidService")
     BidService bidService;
+    @Autowired
+    AddressService addressService;
+    @Autowired
+    ImageUtil imageUtil;
+//    @Autowired
+//    @Qualifier("tokenDAO")
+//    TokenDAO tokenDAO;
+
+    @Autowired
+     private SessionFactory sessionFactory;
+
 
 //    @Autowired
 //    CustomUserDetailsService customUserDetailsService;
 
-//  @org.junit.Test
+    @org.junit.Test
+//    @Transactional
     public void createTest() {
 
 //        TEST USER
@@ -159,6 +180,29 @@ public class UserServiceTest {
 //        User user = userService.getByName("login9121");
 ////        User user = userService.getById(47);
 //        System.out.println(user);
+
+
+        User byId = userService.getById(91);
+        byId.setPicture("gghhghggh");
+//        System.out.println(byId.getAddress());
+//
+
+
+
+        Address address = new Address();
+               address.setCountry("test1");
+               address.setCity("test211");
+//        address.setUser(byId);
+        byId.setAddress(address);
+        address.setUser(byId);
+        addressService.create(address);
+        userService.edit(byId);
+        //userService.edit(byId);
+//        addressService.edit(byId.getAddress());
+//        User byId2 = userService.getById(93);
+//        System.out.println(byId2.getPicture());
+//        Address address = addressService.getById(92);
+        System.out.println(byId.getAddress());
     }
 
 }

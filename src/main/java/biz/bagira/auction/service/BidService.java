@@ -44,7 +44,4 @@ public class BidService {
         return bidDAO.getAll();
     }
 
-    public BidDAO getBidDAO() {
-        return bidDAO;
-    }
 }

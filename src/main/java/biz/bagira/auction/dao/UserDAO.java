@@ -7,7 +7,6 @@ import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
@@ -24,13 +23,10 @@ public class UserDAO implements AbstractDAO<User> {
     private static final Logger logger = LoggerFactory.getLogger(UserDAO.class);
     @Autowired
     private SessionFactory sessionFactory;
-    @Autowired
-   	private PasswordEncoder encoder;
+
 
 
     public void create(User entity) {
-
-        entity.setPassword(encoder.encode(entity.getPassword()));
         sessionFactory.getCurrentSession().save(entity);
         logger.info("User add successfully : " + entity);
     }
@@ -58,7 +54,8 @@ public class UserDAO implements AbstractDAO<User> {
 
     public void edit(User entity) {
 
-        sessionFactory.getCurrentSession().update(entity);
+
+        sessionFactory.getCurrentSession().saveOrUpdate(entity);
         logger.info("User edit successfully  : " + entity);
     }
 

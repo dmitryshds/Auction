@@ -1,13 +1,18 @@
 package biz.bagira.auction.configuration;
 
+import biz.bagira.auction.util.ImageUtil;
+import biz.bagira.auction.util.MailUtil;
 import biz.bagira.auction.util.RoleToUserProfileConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.core.env.Environment;
 import org.springframework.format.FormatterRegistry;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
@@ -32,10 +37,14 @@ import java.util.Locale;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "biz.bagira.auction")
+@PropertySource(value = "classpath:application.properties")
 public class ApplicationConfig extends WebMvcConfigurerAdapter {
 
     @Autowired
     RoleToUserProfileConverter roleToUserProfileConverter;
+
+    @Autowired
+    private Environment environment;
 
     /**
      * Configure ViewResolvers to deliver preferred views.
@@ -99,7 +108,7 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter {
     @Bean
     public LocaleResolver localeResolver() {
         SessionLocaleResolver resolver = new org.springframework.web.servlet.i18n.SessionLocaleResolver();
-        resolver.setDefaultLocale(Locale.getDefault());
+        resolver.setDefaultLocale(new Locale("en"));
         return resolver;
     }
 
@@ -126,10 +135,24 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter {
      * Built-in multipart support handles file uploads in web applications
      */
     @Bean
-    public CommonsMultipartResolver multipartResolver() {
-        CommonsMultipartResolver resolver=new CommonsMultipartResolver();
-        resolver.setDefaultEncoding("utf-8");
-        resolver.setMaxUploadSize(100000);
-        return resolver;
+    public MultipartResolver multipartResolver() {
+        return new StandardServletMultipartResolver();
+    }
+
+    @Bean
+    public ImageUtil imageUtil(){
+        return new ImageUtil(environment.getRequiredProperty("root.folder"));
+    }
+
+    @Bean
+    public MailUtil mailUtil(){
+        return new MailUtil(environment.getProperty("mail.smtp.auth"),
+                            environment.getProperty("mail.from"),
+                            environment.getProperty("mail.smtp.starttls.enable"),
+                            environment.getProperty("mail.smtp.host"),
+                            environment.getProperty("mail.smtp.port"),
+                            environment.getProperty("mail.smtp.ssl.trust"),
+                            environment.getProperty("mail.password"),
+                            environment.getProperty("app.host"));
     }
 }

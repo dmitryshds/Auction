@@ -50,7 +50,7 @@ public class ItemDAO implements AbstractDAO<Item> {
     }
 
     public void edit(Item entity) {
-        sessionFactory.getCurrentSession().update(entity);
+        sessionFactory.getCurrentSession().saveOrUpdate(entity);
         logger.info("Item edit successfully  : " + entity);
     }
 

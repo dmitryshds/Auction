@@ -82,7 +82,6 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>${spring-framework-version}</version>
-            <!--<version>4.2.9.RELEASE</version>-->
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -110,6 +109,11 @@
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>1.1.0.Final</version>
+        </dependency>
 
         <!--Logging-->
         <dependency>
@@ -133,10 +137,10 @@
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
             <exclusions>
-                <exclusion>
-                    <groupId>javax.mail</groupId>
-                    <artifactId>mail</artifactId>
-                </exclusion>
+                <!--<exclusion>-->
+                    <!--<groupId>javax.mail</groupId>-->
+                    <!--<artifactId>mail</artifactId>-->
+                <!--</exclusion>-->
                 <exclusion>
                     <groupId>javax.jms</groupId>
                     <artifactId>jms</artifactId>
@@ -219,6 +223,20 @@
             <artifactId>jackson-annotations</artifactId>
             <version>${jackson.version}</version>
         </dependency>
+        <!-- used for send E-mail -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4</version>
+        </dependency>
+        <!-- !!!!!!!!!!!!!!!!!!!!!!!!DELETE -->
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>7.0</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>
@@ -232,6 +250,14 @@
                     <warSourceDirectory>src/main/webapp</warSourceDirectory>
                     <warName>auction</warName>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
                 </configuration>
             </plugin>
         </plugins>

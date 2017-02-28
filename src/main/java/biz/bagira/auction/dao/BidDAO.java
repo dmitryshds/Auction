@@ -46,7 +46,7 @@ public class BidDAO implements AbstractDAO<Bid> {
 
 
     public void edit(Bid entity) {
-        sessionFactory.getCurrentSession().update(entity);
+        sessionFactory.getCurrentSession().saveOrUpdate(entity);
         logger.info("Bid edit successfully  : " + entity);
     }
 

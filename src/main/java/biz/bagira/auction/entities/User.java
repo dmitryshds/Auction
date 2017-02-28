@@ -1,7 +1,12 @@
 package biz.bagira.auction.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -9,24 +14,32 @@ import java.util.List;
  */
 @Entity
 @Table(name = "USERS")
-public class User {
+public class User implements Serializable {
     private Integer idUsers;
-    private String login;
-    private String password;
-    //need to delete
-    private byte[] pswSalt;
 
+    private String login;
+
+    private String password;
+    private Title title;
     private String firstName;
     private String lastName;
     private String email;
-    private Address address;
-    private byte validateEmail;
+    private String country;
+    private String zip;
+    private String city;
+    private String street;
+    private String homeNumber;
+    private Boolean validateEmail;
     private String picture;
     private List<Item> itemList = new ArrayList<Item>();
     private List<Bid> bidList = new ArrayList<Bid>();
     private List<Order> orderList = new ArrayList<Order>();
     private String state=State.ACTIVE.getState();
     private List<UserProfile> userProfiles = new ArrayList<UserProfile>();
+
+    public User() {
+        validateEmail = false;
+    }
 
     @Id
     @Column(name = "ID_USERS")
@@ -39,6 +52,8 @@ public class User {
         this.idUsers = idUsers;
     }
 
+    @NotNull
+    @Size(min = 2, max = 10)
     @Column(name = "LOGIN")
     public String getLogin() {
         return login;
@@ -48,6 +63,7 @@ public class User {
         this.login = login;
     }
 
+    @NotNull
     @Column(name = "PASSWORD")
     public String getPassword() {
         return password;
@@ -57,13 +73,13 @@ public class User {
         this.password = password;
     }
 
-    @Column(name = "PSW_SALT")
-    public byte[] getPswSalt() {
-        return pswSalt;
+    @Column(name = "TITLE")
+    public Title getTitle() {
+        return title;
     }
 
-    public void setPswSalt(byte[] pswSalt) {
-        this.pswSalt = pswSalt;
+    public void setTitle(Title title) {
+        this.title = title;
     }
 
     @Column(name = "FIRST_NAME")
@@ -84,6 +100,8 @@ public class User {
         this.lastName = lastName;
     }
 
+    @NotNull
+    @Pattern(regexp = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$", message = "This is not a valid email")
     @Column(name = "EMAIL")
     public String getEmail() {
         return email;
@@ -93,22 +111,57 @@ public class User {
         this.email = email;
     }
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "USER_ID")
-    public Address getAddress() {
-        return address;
+    @Column(name = "COUNTRY")
+    public String getCountry() {
+        return country;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    @Column(name = "ZIP")
+    public String getZip() {
+        return zip;
+    }
+
+    public void setZip(String zip) {
+        this.zip = zip;
+    }
+
+    @Column(name = "CITY")
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    @Column(name = "STREET")
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    @Column(name = "HOME_NUMBER")
+    public String getHomeNumber() {
+        return homeNumber;
+    }
+
+    public void setHomeNumber(String homeNumber) {
+        this.homeNumber = homeNumber;
     }
 
     @Column(name = "VALIDATE_EMAIL")
-    public byte getValidateEmail() {
+    public Boolean getValidateEmail() {
         return validateEmail;
     }
 
-    public void setValidateEmail(byte validateEmail) {
+    public void setValidateEmail(Boolean validateEmail) {
         this.validateEmail = validateEmail;
     }
 
@@ -199,6 +252,23 @@ public class User {
     public String toString() {
         return "User{" +
                 "idUsers=" + idUsers +
+                ", login='" + login + '\'' +
+                ", title='" + title + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", country='" + country + '\'' +
+                ", zip='" + zip + '\'' +
+                ", city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", homeNumber='" + homeNumber + '\'' +
+                ", validateEmail=" + validateEmail +
+                ", picture='" + picture + '\'' +
+                ", itemList=" + itemList +
+                ", bidList=" + bidList +
+                ", orderList=" + orderList +
+                ", state='" + state + '\'' +
+                ", userProfiles=" + userProfiles +
                 '}';
     }
 }

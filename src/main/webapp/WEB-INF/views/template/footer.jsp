@@ -5,14 +5,15 @@
   Time: 17:42
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
     <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>Title</title>
     </head>
     <body>
-        <!-- Footer -->
+        			<!-- Footer -->
         			<footer id="footer" class="row">
 
         				<!-- Upper Footer -->
@@ -32,7 +33,6 @@
         							</div>
         							<!-- /Newsletter -->
 
-
         							<!-- Social Media -->
         							<div class="col-lg-5 col-md-5 col-sm-5 social-media">
         								<h4>Stay Connected</h4>
@@ -51,8 +51,6 @@
 
         				</div>
         				<!-- /Upper Footer -->
-
-
 
         				<!-- Main Footer -->
         				<div class="col-lg-12 col-md-12 col-sm-12">
@@ -75,10 +73,6 @@
         							</div>
         							<!-- /The Service -->
 
-
-
-
-
         							<!-- Information -->
         							<div class="col-lg-3 col-md-3 col-sm-6">
         								<h4>Information</h4>
@@ -93,7 +87,6 @@
         							</div>
         							<!-- /Information -->
 
-
         							<!-- Contact Us -->
         							<div class="col-lg-3 col-md-3 col-sm-6 contact-footer-info">
         								<h4>Contact Us</h4>
@@ -105,15 +98,12 @@
         								</ul>
         							</div>
         							<!-- /Contact Us -->
-
         						</div>
 
         					</div>
 
         				</div>
         				<!-- /Main Footer -->
-
-
 
         				<!-- Lower Footer -->
         				<div class="col-lg-12 col-md-12 col-sm-12">
@@ -147,8 +137,6 @@
         			<!-- Footer -->
 
 
-                    <%--<div id="back-to-top">--%>
-                    	<%--<i class="icon-up-dir"></i>--%>
-                    <%--</div>--%>
+
     </body>
 </html>

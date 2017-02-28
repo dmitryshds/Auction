@@ -70,7 +70,7 @@
 
                                              <p>Username(Login)* </br>
 
-                                            <span style="color: red; display: none " id="err-login"> Incorrect value min 6 characters</span>
+                                            <span style="color: red; display: none " id="err-login"> Incorrect value min 2 max 10 characters</span>
 
                                             <span style="color: green; display: none " id="corr-login"> Correct value</span>
 
@@ -93,7 +93,7 @@
 
                                             <p>Password*
 
-                                                <span style="color: red; display: none " id="err-password"> Incorrect value min 8 characters</span>
+                                                <span style="color: red; display: none " id="err-password"> Incorrect value min 6 max 12 characters</span>
 
                                                 <span style="color: green; display: none " id="corr-password"> Correct value</span>
 
@@ -359,7 +359,7 @@ $('#login').blur(function () {
     $('#corr-login').hide();
     console.log("blur login");
     var text = $(this).val();
-    if(text.length < 6)
+    if(text.length < 2)
     {
       $('#err-login').show();
 
@@ -400,7 +400,7 @@ $('#password').blur(function () {
     $('#err-password').hide();
     $('#corr-password').hide();
     var text = $(this).val();
-    if(text.length < 8)
+    if(text.length < 6)
     {
       $('#err-password').show();
 

@@ -3,8 +3,6 @@ package biz.bagira.auction.test;
 import biz.bagira.auction.configuration.ApplicationConfig;
 import biz.bagira.auction.configuration.HibernateConfiguration;
 import biz.bagira.auction.configuration.SecurityConfiguration;
-import biz.bagira.auction.entities.Address;
-import biz.bagira.auction.entities.User;
 import biz.bagira.auction.service.*;
 import biz.bagira.auction.util.ImageUtil;
 import org.hibernate.SessionFactory;
@@ -43,8 +41,7 @@ public class UserServiceTest {
     @Autowired
     @Qualifier(value = "bidService")
     BidService bidService;
-    @Autowired
-    AddressService addressService;
+
     @Autowired
     ImageUtil imageUtil;
 //    @Autowired
@@ -182,27 +179,24 @@ public class UserServiceTest {
 //        System.out.println(user);
 
 
-        User byId = userService.getById(91);
-        byId.setPicture("gghhghggh");
-//        System.out.println(byId.getAddress());
+//        User user91 = userService.getById(93);
+//          user91.setTitle(Title.valueOf("Mr"));
+////        user91.setPicture("gghhghggh");
+//        System.out.println(user91);
+//        System.out.println(user91.getTitle());
 //
+//        System.out.println(Title.valueOf(Title.class,"Mrs".toUpperCase()));
 
 
 
-        Address address = new Address();
-               address.setCountry("test1");
-               address.setCity("test211");
-//        address.setUser(byId);
-        byId.setAddress(address);
-        address.setUser(byId);
-        addressService.create(address);
-        userService.edit(byId);
+//        userService.edit(user91);
         //userService.edit(byId);
 //        addressService.edit(byId.getAddress());
 //        User byId2 = userService.getById(93);
 //        System.out.println(byId2.getPicture());
 //        Address address = addressService.getById(92);
-        System.out.println(byId.getAddress());
+//        System.out.println(user91.getAddress());
+//        addressService.delete(91);
     }
 
 }

@@ -45,7 +45,7 @@ public class ProfileDAO implements AbstractDAO<UserProfile> {
     }
 
     public void edit(UserProfile entity) {
-        sessionFactory.getCurrentSession().update(entity);
+        sessionFactory.getCurrentSession().saveOrUpdate(entity);
          logger.info("UserProfile edit successfully  : " + entity);
     }
 

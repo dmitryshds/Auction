@@ -47,7 +47,7 @@ public class OrderDAO implements AbstractDAO<Order> {
 
 
     public void edit(Order entity) {
-        sessionFactory.getCurrentSession().update(entity);
+        sessionFactory.getCurrentSession().saveOrUpdate(entity);
                 logger.info("Order edit successfully  : " + entity);
     }
 

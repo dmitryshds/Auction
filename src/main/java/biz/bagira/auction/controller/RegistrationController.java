@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
+import java.security.Principal;
 
 /**
  * Created by Dmitriy on 21.02.2017.
@@ -113,7 +114,7 @@ public class RegistrationController {
           User byName = userService.getByName(userName);
           if (byName != null)
           {
-              String randomCode = byName.getPassword().substring(7,17);
+              String randomCode = byName.getPassword().substring(7,17).replace(".","").replace("/","");
               if (randomCode.equals(code))
               {
                   byName.setValidateEmail(true);
@@ -125,6 +126,17 @@ public class RegistrationController {
           }
               logger.info("confirmEmail FAIL");
           return "error";
+      }
+
+      @RequestMapping(value = "/account", method = RequestMethod.GET)
+      public String myAccount (ModelMap model, Principal principal){
+          User user = userService.getByName(principal.getName());
+
+          String canonicalPath = user.getPicture().replace(imageUtil.getRootFolder(),"");
+          canonicalPath = canonicalPath.replace('\\','/').replace('\\','/');
+           user.setPicture(canonicalPath);
+          model.addAttribute("user",user);
+          return "/account";
       }
 
 }

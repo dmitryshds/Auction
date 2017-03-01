@@ -66,7 +66,7 @@ public class ImageUtil {
         return pathToUserDir + File.separator + fileName;
     }
 
-    public static byte[] downloadPicture(String directory, String fileName) {
+    public  byte[] downloadPicture(String directory, String fileName) {
 
         byte[] resByteArray = null;
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream(1000)) {
@@ -81,7 +81,7 @@ public class ImageUtil {
         return resByteArray;
     }
 
-    private static boolean writeImage(byte[] resByteArray, String fileName, String path) {
+    private  boolean writeImage(byte[] resByteArray, String fileName, String path) {
         if (!fileName.endsWith(".jpg")) {
             fileName += ".jpg";
         }
@@ -94,7 +94,7 @@ public class ImageUtil {
         }
     }
 
-    public static void folderDelete(File file) {
+    public  void folderDelete(File file) {
         if (!file.exists())
             return;
         if (file.isDirectory()) {
@@ -106,7 +106,7 @@ public class ImageUtil {
         logger.info("Successfully delete user folder: " + file.getAbsolutePath());
     }
 
-    public static boolean deliteImage(String pathToImage) {
+    public  boolean deliteImage(String pathToImage) {
         File file = new File(pathToImage);
         if (!file.exists()) {
             logger.info(pathToImage + " does not exist");
@@ -118,6 +118,15 @@ public class ImageUtil {
         }
 
     }
+
+    public  byte[] downloadPicture(String fullPath) {
+        int i = fullPath.lastIndexOf('\\');
+        String directory = fullPath.substring(0, i + 1);
+        String fileName = fullPath.substring(i + 1, fullPath.length());
+
+        return downloadPicture(directory,fileName);
+    }
+
 
     public  String getRootFolder() {
         return ROOT_FOLDER;

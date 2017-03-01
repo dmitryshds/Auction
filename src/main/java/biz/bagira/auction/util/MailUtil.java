@@ -86,7 +86,7 @@ public class MailUtil {
 
     public void sendMailMessage(User user)
     {
-        String randomCode = user.getPassword().substring(7, 17);
+        String randomCode = user.getPassword().substring(7, 17).replace(".","").replace("/","");
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("<div><i>Dear ")
                 .append(user.getTitle())
@@ -100,7 +100,7 @@ public class MailUtil {
                 .append("/")
                 .append(randomCode)
                 .append("' style='color:blue;'>Please click here</a></div>");
-
+        logger.info(stringBuffer.toString());
         sendMail(MAIL_FROM,PASSWORD,user.getEmail(),stringBuffer.toString());
 
     }

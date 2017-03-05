@@ -21,6 +21,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 import java.util.Locale;
+import java.util.Properties;
 
 /**
  * Created by Dmitriy on 16.02.2017.
@@ -145,14 +146,27 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public MailUtil mailUtil(){
-        return new MailUtil(environment.getProperty("mail.smtp.auth"),
-                            environment.getProperty("mail.from"),
-                            environment.getProperty("mail.smtp.starttls.enable"),
-                            environment.getProperty("mail.smtp.host"),
-                            environment.getProperty("mail.smtp.port"),
-                            environment.getProperty("mail.smtp.ssl.trust"),
-                            environment.getProperty("mail.password"),
-                            environment.getProperty("app.host"));
+    public java.util.Properties properties(){
+        Properties props = new Properties();
+        props.put("mail.smtp.auth",environment.getProperty("mail.smtp.auth"));
+        props.put("mail.from",environment.getProperty("mail.from"));
+        props.put("mail.smtp.starttls.enable",environment.getProperty("mail.smtp.starttls.enable"));
+        props.put("mail.smtp.host",environment.getProperty("mail.smtp.host"));
+        props.put("mail.smtp.port",environment.getProperty("mail.smtp.port"));
+        props.put("mail.smtp.ssl.trust",environment.getProperty("mail.smtp.ssl.trust"));
+        props.put("mail.password",environment.getProperty("mail.password"));
+        props.put("app.host",environment.getProperty("app.host"));
+        return props;
+
     }
+
+    @Bean
+    public MailUtil mailUtil(){
+        return new MailUtil(properties());
+    }
+
+//    @Bean
+//    RequestDumperFilter requestDumper() {
+//        return new RequestDumperFilter();
+//    }
 }

@@ -150,10 +150,12 @@
                 $.each(data, function (i, v) {
                     arr[i] = "<div class='col-lg-4 col-md-4 col-sm-4 product'" + " id='i" + v.idItems + "'" + ">" +
                         "<div class='product-image'>" +
-                        "<img src='' alt='Item' style='width:100%; height:180px;'>" +
+                        "<img src='image"+
+                          v.pictures +
+                         "' alt='Item' style='width:100%; height:180px;'>" +
                         "</div>" +
                         "<div class='product-info'>" +
-                        "<h5><a href='#'>" + v.name +
+                        "<h5><a href='showItem/"+ v.idItems  +"'>" + v.name +
                         "</a></h5>" +
                         "<span class='price'>" + v.initialPrice +
                         "</span></div></div>";

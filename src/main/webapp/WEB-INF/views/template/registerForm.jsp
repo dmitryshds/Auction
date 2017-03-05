@@ -70,7 +70,7 @@
 
                                              <p>Username(Login)* </br>
 
-                                            <span style="color: red; display: none " id="err-login"> Incorrect value min 2 max 10 characters</span>
+                                            <span style="color: red; display: none " id="err-login"> Incorrect value only Latin characters min 2 max 10 characters</span>
 
                                             <span style="color: green; display: none " id="corr-login"> Correct value</span>
 
@@ -357,13 +357,18 @@
 $('#login').blur(function () {
     $('#err-login').hide();
     $('#corr-login').hide();
+    var patt =/^[a-z\s]+$/i;
     console.log("blur login");
     var text = $(this).val();
     if(text.length < 2)
     {
       $('#err-login').show();
 
-    } else{
+    }
+    else if(!patt.test(text)){
+        $('#err-login').show();
+    }
+    else{
 
 $.ajax({
     type: "POST",

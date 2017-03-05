@@ -20,9 +20,10 @@ public class ProfileDAO implements AbstractDAO<UserProfile> {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public void create(UserProfile entity) {
-        sessionFactory.getCurrentSession().save(entity);
+    public Integer create(UserProfile entity) {
+        Integer id = (Integer)sessionFactory.getCurrentSession().save(entity);
         logger.info("UserProfile add successfully : " + entity);
+        return id;
     }
 
     public void delete(UserProfile entity) {

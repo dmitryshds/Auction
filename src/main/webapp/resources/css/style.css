@@ -145,7 +145,16 @@ span.red, span.error{
 	color:#e74c3c;
 }
 
+ .message{
+	 color: #0000ff;
+ }
 
+ .im-preview{
+
+	 width: 150px;
+	 height: 200px;
+	 display: none;
+ }
 
 
 

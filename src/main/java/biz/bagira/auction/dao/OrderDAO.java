@@ -21,9 +21,10 @@ public class OrderDAO implements AbstractDAO<Order> {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public void create(Order entity) {
-        sessionFactory.getCurrentSession().save(entity);
+    public Integer create(Order entity) {
+        Integer id = (Integer) sessionFactory.getCurrentSession().save(entity);
         logger.info("Order add successfully : " + entity);
+        return id;
     }
 
     public void delete(Order entity) {

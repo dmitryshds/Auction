@@ -1,10 +1,8 @@
 package biz.bagira.auction.util;
 
 import biz.bagira.auction.entities.User;
-import biz.bagira.auction.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -18,44 +16,11 @@ public class MailUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(MailUtil.class);
 
-    @Autowired
-    private UserService userService;
 
+    private Properties props;
 
-    private final String MAIL_SMTP_AUTH;
-    private final String MAIL_SMTP_STARTTLS_ENABLE;
-    private final String MAIL_SMTP_HOST;
-    private final String MAIL_SMTP_PORT;
-    private final String MAIL_SMTP_SSL_TRUST;
-    private final String MAIL_FROM;
-    private final String PASSWORD;
-    private final String APP_HOST;
-
-    private Properties props = new Properties();
-
-    public MailUtil(String MAIL_SMTP_AUTH,
-                    String MAIL_FROM,
-                    String MAIL_SMTP_STARTTLS_ENABLE,
-                    String MAIL_SMTP_HOST,
-                    String MAIL_SMTP_PORT,
-                    String MAIL_SMTP_SSL_TRUST,
-                    String PASSWORD,
-                    String APP_HOST) {
-        this.MAIL_SMTP_AUTH = MAIL_SMTP_AUTH;
-        this.MAIL_FROM = MAIL_FROM;
-        this.MAIL_SMTP_STARTTLS_ENABLE = MAIL_SMTP_STARTTLS_ENABLE;
-        this.MAIL_SMTP_HOST = MAIL_SMTP_HOST;
-        this.MAIL_SMTP_PORT = MAIL_SMTP_PORT;
-        this.MAIL_SMTP_SSL_TRUST = MAIL_SMTP_SSL_TRUST;
-        this.PASSWORD = PASSWORD;
-        this.APP_HOST = APP_HOST;
-        props.put("mail.smtp.auth", MAIL_SMTP_AUTH);
-        props.put("mail.smtp.starttls.enable", MAIL_SMTP_STARTTLS_ENABLE);
-        props.put("mail.smtp.host", MAIL_SMTP_HOST);
-        props.put("mail.smtp.port", MAIL_SMTP_PORT);
-        props.put("mail.smtp.ssl.trust", MAIL_SMTP_SSL_TRUST);
-        props.put("mail.smtp.socketFactory.port", "587");
-        props.put("mail.smtp.socketFactory.class", "javax.net.SocketFactory");
+    public MailUtil(Properties props) {
+        this.props = props;
     }
 
     private void sendMail(final String mailFrom, final String password, String mailTo, String message) {
@@ -86,6 +51,10 @@ public class MailUtil {
 
     public void sendMailMessage(User user)
     {
+
+         logger.info("Props : "+props.getProperty("app.host"));
+         logger.info("Props : "+props.getProperty("mail.from"));
+         logger.info("Props : "+props.getProperty("mail.password"));
         String randomCode = user.getPassword().substring(7, 17).replace(".","").replace("/","");
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("<div><i>Dear ")
@@ -94,14 +63,14 @@ public class MailUtil {
                 .append(user.getFirstName())
                 .append(", to complete the registration please confirm your E-mail</i>")
                 .append("<a href='")
-                .append(APP_HOST)
+                .append(props.getProperty("app.host"))
                 .append("/confirm/")
                 .append(user.getLogin())
                 .append("/")
                 .append(randomCode)
                 .append("' style='color:blue;'>Please click here</a></div>");
         logger.info(stringBuffer.toString());
-        sendMail(MAIL_FROM,PASSWORD,user.getEmail(),stringBuffer.toString());
+        sendMail(props.getProperty("mail.from"),props.getProperty("mail.password"),user.getEmail(),stringBuffer.toString());
 
     }
 

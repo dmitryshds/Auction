@@ -66,6 +66,16 @@ public class ImageUtil {
         return pathToUserDir + File.separator + fileName;
     }
 
+    public  String saveImage(Integer userId, Integer itemId, byte[] bytes, int i) {
+
+        String userFolder = createUserFolder(userId);
+        String fileName = "" + userId + "_" + itemId + "_" + i + ".jpg";
+        writeImage(bytes, fileName, userFolder);
+
+        return userFolder+File.separator+fileName;
+    }
+
+
     public  byte[] downloadPicture(String directory, String fileName) {
 
         byte[] resByteArray = null;

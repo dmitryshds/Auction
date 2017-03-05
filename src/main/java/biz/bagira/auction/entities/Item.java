@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -18,29 +19,41 @@ import java.util.Set;
 @Entity
 @Table(name = "ITEMS")
 public class Item {
+
     @JsonProperty("idItems")
     private Integer idItems;
+
     @JsonIgnore
     private User owner;
+
     @JsonIgnore
     private List<Category> categoryList = new ArrayList<Category>();
     //  private Category category;
+
     @JsonProperty("name")
     private String name;
+
     @JsonProperty("description")
     private String description;
+
     @JsonProperty("initialPrice")
     private BigDecimal initialPrice;
+
     @JsonProperty("buynowPrice")
     private BigDecimal buynowPrice;
+
     @JsonProperty("dateStart")
     private Timestamp dateStart;
+
     @JsonProperty("pictures")
     private String pictures;
+
     @JsonProperty("dateFinish")
     private Timestamp dateFinish;
+
     @JsonIgnore
     private Set<Bid> bidSet = new HashSet<Bid>(0);
+
     @JsonIgnore
     private Order order;
 
@@ -55,6 +68,7 @@ public class Item {
         this.idItems = idItems;
     }
 
+    @NotNull
     @ManyToOne( fetch = FetchType.EAGER)
     @JoinColumn(name = "OWNER_ID")
     public User getOwner() {
@@ -76,7 +90,8 @@ public class Item {
 //        this.category = category;
 //    }
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @NotNull
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(name = "CATEGORY_ITEM", joinColumns = @JoinColumn(name = "ITEM_ID"), inverseJoinColumns = @JoinColumn(name = "CATEGORY_ID"))
     //@OrderBy("type")
     public List<Category> getCategoryList() {
@@ -96,6 +111,7 @@ public class Item {
         bidSet.add(bid);
     }
 
+    @NotNull
     @Column(name = "NAME")
     public String getName() {
         return name;
@@ -114,6 +130,7 @@ public class Item {
         this.description = description;
     }
 
+    @NotNull
     @Column(name = "INITIAL_PRICE")
     public BigDecimal getInitialPrice() {
         return initialPrice;
@@ -132,6 +149,7 @@ public class Item {
         this.buynowPrice = buynowPrice;
     }
 
+    @NotNull
     @Column(name = "DATE_START")
     public Timestamp getDateStart() {
         return dateStart;
@@ -150,6 +168,7 @@ public class Item {
         this.pictures = pictures;
     }
 
+    @NotNull
     @Column(name = "DATE_FINISH")
     public Timestamp getDateFinish() {
         return dateFinish;
@@ -200,4 +219,22 @@ public class Item {
         result = 31 * result + (initialPrice != null ? initialPrice.hashCode() : 0);
         return result;
     }
+
+//    @Override
+//    public String toString() {
+//        return "Item{" +
+//                "idItems=" + idItems +
+//                ", owner=" + owner +
+//                ", categoryList=" + categoryList +
+//                ", name='" + name + '\'' +
+//                ", description='" + description + '\'' +
+//                ", initialPrice=" + initialPrice +
+//                ", buynowPrice=" + buynowPrice +
+//                ", dateStart=" + dateStart +
+//                ", pictures='" + pictures + '\'' +
+//                ", dateFinish=" + dateFinish +
+//                ", bidSet=" + bidSet +
+//                ", order=" + order +
+//                '}';
+//    }
 }

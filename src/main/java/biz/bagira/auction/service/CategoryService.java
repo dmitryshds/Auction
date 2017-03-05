@@ -49,5 +49,7 @@ public class CategoryService {
         return categoryDAO;
     }
 
+    public Category getByName(String name){return categoryDAO.getByName(name);}
+
 
 }

@@ -22,9 +22,10 @@ public class CategoryDAO implements AbstractDAO<Category> {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public void create(Category entity) {
-        sessionFactory.getCurrentSession().save(entity);
+    public Integer create(Category entity) {
+        Integer id = (Integer)sessionFactory.getCurrentSession().save(entity);
         logger.info("Category add successfully : " + entity);
+        return id;
     }
 
     public void delete(Category entity) {
@@ -61,7 +62,17 @@ public class CategoryDAO implements AbstractDAO<Category> {
         Session currentSession = sessionFactory.getCurrentSession();
         SQLQuery query = currentSession.createSQLQuery("SELECT ID_CATEGORY, TYPE FROM CATEGORY ORDER BY TYPE");
         query.addEntity(Category.class);
-//        return sessionFactory.getCurrentSession().createQuery("from Category").list();
         return  (List<Category>)query.list();
     }
+
+    public Category getByName(String name) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        SQLQuery query = currentSession.createSQLQuery("SELECT * FROM category c WHERE c.type = :name ");
+        query.addEntity(Category.class);
+        query.setParameter("name", name);
+        Category category = (Category) query.uniqueResult();
+        logger.info("Category getByName : " + category);
+        return category;
+    }
+
 }

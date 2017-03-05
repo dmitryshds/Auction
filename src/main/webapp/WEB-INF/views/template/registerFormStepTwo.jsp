@@ -97,11 +97,6 @@
 
                                     <input type="file"  name="file"  id="upload-image"  accept=".png, .jpg, .gif, .jpeg"/><br/>
 
-                                    <%--<div  id="rem-image">--%>
-
-                                        <%--<a href="#">Delete image</a>--%>
-
-                                    <%--</div>--%>
 
                                 </div>
 
@@ -134,7 +129,6 @@
 
         <script>
 
-            <%--src="${uploadJs}"--%>
             var maxFileSize = 2 * 1024 * 1024;
 
     $(document).on("change", "#upload-image", function() {
@@ -172,7 +166,7 @@
         reader.readAsDataURL(input.files[0]);
     }
 }
-    var validateFile = function(file)
+          function validateFile(file)
         {
             if ( file[0].size > maxFileSize ) {
 

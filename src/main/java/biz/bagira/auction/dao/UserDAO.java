@@ -26,9 +26,10 @@ public class UserDAO implements AbstractDAO<User> {
 
 
 
-    public void create(User entity) {
-        sessionFactory.getCurrentSession().save(entity);
+    public Integer create(User entity) {
+        Integer id = (Integer)sessionFactory.getCurrentSession().save(entity);
         logger.info("User add successfully : " + entity);
+        return id;
     }
 
     public void delete(User entity) {

@@ -24,9 +24,10 @@ public class ItemDAO implements AbstractDAO<Item> {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public void create(Item entity) {
-        sessionFactory.getCurrentSession().save(entity);
+    public Integer create(Item entity) {
+        Integer id = (Integer) sessionFactory.getCurrentSession().save(entity);
         logger.info("Item add successfully : " + entity);
+        return id;
     }
 
     public void delete(Item entity) {

@@ -39,6 +39,12 @@
 
         										<li><a href="order_info.html">Checkout</a></li>
 
+											<sec:authorize access="isAuthenticated()">
+
+												<li><a href="additem" methods="GET"><spring:message code="Add item"/></a></li>
+
+											</sec:authorize>
+
         										<li><a href="text_page.html">About Us</a></li>
 
         										<li><a href="contact.html">Contact</a></li>

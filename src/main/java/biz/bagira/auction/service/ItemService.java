@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Set;
 
@@ -23,7 +24,10 @@ public class ItemService {
     private ItemDAO itemDAO;
 
 
-    public void create(Item entity) { itemDAO.create(entity); }
+    public Integer create(Item entity) {
+        entity.setDateStart(new Timestamp(System.currentTimeMillis()));
+       return itemDAO.create(entity);
+    }
 
     public void delete(Item entity) {
         itemDAO.delete(entity);

@@ -6,7 +6,7 @@ import java.util.Collection;
  * Created by Dmitriy on 18.01.2017.
  */
 public interface AbstractDAO<T> {
-     void create(T entity);
+     Integer create(T entity);
 
      void delete(T entity);
 

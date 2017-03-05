@@ -21,9 +21,10 @@ public class BidDAO implements AbstractDAO<Bid> {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public void create(Bid entity) {
-        sessionFactory.getCurrentSession().save(entity);
+    public Integer create(Bid entity) {
+        Integer id = (Integer) sessionFactory.getCurrentSession().save(entity);
         logger.info("Bid add successfully : " + entity);
+        return id;
     }
 
     public void delete(Bid entity) {

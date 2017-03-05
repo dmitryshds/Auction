@@ -71,6 +71,7 @@
                                         <div class="col-lg-4 col-md-4 col-sm-4">
 
                                             <img src="<c:url value="image${user.picture}"/>" style="width: 150px; height:150px;  ">
+
                                         </div>
 
                                         <div class="col-lg-8 col-md-8 col-sm-8" >
@@ -132,7 +133,6 @@
 
                                                   <div class="col-lg-8 col-md-8 col-sm-8">
 
-                                                      <%--<input type="text" name="firstName"  id="firstName"/>--%>
                                                                <b>${user.firstName}</b>
                                                   </div>
 
@@ -148,7 +148,6 @@
 
                                                   <div class="col-lg-8 col-md-8 col-sm-8">
 
-                                                      <%--<input type="text" name="lastName" id="lastName"/>--%>
                                                           <b>${user.lastName}</b>
                                                   </div>
 

@@ -131,9 +131,8 @@ public class RegistrationController {
       @RequestMapping(value = "/account", method = RequestMethod.GET)
       public String myAccount (ModelMap model, Principal principal){
           User user = userService.getByName(principal.getName());
-
           String canonicalPath = user.getPicture().replace(imageUtil.getRootFolder(),"");
-          canonicalPath = canonicalPath.replace('\\','/').replace('\\','/');
+          canonicalPath = canonicalPath.replace('\\', '/').replace('\\', '/');
            user.setPicture(canonicalPath);
           model.addAttribute("user",user);
           return "/account";

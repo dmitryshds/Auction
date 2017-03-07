@@ -2,15 +2,17 @@ package biz.bagira.auction.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 /**
  * Created by Dmitriy on 23.01.2017.
@@ -46,13 +48,13 @@ public class Item {
     private Timestamp dateStart;
 
     @JsonProperty("pictures")
-    private String pictures;
+    private List<String> pictures = new ArrayList<>(0);
 
     @JsonProperty("dateFinish")
     private Timestamp dateFinish;
 
     @JsonIgnore
-    private Set<Bid> bidSet = new HashSet<Bid>(0);
+    private Set<Bid> bidSet = new ConcurrentSkipListSet<Bid>();
 
     @JsonIgnore
     private Order order;
@@ -159,12 +161,19 @@ public class Item {
         this.dateStart = dateStart;
     }
 
-    @Column(name = "PICTURES")
-    public String getPictures() {
+    @ElementCollection()
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @CollectionTable(name="PICTURES", joinColumns=@JoinColumn(name="ID_ITEM"))
+    @Column(name="PATH")
+    public List<String> getPictures() {
         return pictures;
     }
 
-    public void setPictures(String pictures) {
+    public void addPicture(String path){
+          pictures.add(path);
+    }
+
+    public void setPictures(List<String> pictures) {
         this.pictures = pictures;
     }
 
@@ -220,21 +229,20 @@ public class Item {
         return result;
     }
 
-//    @Override
-//    public String toString() {
-//        return "Item{" +
-//                "idItems=" + idItems +
-//                ", owner=" + owner +
-//                ", categoryList=" + categoryList +
-//                ", name='" + name + '\'' +
-//                ", description='" + description + '\'' +
-//                ", initialPrice=" + initialPrice +
-//                ", buynowPrice=" + buynowPrice +
-//                ", dateStart=" + dateStart +
-//                ", pictures='" + pictures + '\'' +
-//                ", dateFinish=" + dateFinish +
-//                ", bidSet=" + bidSet +
-//                ", order=" + order +
-//                '}';
-//    }
+    @Override
+    public String toString() {
+        return "Item{" +
+                "idItems=" + idItems +
+
+
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", initialPrice=" + initialPrice +
+                ", buynowPrice=" + buynowPrice +
+                ", dateStart=" + dateStart +
+                ", pictures='" + pictures + '\'' +
+                ", dateFinish=" + dateFinish +
+
+                '}';
+    }
 }

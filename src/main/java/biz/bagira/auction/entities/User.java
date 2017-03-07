@@ -248,15 +248,15 @@ public class User implements Serializable {
         return result;
     }
 
-//    @Override
-//    public String toString() {
-//        return "User{" +
-//                "idUsers=" + idUsers +
-//                ", login='" + login + '\'' +
-//                ", title='" + title + '\'' +
-//                ", firstName='" + firstName + '\'' +
-//                ", lastName='" + lastName + '\'' +
-//                ", email='" + email + '\'' +
+    @Override
+    public String toString() {
+        return "User{" +
+                "idUsers=" + idUsers +
+                ", login='" + login + '\'' +
+                ", title='" + title + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
 //                ", country='" + country + '\'' +
 //                ", zip='" + zip + '\'' +
 //                ", city='" + city + '\'' +
@@ -269,6 +269,6 @@ public class User implements Serializable {
 //                ", orderList=" + orderList +
 //                ", state='" + state + '\'' +
 //                ", userProfiles=" + userProfiles +
-//                '}';
-//    }
+                '}';
+    }
 }

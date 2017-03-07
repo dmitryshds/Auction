@@ -197,6 +197,20 @@ public class UserServiceTest {
 //        Address address = addressService.getById(92);
 //        System.out.println(user91.getAddress());
 //        addressService.delete(91);
+//        Set<Item> all = itemService.getAll();
+//        ("select i.* from items AS i, category_item AS ci, category AS c, pictures AS p where i.id_items=ci.item_id AND ci.category_id=c.id_category AND i.id_items=p.id_item AND c.id_category=:id ORDER BY i.ID_ITEMS");
+//        List<Item> all = itemService.getLimitItemsByCategoryId(9,0,10);
+//        System.out.println("ALL size = "+all.size());
+//        for (Item item : all) {
+//            System.out.println(item);
+//        }
+
+//        for (Item item : all) {
+//            System.out.println(item.getPictures());
+//        }
+//        Integer countItemsByCategory = itemService.getCountItemsByCategory(9);
+//        System.out.println(countItemsByCategory);
+
     }
 
 }

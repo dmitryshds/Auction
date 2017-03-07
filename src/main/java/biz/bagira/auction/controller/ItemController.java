@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -72,19 +73,17 @@ public class ItemController {
         item.setIdItems(itemId);
 
 
-        StringBuffer sb = new StringBuffer();
         for (int i = 0; i < files.length; i++) {
             if (files[i].isEmpty()) {
                 continue;
             }
             try {
                 String pathToImage = imageUtil.saveImage(user.getIdUsers(), itemId, files[i].getBytes(), i);
-                sb.append(pathToImage + ";");
+                item.addPicture(pathToImage);
             } catch (IOException e) {
                 logger.info(e.getMessage());
             }
         }
-        item.setPictures(sb.toString().substring(0, sb.length() - 1));
         itemService.edit(item);
         logger.info("Item added = " + itemId);
         redirectAttributes.addFlashAttribute("message", "You successfully added item");
@@ -100,13 +99,15 @@ public class ItemController {
                                  @PathVariable Integer startPos,
                                  @PathVariable Integer quantity) {
         List<Item> items = itemService.getLimitItemsByCategoryId(categoryId, startPos, quantity);
+        logger.info("List Items = " + items);
+        logger.info(">>>>>>>>>List SIZE = " + items.size());
         if (items.size() > 0) {
             for (Item item : items) {
-                String pictures = item.getPictures();
-                if (pictures != null) {
-                    String[] split = pictures.split(";");
-                    item.setPictures(split[0].replace(imageUtil.getRootFolder(), "").replace('\\', '/').replace('\\', '/'));
-                    logger.info("PICTURE ITEM = " + split[0].replace(imageUtil.getRootFolder(), "").replace('\\', '/').replace('\\', '/'));
+                List<String> pictures = item.getPictures();
+                List<String> newPict = new ArrayList<>();
+                if (!pictures.isEmpty()) {
+                    newPict.add(pictures.get(0).replace(imageUtil.getRootFolder(), "").replace('\\', '/').replace('\\', '/'));
+                    item.setPictures(newPict);
                 }
             }
         }
@@ -124,11 +125,20 @@ public class ItemController {
     public String showItem(@PathVariable("itemId") Integer itemId, ModelMap modelMap){
         logger.info("Get Item  Id = "+itemId);
         Item item = itemService.getById(itemId);
-        String pictures = item.getPictures();
-        pictures = pictures.replace(imageUtil.getRootFolder(),"").replace('\\', '/').replace('\\', '/');;
-        item.setPictures(pictures);
-        modelMap.addAttribute("item",item);
+        logger.info("ITEM = "+item);
 
+        if (item != null) {
+
+            List<String> pictures = item.getPictures();
+            logger.info("PICTURES = " + pictures);
+            if (!pictures.isEmpty() || pictures != null) {
+                for (int i = 0; i < pictures.size(); i++)
+                    pictures.set(i, pictures.get(i).replace(imageUtil.getRootFolder(), "").replace('\\', '/').replace('\\', '/'));
+            }
+            item.setPictures(pictures);
+
+            modelMap.addAttribute("item", item);
+        }
         return "showItem";
     }
 

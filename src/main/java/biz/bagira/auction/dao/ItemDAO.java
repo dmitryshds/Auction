@@ -66,18 +66,20 @@ public class ItemDAO implements AbstractDAO<Item> {
 
     public List<Item> getItemsByCategoryId(Integer categoryId) {
         Session currentSession = sessionFactory.getCurrentSession();
-        SQLQuery query = currentSession.createSQLQuery("select i.* from items AS i, category_item AS ci, category AS c where i.id_items=ci.item_id AND ci.category_id=c.id_category AND c.id_category=:id");
+        SQLQuery query = currentSession.createSQLQuery("select i.* from items AS i, category_item AS ci, category AS c where i.id_items=ci.item_id AND ci.category_id=c.id_category AND c.id_category=:id join fetch i.pictures");
         query.addEntity(Item.class);
         query.setParameter("id", categoryId);
         return (List<Item>) query.list();
     }
     public List<Item> getLimitItemsByCategoryId(Integer categoryId, Integer from, Integer rows) {
         Session currentSession = sessionFactory.getCurrentSession();
-        SQLQuery query = currentSession.createSQLQuery("select i.* from items AS i, category_item AS ci, category AS c where i.id_items=ci.item_id AND ci.category_id=c.id_category AND c.id_category=:id ORDER BY i.ID_ITEMS");
+//        SQLQuery query = currentSession.createSQLQuery("select i.* from items AS i, category_item AS ci, category AS c, pictures AS p  where i.id_items=ci.item_id AND ci.category_id=c.id_category AND i.id_items=p.id_item AND i.id_items = p.id_item AND c.id_category=:id ORDER BY i.ID_ITEMS");
+        SQLQuery query = currentSession.createSQLQuery("select i.* from items AS i, category_item AS ci, category AS c  where i.id_items=ci.item_id AND ci.category_id=c.id_category   AND c.id_category=:id ORDER BY i.ID_ITEMS");
         query.addEntity(Item.class);
         query.setParameter("id", categoryId);
         query.setFirstResult(from);
         query.setMaxResults(rows);
+
         return (List<Item>) query.list();
     }
 

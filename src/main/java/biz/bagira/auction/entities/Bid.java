@@ -3,18 +3,23 @@ package biz.bagira.auction.entities;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Comparator;
 
 /**
  * Created by Dmitriy on 23.01.2017.
  */
 @Entity
 @Table(name = "BIDS")
-public class Bid {
+public class Bid implements Comparator<Bid>{
     private Integer idBid;
     private Item item;
     private User userBidder;
     private BigDecimal bid;
     private Timestamp bidDate;
+
+    public Bid() {
+        bidDate = new Timestamp(System.currentTimeMillis());
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,6 +71,13 @@ public class Bid {
 
     public void setBidDate(Timestamp bidDate) {
         this.bidDate = bidDate;
+    }
+
+
+
+    @Override
+    public int compare(Bid o1, Bid o2) {
+        return o1.getBid().compareTo(o2.getBid());
     }
 
     @Override

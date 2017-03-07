@@ -91,10 +91,10 @@
         							<div class="col-lg-3 col-md-3 col-sm-6 contact-footer-info">
         								<h4>Contact Us</h4>
         								<ul>
-        									<li><i class="icons icon-location"></i> 8901 Marmora Road,<br>Glasgow, D04 89GR.</li>
-                                            <li><i class="icons icon-phone"></i> +1 800 603 6035</li>
-        									<li><i class="icons icon-mail-alt"></i><a href="mailto:mail@company.com"> mail@companyname.com</a></li>
-        									<li><i class="icons icon-skype"></i> homeshop</li>
+        									<li><i class="icons icon-location"></i> Kiev Ukraine <br>.</li>
+                                            <li><i class="icons icon-phone"></i> +3 123 456 789</li>
+        									<li><i class="icons icon-mail-alt"></i><a href="info.auction2017@gmail.com"> info.auction2017@gmail.com</a></li>
+        									<li><i class="icons icon-skype"></i> auction2017</li>
         								</ul>
         							</div>
         							<!-- /Contact Us -->

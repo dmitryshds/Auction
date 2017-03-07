@@ -13,6 +13,7 @@
     <head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>Title</title>
+		<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
     </head>
     <body>
        				 <!-- Header -->
@@ -31,7 +32,7 @@
 
 											<sec:authorize access="isAuthenticated()">
 
-        									 	<li><a href="account" methods="GET"><spring:message code="account"/></a></li>
+        									 	<li><a href="${contextPath}/account" methods="GET"><spring:message code="account"/></a></li>
 
         									</sec:authorize>
 
@@ -41,7 +42,7 @@
 
 											<sec:authorize access="isAuthenticated()">
 
-												<li><a href="additem" methods="GET"><spring:message code="Add item"/></a></li>
+												<li><a href="${contextPath}/additem" methods="GET"><spring:message code="Add item"/></a></li>
 
 											</sec:authorize>
 
@@ -60,13 +61,13 @@
 
         										<li class="purple">
 
-													<a href="login">
+													<a href="${contextPath}/login">
 
 														<i class="icons icon-user-3"></i><spring:message code="login"/></a>
 
         									    </li>
 
-        										<li><a href="register">
+        										<li><a href="${contextPath}/register">
 
 
 													<i class="icons icon-lock"></i> Create an Account</a></li>
@@ -79,7 +80,7 @@
 
 													    	<i class="icons icon-user-3" style="color: #122b40"> Hello <sec:authentication property="principal.username" /></i>
 
-												<li><a href="logout">
+												<li><a href="${contextPath}/logout">
 
 															<i class="icons icon-lock"></i>Log out</a></li>
 
@@ -101,7 +102,7 @@
 
         							<div id="logo" class="col-lg-4 col-md-4 col-sm-4">
 
-        									<a href="index"><img src="<c:url value="/resources/img/logo.png" />" alt="Logo"></a>
+        									<a href="${contextPath}/index"><img src="<c:url value="/resources/img/logo.png" />" alt="Logo"></a>
 
         							</div>
 

@@ -8,8 +8,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%--<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>--%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <html>
     <head>
@@ -23,15 +25,25 @@
 
         <spring:url value="/resources/js/jquery-3.1.1.js" var="jqueryJs"/>
         <spring:url value="/resources/js/jquery-ui.js" var="jqueryUI"/>
+        <spring:url value="/resources/js/zoom/bootstrap.min.js" var="zoom1"/>
+        <spring:url value="/resources/js/zoom/chosen.jquery.min.js" var="zoom2"/>
+        <spring:url value="/resources/js/zoom/flexslider.min.js" var="zoom3"/>
+        <spring:url value="/resources/js/zoom/jquery-1.11.0.min.js" var="zoom4"/>
+        <spring:url value="/resources/js/zoom/jquery-ui.min.js" var="zoom5"/>
+        <spring:url value="/resources/js/zoom/main-script.js" var="zoom6"/>
+        <spring:url value="/resources/js/zoom/perfect-scrollbar.min.js" var="zoom7"/>
+        <spring:url value="/resources/js/zoom/zoomsl-3.0.min.js" var="zoom8"/>
 
-        <script src="${jqueryJs}">
-        </script>
+
         <script src="${jqueryUI}">
 
         </script>
-		<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-		<c:set var="owner" value="${item.owner}"/>
 
+
+        <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+		<c:set var="owner" value="${item.owner}"/>
+        <c:set var="picture" value="${item.pictures}"/>
+        <c:set var="bids" value="${item.bidSet}"/>
     </head>
     <body>
         <!-- Container -->
@@ -66,92 +78,106 @@
         								<div id="product-slider">
         									<ul class="slides">
         										<li>
-        											<img class="cloud-zoom" src="img/products/single1.jpg" data-large="img/products/sample1.jpg"  alt=""/>
-        											<a class="fullscreen-button" href="img/products/single1.jpg">
-        												<div class="product-fullscreen">
+                                                    <c:if test="${fn:length(picture) gt 0}">
+                                                        <img class="cloud-zoom" src="/image${picture[0]}"
+                                                             data-large="/image${picture[0]}" alt=""/>
+                                                        <a class="fullscreen-button" href="/image${picture[0]}">
+
+                                                            <div class="product-fullscreen">
         													<i class="icons icon-resize-full-1"></i>
         												</div>
         											</a>
+                                                    </c:if>
         										</li>
         									</ul>
         								</div>
         								<div id="product-carousel">
         									<ul class="slides">
-        										<li>
-        											<a class="fancybox" rel="product-images" href="img/products/single1.jpg"></a>
-        											<img src="img/products/single1.jpg" data-large="img/products/single1.jpg" alt=""/>
-        										</li>
-        										<li>
-        											<a class="fancybox" rel="product-images" href="img/products/single2.jpg"></a>
-        											<img src="img/products/single2.jpg" data-large="img/products/single2.jpg" alt="" />
-        										</li>
-        										<li>
-        											<a class="fancybox" rel="product-images" href="img/products/single3.jpg"></a>
-        											<img src="img/products/single3.jpg" data-large="img/products/single3.jpg" alt="" />
-        										</li>
-        										<li>
-        											<a class="fancybox" rel="product-images" href="img/products/single4.jpg"></a>
-        											<img src="img/products/single4.jpg" data-large="img/products/single4.jpg" alt="" />
-        										</li>
-        										<%--<li>--%>
-        											<%--<a class="fancybox" rel="product-images" href="img/products/single5.jpg"></a>--%>
-        											<%--<img src="img/products/single5.jpg" data-large="img/products/single5.jpg" alt="" />--%>
-        										<%--</li>--%>
-        									</ul>
-        									<div class="product-arrows">
-        										<div class="left-arrow">
-        											<i class="icons icon-left-dir"></i>
-        										</div>
-        										<div class="right-arrow">
-        											<i class="icons icon-right-dir"></i>
-        										</div>
-        									</div>
+                                                <c:if test="${fn:length(picture) gt 1}">
+
+                                                    <c:forEach var="i" begin="1" end="${fn:length(picture)-1}">
+                                                        <li>
+                                                            <a class="fancybox" rel="product-images"
+                                                               href="/image${picture[i]}"></a>
+                                                            <img src="/image${picture[i]}"
+                                                                 data-large="/image${picture[i]}" alt=""/>
+                                                        </li>
+                                                    </c:forEach>
+
+                                                </c:if>
+                                            </ul>
         								</div>
                                     </div>
                                     <!-- /Product Images Carousel -->
 
                                     <div class="col-lg-8 col-md-8 col-sm-8 product-single-info full-size">
 
-                                        <h2>Lorem ipsum dolor sit amet</h2>
-                                        <div class="rating-box">
-        									<div class="rating readonly-rating" data-score="4"></div>
-        									2 Review(s)
-        								</div>
+                                        <h2>${item.name}</h2>
+                                        <%--<div class="rating-box">--%>
+                                        <%----%>
+                                        <%--</div>--%>
                                         <table>
                                         	<tr>
-                                            	<td>Manufacturer</td>
-                                                <td><a href="#">Manufacturer 1</a></td>
+                                                <td>Owner:</td>
+                                                <td><a href="#"> ${item.owner.login}</a></td>
                                             </tr>
                                             <tr>
-                                            	<td>Availability</td>
-                                                <td><span class="green">in stock</span> 20 items</td>
+                                                <td>Initial price</td>
+                                                <td><span class="green"></span> ${item.initialPrice}</td>
                                             </tr>
+                                            <c:if test="${not empty item.buynowPrice}">
+                                                <tr>
+                                                    <td>By now price</td>
+                                                    <td><a href="#"> ${item.buynowPrice} </a></td>
+                                                </tr>
+                                            </c:if>
                                             <tr>
-                                            	<td>Product code</td>
-                                                <td>PBS173</td>
+                                                <td>Description</td>
+                                                <td>${item.description}</td>
                                             </tr>
                                         </table>
 
-                                        <strong>Product Dimensions</strong>
+                                        <strong></strong>
                                         <table>
                                         	<tr>
-                                            	<td>Product Width</td>
-                                                <td>10.00000M</td>
+                                                <td>Added</td>
+                                                <td><fmt:formatDate type="both" value="${item.dateStart}"/></td>
                                             </tr>
+                                            <%--<tr>--%>
+                                            <%--<td>Fineshed</td>--%>
+                                            <%--<td><fmt:formatDate type="both" value="${item.dateFinish}"/></td>--%>
+                                            <%--</tr>--%>
                                             <tr>
-                                            	<td>Product Length</td>
-                                                <td>10.00000M</td>
+                                                <td>Left :</td>
+                                                <td id="demo"></td>
                                             </tr>
                                         </table>
+                                        <c:if test="${fn:length(bids) gt 0}">
+                                            <%--<span class="price">${bids.bid}</span>--%>
+                                            <c:forEach items="${bids}" var="bid">
+                                                <span class="price">${bid.bid}</span>
+                                            </c:forEach>
+                                        </c:if>
+                                        <c:if test="${fn:length(bids) == 0}">
+                                            <span class="price">${item.initialPrice}</span>
+                                        </c:if>
 
-                                    	<span class="price"><del>$381.00</del> $281.00</span>
+                                        <sec:authorize access="isAuthenticated()">
+                                            <form action="/newbid" class="product-actions-single" method="post">
+                                                <table>
+                                                    <tr>
 
-                                        <table class="product-actions-single">
-                                        	<tr>
-
-                                            </tr>
-                                        </table>
-
+                                                        <td><input type="text" id="bid" name="bid"></td>
+                                                        <td><input class="big" type="submit" value="Add bid" style="background-color: #DDD;color: #999;" id="addBid" disabled="disabled"/></td>
+                                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                                        <input type="hidden" name="itemId" value="${item.idItems}"/>
+                                                        <input type="hidden" name="userName" id="userName" value=" <sec:authentication property="principal.username"/>">
+                                                    </tr>
+                                                    <tr id="error">
+                                                    </tr>
+                                                </table>
+                                            </form>
+                                        </sec:authorize>
 
                    				        </div>
 
@@ -169,32 +195,107 @@
 
         		<!-- JavaScript -->
 
-        		<script src="js/jquery-1.11.0.min.js"></script>
-        		<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+        <%--<script src="${zoom4}"></script>--%>
+        <script type="text/javascript" src="${zoom4}">
+            $('bid').click(function () {
+                   console.log("CLICK JQUERY");
+            });
+
+        </script>
+        <script src="${zoom5}"></script>
 
 
         		<!-- Scroll Bar !!!-->
-        		<script src="js/perfect-scrollbar.min.js"></script>
+        <script src="${zoom7}"></script>
 
 
 
         		<!-- FlexSlider!!! -->
-        		<script defer src="js/flexslider.min.js"></script>
+        <script defer src="${zoom3}"></script>
 
 
 
         		<!-- Cloud Zoom!!! -->
-        		 <script src="js/zoomsl-3.0.min.js"></script>
+        <script src="${zoom8}"></script>
 
         		<!-- SelectJS !!!-->
-                <script src="js/chosen.jquery.min.js" type="text/javascript"></script>
+        <%--<script src="${zoom-2}" type="text/javascript"></script>--%>
+        <script src="${zoom2}"></script>
 
                 <!-- Main JS -->
-                 <script defer src="js/bootstrap.min.js"></script>
-                <script src="js/main-script.js"></script>
+        <script defer src="${zoom1}"></script>
+        <script src="${zoom6}"></script>
+
+        <script type="text/javascript">
+//             CountDown Timer
+            var countDownDate = ${item.dateFinish.time};
+            var x = setInterval(function () {
+            var now = new Date().getTime();
+            var distance = countDownDate - now;
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+              + minutes + "m " + seconds + "s ";
+            if (distance < 0) {
+                clearInterval(x);
+             document.getElementById("demo").innerHTML = "EXPIRED";
+                nonActiveDutton();
+            }
+        }, 1000);
 
 
+        </script>
 
+        <script type="text/javascript">
+            document.getElementById('bid').oninput   = function () {
+                console.log("BIDDDDDD");
+             nonActiveButton();
+              hideError();
+             var text = $(this).val();
+             var patt =/^[0-9\s]+$/i;
+//             var patt =/^\d{0,2}(\.\d{0,2}){0,1}$/;
+             if (patt.test(text))
+             {
+                 activeButton();
+             }
+             else {
+                 if(text == '')
+                 {
+                     return;
+                 }else {
+                     showError();
+                 }
+             }
+            };
+
+         function nonActiveButton() {
+             document.getElementById('addBid').setAttribute("style","background-color: #DDD;color: #999;");
+             document.getElementById('addBid').setAttribute("disabled","disabled");
+
+         };
+
+         function activeButton() {
+           document.getElementById('addBid').removeAttribute("style");
+             document.getElementById('addBid').removeAttribute("disabled");
+
+         }
+
+         function showError() {
+             document.getElementById('error').innerHTML ="<span style='color: #ff0000' id='err'>Invalid Data</span>";
+         }
+         function hideError() {
+             var elem = document.getElementById("err");
+             var parent = document.getElementById("error");
+             if (elem) {
+
+             parent.removeChild(elem);
+               }
+
+         }
+
+        </script>
 
 
         

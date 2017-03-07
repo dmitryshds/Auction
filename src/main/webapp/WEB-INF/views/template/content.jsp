@@ -146,12 +146,12 @@
             function display(data) {
 
                 var arr = [];
-
+                 console.log("DATA = " + data);
                 $.each(data, function (i, v) {
                     arr[i] = "<div class='col-lg-4 col-md-4 col-sm-4 product'" + " id='i" + v.idItems + "'" + ">" +
                         "<div class='product-image'>" +
                         "<img src='image"+
-                          v.pictures +
+							v.pictures +
                          "' alt='Item' style='width:100%; height:180px;'>" +
                         "</div>" +
                         "<div class='product-info'>" +
@@ -165,6 +165,7 @@
                 for (var j in arr) {
                     inner += arr[j];
                 }
+				console.log("INNER = "+inner);
 
                 $('#product').html(inner);
                 displayPaginator();

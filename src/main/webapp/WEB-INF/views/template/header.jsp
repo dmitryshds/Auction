@@ -9,13 +9,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<html>
-    <head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <title>Title</title>
-		<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-    </head>
-    <body>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<%--<html>--%>
+    <%--<head>--%>
+		<%--<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>--%>
+        <%--<title>Title</title>--%>
+		<%----%>
+    <%--</head>--%>
+    <%--<body>--%>
        				 <!-- Header -->
         			<header class="row">
 
@@ -49,6 +50,11 @@
         										<li><a href="text_page.html">About Us</a></li>
 
         										<li><a href="contact.html">Contact</a></li>
+											<sec:authorize access="hasRole('ADMIN')">
+
+												<li><a href="${contextPath}/admin">Admin page</a></li>
+
+											</sec:authorize>
 
         								</ul>
         							</nav>
@@ -375,5 +381,5 @@
 
         			</header>
         			<!-- /Header -->
-    </body>
-</html>
+    <%--</body>--%>
+<%--</html>--%>

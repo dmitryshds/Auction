@@ -52,6 +52,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/index", "/login", "/register", "/confirm/**","/auction/cat/**")
                 .permitAll()
+                .antMatchers("/admin/**")
+                .access("hasRole('ADMIN') or hasRole('DBA')")
                 .and()
                 .formLogin().
                 loginPage("/login").
@@ -65,7 +67,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .rememberMeParameter("remember-me")
                 .tokenRepository(tokenRepository)
                 .tokenValiditySeconds(604800)
-                .and().csrf();
+                .and().csrf()
+                .and().exceptionHandling().accessDeniedPage("/accessDenied");
 
 
     }

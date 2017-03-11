@@ -38,11 +38,13 @@ public class RegistrationController {
     @Autowired
     MailUtil mailUtil;
 
+
     @RequestMapping(value = "/register", method = {RequestMethod.GET})
     public String register(ModelMap modelMap) {
         modelMap.addAttribute("user", new User());
         return "register";
     }
+
 
     @RequestMapping(value = "/newuser", method = {RequestMethod.POST})
     public String newUser(@Valid User user,
@@ -58,7 +60,7 @@ public class RegistrationController {
             user.addUserProfile(profileService.getById(1));
             user.setTitle(Title.valueOf(titles.toUpperCase()));
             userService.create(user);
-            mailUtil.sendMailMessage(user);
+
 
             logger.info("NEW USER CREATED : " + user.getLogin());
         }
@@ -87,7 +89,7 @@ public class RegistrationController {
                 logger.info(e.getMessage());
             }
         }
-
+        mailUtil.sendMailMessage(user);
         request.getSession().setAttribute("loginName", user.getLogin());
         return "redirect:/login";
     }
@@ -100,11 +102,9 @@ public class RegistrationController {
 
         User byName = userService.getByName(userLogin);
         logger.info("BY NAME = "+byName);
-        if (byName == null)
-        {
+        if (byName == null){
             return true;
         }
-
         return false;
        }
 
@@ -112,8 +112,7 @@ public class RegistrationController {
       @RequestMapping(value = "/confirm/{name}/{code}",method = {RequestMethod.GET})
       public String confirmEmail(@NotNull@PathVariable("name")String userName,@NotNull@PathVariable("code") String code){
           User byName = userService.getByName(userName);
-          if (byName != null)
-          {
+          if (byName != null){
               String randomCode = byName.getPassword().substring(7,17).replace(".","").replace("/","");
               if (randomCode.equals(code))
               {
@@ -133,7 +132,7 @@ public class RegistrationController {
           User user = userService.getByName(principal.getName());
           String canonicalPath = user.getPicture().replace(imageUtil.getRootFolder(),"");
           canonicalPath = canonicalPath.replace('\\', '/').replace('\\', '/');
-           user.setPicture(canonicalPath);
+          user.setPicture(canonicalPath);
           model.addAttribute("user",user);
           return "/account";
       }

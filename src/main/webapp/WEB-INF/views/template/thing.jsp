@@ -57,7 +57,7 @@
 
                         <div class="col-lg-12 col-md-12 col-sm-12">
                         	<div class="breadcrumbs">
-                            	<p><a href="${contextPath}/index">Home</a> <i class="icons icon-right-dir"></i> <span><c:forEach var="category" items="${item.categoryList}">${category.type}</c:forEach> </span> <i class="icons icon-right-dir"></i> Item</p>
+                            	<p><a href="${contextPath}/index">Home</a> <i class="icons icon-right-dir"></i> <span>${item.category.type} </span> <i class="icons icon-right-dir"></i> Item</p>
                             </div>
                         </div>
 
@@ -153,9 +153,9 @@
                                             </tr>
                                         </table>
                                         <c:if test="${fn:length(bids) gt 0}">
-                                            <%--<span class="price">${bids.bid}</span>--%>
-                                            <c:forEach items="${bids}" var="bid">
-                                                <span class="price">${bid.bid}</span>
+                                            <c:set var="len" value="${fn:length(bids)}"/>
+                                            <c:forEach items="${bids}" var="b" begin="${len-1}" end="${len}">
+                                                <span class="price" id="latest-price">${b.bid}</span>
                                             </c:forEach>
                                         </c:if>
                                         <c:if test="${fn:length(bids) == 0}">
@@ -178,6 +178,26 @@
                                                 </table>
                                             </form>
                                         </sec:authorize>
+
+                                        <table >
+                                            <h3 class="table">Latest Bids :</h3>
+                                            <tr>
+                                                <td>Date: </td>
+                                                <td>Bidder: </td>
+                                                <td>Bid: </td>
+                                            </tr>
+                                            <c:forEach items="${bids}" var="b">
+                                                <tr>
+                                                    <td><fmt:formatDate type="both" value="${b.bidDate}"/></td>
+                                                    <td>${b.userBidder.login}</td>
+                                                    <td>${b.bid}</td>
+                                                </tr>
+                                            </c:forEach>
+
+
+
+                                        </table>
+
 
                    				        </div>
 
@@ -250,13 +270,10 @@
 
         <script type="text/javascript">
             document.getElementById('bid').oninput   = function () {
-                console.log("BIDDDDDD");
              nonActiveButton();
               hideError();
-             var text = $(this).val();
-             var patt =/^[0-9\s]+$/i;
-//             var patt =/^\d{0,2}(\.\d{0,2}){0,1}$/;
-             if (patt.test(text))
+             var text = this.value;
+             if (checkBid(text))
              {
                  activeButton();
              }
@@ -278,23 +295,31 @@
 
          function activeButton() {
            document.getElementById('addBid').removeAttribute("style");
-             document.getElementById('addBid').removeAttribute("disabled");
+           document.getElementById('addBid').removeAttribute("disabled");
 
          }
 
          function showError() {
-             document.getElementById('error').innerHTML ="<span style='color: #ff0000' id='err'>Invalid Data</span>";
+             document.getElementById('error').innerHTML ="<span style='color: #ff0000' id='err'>Only digit character, and your bid can't be less then price</span>";
          }
          function hideError() {
              var elem = document.getElementById("err");
              var parent = document.getElementById("error");
              if (elem) {
-
-             parent.removeChild(elem);
+                  parent.removeChild(elem);
                }
 
          }
-
+         function checkBid(e) {
+           var latestBid =  document.getElementById('latest-price').textContent;
+           var price = parseFloat(latestBid);
+           var bid = parseFloat(e);
+             if (price < bid){
+                 return true;
+             }else {
+                 return false;
+             }
+         }
         </script>
 
 

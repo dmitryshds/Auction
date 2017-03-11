@@ -34,11 +34,12 @@ public class User implements Serializable {
     private List<Item> itemList = new ArrayList<Item>();
     private List<Bid> bidList = new ArrayList<Bid>();
     private List<Order> orderList = new ArrayList<Order>();
-    private String state=State.ACTIVE.getState();
+    private String state;
     private List<UserProfile> userProfiles = new ArrayList<UserProfile>();
 
     public User() {
         validateEmail = false;
+        state=State.ACTIVE.getState();
     }
 
     @Id
@@ -174,7 +175,7 @@ public class User implements Serializable {
         this.picture = picture;
     }
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "owner")
+    @OneToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER,mappedBy = "owner")
     public List<Item> getItemList() {
         return itemList;
     }
@@ -203,7 +204,7 @@ public class User implements Serializable {
         this.orderList = orderList;
     }
 
-    @Column(name="STATE", nullable=false)
+    @Column(name="STATE")
     public String getState() {
         return state;
     }

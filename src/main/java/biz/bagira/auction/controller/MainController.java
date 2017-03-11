@@ -2,8 +2,6 @@ package biz.bagira.auction.controller;
 
 import biz.bagira.auction.entities.Category;
 import biz.bagira.auction.service.CategoryService;
-import biz.bagira.auction.service.ItemService;
-import biz.bagira.auction.util.ImageUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +29,6 @@ public class MainController {
 
     @Autowired
     private CategoryService categoryService;
-    @Autowired
-    private ItemService itemService;
-    @Autowired
-    private ImageUtil imageUtil;
-
 
     @Autowired
     PersistentTokenBasedRememberMeServices persistentTokenBasedRememberMeServices;
@@ -49,16 +42,12 @@ public class MainController {
     }
 
 
-
-
-
-
-
     @RequestMapping(value = "/accessDenied", method = RequestMethod.GET)
     public String accessDenied() {
 
         return "accessDenied";
     }
+
 
     @RequestMapping(value = "/login", method = {RequestMethod.GET})
     public ModelAndView login(@RequestParam(value = "error", required = false) String error) {
@@ -73,6 +62,7 @@ public class MainController {
 
     }
 
+
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -86,33 +76,6 @@ public class MainController {
         }
         return "redirect:/index";
     }
-
-//    @RequestMapping(value = "/cat/{id}/{startPos}/{quantity}", method = RequestMethod.POST)
-//    public
-//    @ResponseBody
-//    JSONItems getItemsByCategory(@PathVariable("id") Integer categoryId,
-//                                 @PathVariable Integer startPos,
-//                                 @PathVariable Integer quantity) {
-//        List<Item> items = itemService.getLimitItemsByCategoryId(categoryId, startPos, quantity);
-//       if (items.size() > 0) {
-//           for (Item item : items) {
-//               String pictures = item.getPictures();
-//               if (pictures != null) {
-//                   String[] split = pictures.split(";");
-//                   item.setPictures(split[0].replace(imageUtil.getRootFolder(), "").replace('\\', '/').replace('\\', '/'));
-//                   logger.info("PICTURE ITEM = " + split[0].replace(imageUtil.getRootFolder(), "").replace('\\', '/').replace('\\', '/'));
-//               }
-//           }
-//       }
-//        Integer count = itemService.getCountItemsByCategory(categoryId);
-//        logger.info(items.toString());
-//        JSONItems jsonItems = new JSONItems();
-//        jsonItems.setCountItemsByCategory(count);
-//        jsonItems.setItemList(items);
-//        jsonItems.setStart(startPos);
-//        jsonItems.setQuantity(quantity);
-//        return jsonItems;
-//    }
 
 
 

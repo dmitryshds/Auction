@@ -63,7 +63,7 @@ public class ItemController {
         Category category = categoryService.getByName(categoryType);
         Item item = new Item();
         item.setOwner(user);
-        item.addCategory(category);
+        item.setCategory(category);
         item.setName(name);
         item.setDescription(description);
         item.setInitialPrice(initialPrice);
@@ -71,7 +71,6 @@ public class ItemController {
         item.setDateFinish(DateUtil.convert(dateFinish));
         Integer itemId = itemService.create(item);
         item.setIdItems(itemId);
-
 
         for (int i = 0; i < files.length; i++) {
             if (files[i].isEmpty()) {
@@ -122,7 +121,8 @@ public class ItemController {
     }
 
     @RequestMapping(value = "/showItem/{itemId}", method = RequestMethod.GET)
-    public String showItem(@PathVariable("itemId") Integer itemId, ModelMap modelMap){
+    public String showItem(@PathVariable("itemId") Integer itemId,
+                           ModelMap modelMap){
         logger.info("Get Item  Id = "+itemId);
         Item item = itemService.getById(itemId);
         logger.info("ITEM = "+item);
@@ -136,7 +136,6 @@ public class ItemController {
                     pictures.set(i, pictures.get(i).replace(imageUtil.getRootFolder(), "").replace('\\', '/').replace('\\', '/'));
             }
             item.setPictures(pictures);
-
             modelMap.addAttribute("item", item);
         }
         return "showItem";

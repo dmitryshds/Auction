@@ -66,7 +66,7 @@ public class ItemDAO implements AbstractDAO<Item> {
 
     public List<Item> getItemsByCategoryId(Integer categoryId) {
         Session currentSession = sessionFactory.getCurrentSession();
-        SQLQuery query = currentSession.createSQLQuery("select i.* from items AS i, category_item AS ci, category AS c where i.id_items=ci.item_id AND ci.category_id=c.id_category AND c.id_category=:id join fetch i.pictures");
+        SQLQuery query = currentSession.createSQLQuery("select i.* from items AS i  where  i.category_id=:id ");
         query.addEntity(Item.class);
         query.setParameter("id", categoryId);
         return (List<Item>) query.list();
@@ -74,7 +74,7 @@ public class ItemDAO implements AbstractDAO<Item> {
     public List<Item> getLimitItemsByCategoryId(Integer categoryId, Integer from, Integer rows) {
         Session currentSession = sessionFactory.getCurrentSession();
 //        SQLQuery query = currentSession.createSQLQuery("select i.* from items AS i, category_item AS ci, category AS c, pictures AS p  where i.id_items=ci.item_id AND ci.category_id=c.id_category AND i.id_items=p.id_item AND i.id_items = p.id_item AND c.id_category=:id ORDER BY i.ID_ITEMS");
-        SQLQuery query = currentSession.createSQLQuery("select i.* from items AS i, category_item AS ci, category AS c  where i.id_items=ci.item_id AND ci.category_id=c.id_category   AND c.id_category=:id ORDER BY i.ID_ITEMS");
+        SQLQuery query = currentSession.createSQLQuery("select i.* from items AS i where i.category_id=:id ORDER BY i.ID_ITEMS");
         query.addEntity(Item.class);
         query.setParameter("id", categoryId);
         query.setFirstResult(from);
@@ -85,7 +85,7 @@ public class ItemDAO implements AbstractDAO<Item> {
 
     public Integer getCountItemsByCategory(Integer categoryId){
         Session currentSession = sessionFactory.getCurrentSession();
-        SQLQuery query = currentSession.createSQLQuery("select COUNT(ci.ITEM_ID )  from  category_item AS ci where ci.category_id=:id ");
+        SQLQuery query = currentSession.createSQLQuery("select COUNT(i.ID_ITEMS)  from  items AS i where i.category_id=:id ");
         query.setParameter("id", categoryId);
         return ((BigInteger) query.uniqueResult()).intValue();
     }

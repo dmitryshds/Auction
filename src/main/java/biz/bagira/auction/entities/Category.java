@@ -34,24 +34,7 @@ public class Category {
 
 
 
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "category")
-//    public List<Item> getItemList() {
-//        return itemList;
-//    }
-//
-//    public void setItemList(List<Item> itemList) {
-//        this.itemList = itemList;
-//    }
-
-    public void addItem(Item item)
-    {
-
-        itemList.add(item);
-    }
-
-    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
-    @JoinTable(name = "CATEGORY_ITEM", joinColumns = @JoinColumn(name = "CATEGORY_ID"), inverseJoinColumns = @JoinColumn(name = "ITEM_ID"))
-   // @OrderBy("name")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "category")
     public List<Item> getItemList() {
         return itemList;
     }
@@ -59,6 +42,23 @@ public class Category {
     public void setItemList(List<Item> itemList) {
         this.itemList = itemList;
     }
+
+    public void addItem(Item item)
+    {
+
+        itemList.add(item);
+    }
+
+//    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+//    @JoinTable(name = "CATEGORY_ITEM", joinColumns = @JoinColumn(name = "CATEGORY_ID"), inverseJoinColumns = @JoinColumn(name = "ITEM_ID"))
+//   // @OrderBy("name")
+//    public List<Item> getItemList() {
+//        return itemList;
+//    }
+//
+//    public void setItemList(List<Item> itemList) {
+//        this.itemList = itemList;
+//    }
 
     @Override
     public boolean equals(Object o) {

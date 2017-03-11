@@ -6,13 +6,13 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Title</title>
-    </head>
-    <body>
+<%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>--%>
+<%--<html>--%>
+    <%--<head>--%>
+        <%--<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />--%>
+        <%--<title>Title</title>--%>
+    <%--</head>--%>
+    <%--<body>--%>
         			<!-- Footer -->
         			<footer id="footer" class="row">
 
@@ -91,7 +91,7 @@
         							<div class="col-lg-3 col-md-3 col-sm-6 contact-footer-info">
         								<h4>Contact Us</h4>
         								<ul>
-        									<li><i class="icons icon-location"></i> Kiev Ukraine <br>.</li>
+        									<li><i class="icons icon-location"></i> Kiev Ukraine <br>Khreshchatyk str.1</li>
                                             <li><i class="icons icon-phone"></i> +3 123 456 789</li>
         									<li><i class="icons icon-mail-alt"></i><a href="info.auction2017@gmail.com"> info.auction2017@gmail.com</a></li>
         									<li><i class="icons icon-skype"></i> auction2017</li>
@@ -138,5 +138,5 @@
 
 
 
-    </body>
-</html>
+    <%--</body>--%>
+<%--</html>--%>

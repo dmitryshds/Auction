@@ -9,7 +9,7 @@ public enum State {
 	
 	private String state;
 	
-	 State(final String state){
+	 State( String state){
 		this.state = state;
 	}
 	
@@ -27,5 +27,7 @@ public enum State {
 		return this.name();
 	}
 
-
+//	public void setState(String state) {
+//		this.state = state;
+//	}
 }

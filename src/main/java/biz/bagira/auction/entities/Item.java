@@ -29,8 +29,8 @@ public class Item {
     private User owner;
 
     @JsonIgnore
-    private List<Category> categoryList = new ArrayList<Category>();
-    //  private Category category;
+//    private List<Category> categoryList = new ArrayList<Category>();
+    private Category category;
 
     @JsonProperty("name")
     private String name;
@@ -71,7 +71,7 @@ public class Item {
     }
 
     @NotNull
-    @ManyToOne( fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "OWNER_ID")
     public User getOwner() {
         return owner;
@@ -82,8 +82,20 @@ public class Item {
     }
 
 
-//    @ManyToOne( fetch = FetchType.LAZY)
-//    @JoinColumn(name = "CATEGORY_ID")
+    @ManyToOne(cascade = { CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @JoinColumn(name = "CATEGORY_ID")
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+//    @NotNull
+//    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+//    @JoinTable(name = "CATEGORY_ITEM", joinColumns = @JoinColumn(name = "ITEM_ID"), inverseJoinColumns = @JoinColumn(name = "CATEGORY_ID"))
+//    //@OrderBy("type")
 //    public Category getCategory() {
 //        return category;
 //    }
@@ -92,23 +104,11 @@ public class Item {
 //        this.category = category;
 //    }
 
-    @NotNull
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    @JoinTable(name = "CATEGORY_ITEM", joinColumns = @JoinColumn(name = "ITEM_ID"), inverseJoinColumns = @JoinColumn(name = "CATEGORY_ID"))
-    //@OrderBy("type")
-    public List<Category> getCategoryList() {
-        return categoryList;
-    }
-
-    public void setCategoryList(List<Category> categorySet) {
-        this.categoryList = categorySet;
-    }
-
-    public void addCategory(Category category)
-    {
-        categoryList.add(category);
-
-    }
+//    public void addCategory(Category category)
+//    {
+//        categoryList.add(category);
+//
+//    }
     public void addBid(Bid bid) {
         bidSet.add(bid);
     }
@@ -188,6 +188,7 @@ public class Item {
     }
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "item")
+    @OrderBy("BID")
     public Set<Bid> getBidSet() {
         return bidSet;
     }

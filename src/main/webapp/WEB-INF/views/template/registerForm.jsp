@@ -354,7 +354,9 @@
      var emailValid;
      var termsValid;
 
-$('#login').blur(function () {
+//$('#login').on("change",function () {
+//$('section').on('change','#login',function () {
+$('#login').change(function () {
     $('#err-login').hide();
     $('#corr-login').hide();
     var patt =/^[a-z\s]+$/i;
@@ -401,7 +403,7 @@ $.ajax({
     }
 });
 
-$('#password').blur(function () {
+$('#password').on("change",function () {
     $('#err-password').hide();
     $('#corr-password').hide();
     var text = $(this).val();
@@ -415,7 +417,7 @@ $('#password').blur(function () {
     }
 });
 
-$('#confPassword').blur(function () {
+$('#confPassword').on("change",function () {
     $('#err-confPassword').hide();
     $('#corr-confPassword').hide();
     var pass = $('#password').val();
@@ -431,7 +433,7 @@ $('#confPassword').blur(function () {
     }
 });
 
-$('#email').blur(function () {
+$('#email').on("change",function () {
     $('#err-email').hide();
     $('#corr-email').hide();
     var pattern = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;

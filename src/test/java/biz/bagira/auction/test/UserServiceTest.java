@@ -3,6 +3,8 @@ package biz.bagira.auction.test;
 import biz.bagira.auction.configuration.ApplicationConfig;
 import biz.bagira.auction.configuration.HibernateConfiguration;
 import biz.bagira.auction.configuration.SecurityConfiguration;
+import biz.bagira.auction.entities.Item;
+import biz.bagira.auction.entities.User;
 import biz.bagira.auction.service.*;
 import biz.bagira.auction.util.ImageUtil;
 import org.hibernate.SessionFactory;
@@ -12,6 +14,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+
+import java.util.List;
 
 /**
  * Created by Dmitriy on 20.01.2017.
@@ -209,7 +213,14 @@ public class UserServiceTest {
 //            System.out.println(item.getPictures());
 //        }
 //        Integer countItemsByCategory = itemService.getCountItemsByCategory(9);
+//        List<Item> countItemsByCategory2 = itemService.getLimitItemsByCategoryId(9,0,10);
 //        System.out.println(countItemsByCategory);
+//        System.out.println(countItemsByCategory2);
+//        List<Item> itemsByCategory = itemService.getItemsByCategory(9);
+//        System.out.println(itemsByCategory);
+        User user = userService.getById(144);
+        List<Item> itemList = user.getItemList();
+        System.out.println(itemList.size());
 
     }
 

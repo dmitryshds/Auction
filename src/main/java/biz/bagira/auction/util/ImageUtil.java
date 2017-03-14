@@ -34,7 +34,7 @@ public class ImageUtil {
         File file = new File(ROOT_FOLDER);
         if (!file.exists()) {
             if (file.mkdir()) {
-                System.out.println("Directory is created!");
+               logger.info("Directory is created!");
             } else {
                 System.out.println("Failed to create directory!");
             }
@@ -47,10 +47,26 @@ public class ImageUtil {
         System.out.println("File exist = " + file.exists());
         if (!file.exists()) {
             if (file.mkdirs()) {
-                System.out.println("User directory is created!");
+                logger.info("User directory is created!");
 
             } else {
-                System.out.println("Failed to create user directory!");
+                logger.info("Failed to create user directory!");
+
+            }
+        }
+        return file.getAbsolutePath();
+    }
+
+    public String createUserAvatarFolder(String folder) {
+        String userFolder = ROOT_FOLDER + File.separator + folder;
+        File file = new File(userFolder);
+        System.out.println("File exist = " + file.exists());
+        if (!file.exists()) {
+            if (file.mkdirs()) {
+                logger.info("Directory  created!");
+
+            } else {
+                logger.info("Failed to create  directory!");
 
             }
         }
@@ -58,9 +74,11 @@ public class ImageUtil {
     }
 
 
+
     public  String saveAvatar(Integer userId, byte[] resByteArray) {
-        createUserFolder(userId);
-        String pathToUserDir = ROOT_FOLDER + File.separator + userId;
+//        createUserFolder(userId);
+//        String pathToUserDir = ROOT_FOLDER + File.separator + userId;
+        String pathToUserDir =  createUserFolder(userId);
         String fileName = userId + "_avat.jpg";
         writeImage(resByteArray, fileName, pathToUserDir);
         return pathToUserDir + File.separator + fileName;
@@ -91,7 +109,7 @@ public class ImageUtil {
         return resByteArray;
     }
 
-    private  boolean writeImage(byte[] resByteArray, String fileName, String path) {
+    public  boolean writeImage(byte[] resByteArray, String fileName, String path) {
         if (!fileName.endsWith(".jpg")) {
             fileName += ".jpg";
         }

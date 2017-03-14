@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
 
@@ -82,13 +83,25 @@ public class RegistrationController {
 
                 if (ImageUtil.isValidString(pathToFile)) {
                     user.setPicture(pathToFile);
-                    userService.edit(user);
-
                 }
             } catch (IOException e) {
                 logger.info(e.getMessage());
             }
         }
+        if (user.getPicture() == null) {
+            String path = imageUtil.getRootFolder() + File.separator + "adm"+File.separator;
+            String name = "avat.jpg";
+            File avat = new File(path + File.separator + name);
+            if (avat.exists()) {
+                byte[] bytes = imageUtil.downloadPicture(path, name);
+                pathToFile = imageUtil.saveAvatar(userId, bytes);
+
+                if (ImageUtil.isValidString(pathToFile)) {
+                    user.setPicture(pathToFile);
+                }
+            }
+        }
+        userService.edit(user);
         mailUtil.sendMailMessage(user);
         request.getSession().setAttribute("loginName", user.getLogin());
         return "redirect:/login";
@@ -96,45 +109,49 @@ public class RegistrationController {
 
 
     @RequestMapping(value = "/userlogin/{login}", method = RequestMethod.POST)
-       public
-       @ResponseBody
-        Boolean getItemsByCategory(@PathVariable("login") String userLogin){
+    public
+    @ResponseBody
+    Boolean getItemsByCategory(@PathVariable("login") String userLogin) {
 
         User byName = userService.getByName(userLogin);
-        logger.info("BY NAME = "+byName);
-        if (byName == null){
+        logger.info("BY NAME = " + byName);
+        if (byName == null) {
             return true;
         }
         return false;
-       }
+    }
 
 
-      @RequestMapping(value = "/confirm/{name}/{code}",method = {RequestMethod.GET})
-      public String confirmEmail(@NotNull@PathVariable("name")String userName,@NotNull@PathVariable("code") String code){
-          User byName = userService.getByName(userName);
-          if (byName != null){
-              String randomCode = byName.getPassword().substring(7,17).replace(".","").replace("/","");
-              if (randomCode.equals(code))
-              {
-                  byName.setValidateEmail(true);
-                  userService.edit(byName);
-                  logger.info("confirmEmail SUCCESS");
-                  return "redirect:/index";
-              }
+    @RequestMapping(value = "/confirm/{name}/{code}", method = {RequestMethod.GET})
+    public String confirmEmail(@NotNull @PathVariable("name") String
+                                       userName, @NotNull @PathVariable("code") String code) {
+        User byName = userService.getByName(userName);
+        if (byName != null) {
+            String randomCode = byName.getPassword().substring(7, 17).replace(".", "").replace("/", "");
+            if (randomCode.equals(code)) {
+                byName.setValidateEmail(true);
+                userService.edit(byName);
+                logger.info("confirmEmail SUCCESS");
+                return "redirect:/index";
+            }
 
-          }
-              logger.info("confirmEmail FAIL");
-          return "error";
-      }
+        }
+        logger.info("confirmEmail FAIL");
+        return "error";
+    }
 
-      @RequestMapping(value = "/account", method = RequestMethod.GET)
-      public String myAccount (ModelMap model, Principal principal){
-          User user = userService.getByName(principal.getName());
-          String canonicalPath = user.getPicture().replace(imageUtil.getRootFolder(),"");
-          canonicalPath = canonicalPath.replace('\\', '/').replace('\\', '/');
-          user.setPicture(canonicalPath);
-          model.addAttribute("user",user);
-          return "/account";
-      }
+    @RequestMapping(value = "/account", method = RequestMethod.GET)
+    public String myAccount(ModelMap model, Principal principal) {
+        User user = userService.getByName(principal.getName());
+        String canonicalPath = user.getPicture();
+        if (canonicalPath != null) {
+            canonicalPath = canonicalPath.replace(imageUtil.getRootFolder(), "");
+            canonicalPath = canonicalPath.replace('\\', '/').replace('\\', '/');
+            user.setPicture(canonicalPath);
+        }
+        model.addAttribute("user", user);
+        return "account";
+    }
 
 }
+

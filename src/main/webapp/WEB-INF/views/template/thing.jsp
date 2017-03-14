@@ -159,7 +159,7 @@
                                             </c:forEach>
                                         </c:if>
                                         <c:if test="${fn:length(bids) == 0}">
-                                            <span class="price">${item.initialPrice}</span>
+                                            <span class="price" id="latest-price">${item.initialPrice}</span>
                                         </c:if>
 
                                         <sec:authorize access="isAuthenticated()">
@@ -217,9 +217,9 @@
 
         <%--<script src="${zoom4}"></script>--%>
         <script type="text/javascript" src="${zoom4}">
-            $('bid').click(function () {
-                   console.log("CLICK JQUERY");
-            });
+//            $('bid').click(function () {
+//                   console.log("CLICK JQUERY");
+//            });
 
         </script>
         <script src="${zoom5}"></script>
@@ -312,6 +312,11 @@
          }
          function checkBid(e) {
            var latestBid =  document.getElementById('latest-price').textContent;
+//           var latestBid =  document.getElementById('latest-price');
+//            latestBid =  latestBid.value;
+//           var firstBid =  document.getElementById('first-price').textContent;
+             console.log("latestBid = "+latestBid);
+//             console.log("firstBid = "+firstBid);
            var price = parseFloat(latestBid);
            var bid = parseFloat(e);
              if (price < bid){

@@ -32,7 +32,7 @@ public class Bid implements Comparator<Bid>{
         this.idBid = idBid;
     }
 
-    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST},fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST},fetch = FetchType.EAGER)
     @JoinColumn(name = "ITEM_ID")
     public Item getItem() {
         return item;
@@ -42,7 +42,7 @@ public class Bid implements Comparator<Bid>{
         this.item = item;
     }
 
-    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST},fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST},fetch = FetchType.EAGER)
     @JoinColumn(name = "USER_ID")
     public User getUserBidder() {
         return userBidder;

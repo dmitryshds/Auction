@@ -6,8 +6,9 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Dmitriy on 23.01.2017.
@@ -31,9 +32,9 @@ public class User implements Serializable {
     private String homeNumber;
     private Boolean validateEmail;
     private String picture;
-    private List<Item> itemList = new ArrayList<Item>();
-    private List<Bid> bidList = new ArrayList<Bid>();
-    private List<Order> orderList = new ArrayList<Order>();
+    private Set<Item> itemList = new LinkedHashSet<>();
+    private Set<Bid> bidList = new LinkedHashSet<Bid>();
+    private Set<Order> orderList = new LinkedHashSet<Order>();
     private String state;
     private List<UserProfile> userProfiles = new ArrayList<UserProfile>();
 
@@ -176,31 +177,31 @@ public class User implements Serializable {
     }
 
     @OneToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER,mappedBy = "owner")
-    public List<Item> getItemList() {
+    public Set<Item> getItemList() {
         return itemList;
     }
 
-    public void setItemList(List<Item> itemList) {
+    public void setItemList(Set<Item> itemList) {
         this.itemList = itemList;
     }
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "userBidder")
-    public List<Bid> getBidList() {
+    public Set<Bid> getBidList() {
         return bidList;
     }
 
-    public void setBidList(List<Bid> bidList) {
+    public void setBidList(Set<Bid> bidList) {
         this.bidList = bidList;
     }
 
 
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "winner")
-    public List<Order> getOrderList() {
+    public Set<Order> getOrderList() {
         return orderList;
     }
 
-    public void setOrderList(List<Order> orderList) {
+    public void setOrderList(Set<Order> orderList) {
         this.orderList = orderList;
     }
 

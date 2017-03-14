@@ -54,6 +54,7 @@ public class MainController {
 
         ModelAndView model = new ModelAndView();
         if (error != null) {
+
             model.addObject("error", "Invalid username or password!");
         }
         model.setViewName("login");

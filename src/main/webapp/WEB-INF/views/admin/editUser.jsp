@@ -10,6 +10,8 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <html class="no-js">
 
@@ -58,11 +60,11 @@
                 <div class="span2" id="sidebar" >
                     <ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
                         <li class="active">
-                          <a href="index.html"><i class="icon-chevron-right"></i> Dashboard</a>
+                          <a href="/index"><i class="icon-chevron-right"></i> Main Auction</a>
                         </li>
 
                         <li>
-                            <a href="form.html"><i class="icon-chevron-right"></i> Forms</a>
+                            <a href="/admin"><i class="icon-chevron-right"></i> Forms</a>
                         </li>
                         <li>
                             <a href="tables.html"><i class="icon-chevron-right"></i> Tables</a>
@@ -112,7 +114,7 @@
                            </div>
                            <div class="block-content collapse in">
                                <div class="span12">
-                            <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="example">
+                            <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="user-table">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -196,9 +198,9 @@
                   </div>
                   <div class="block-content collapse in">
                       <div class="span12">
-                   <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="example">
+                   <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="item-table">
                        <thead>
-                           <tr>
+                           <tr style="font-size: small;">
                                <th>ID</th>
                                <th>Category</th>
                                <th>Name</th>
@@ -211,25 +213,45 @@
                                <th>Pictures</th>
                                <th>Pictures</th>
                                <th>Pictures</th>
-
+                               <th>State</th>
+                               <th>Action</th>
 
                            </tr>
                        </thead>
                        <tbody>
                            <c:forEach var="item" items="${user.itemList}">
-                           <tr class="odd gradeX">
+                           <tr class="odd gradeX" style="font-size: small;">
                                <td>${item.idItems}</td>
                                <td>${item.category.type}</td>
                                <td>${item.name}</td>
                                <td>${item.description}</td>
                                <td>${item.initialPrice}</td>
                                <td>${item.buynowPrice}</td>
-                               <td>${item.dateStart}</td>
-                               <td>${item.dateFinish}</td>
+                               <td><fmt:formatDate type="both" value="${item.dateStart}"/></td>
+                               <td><fmt:formatDate type="both" value="${item.dateFinish}"/></td>
                                <c:forEach var="pic" items="${item.pictures}">
-                               <td>${pic}</td>
+                               <td><img src="/image${pic}" style="width: 50px; height: 50px;"/></td>
                                </c:forEach>
-                               <%--&lt;%&ndash;<td></td>&ndash;%&gt;--%>
+                               <c:set var="len" value="${fn:length(item.pictures)}"/>
+                               <c:if test="${len < 4}">
+                                  <c:forEach begin="${4-len}" end="3" step="1">
+                                      <td></td>
+                                  </c:forEach>
+                               </c:if>
+                               <td>${item.state}</td>
+                               <td>
+                                   <form   method="post" action="/admin/editItem" >
+                                   <select  name="itemTitles" style="color: crimson">
+                                 <option>ACTIVE</option>
+                                 <option>INACTIVE</option>
+                                 <option>LOCKED</option>
+                                 <option>DELETED</option>
+                                 </select>
+                                  <input class="big" type="submit" value="Save changes" style="background: #45b0e3" />
+                                   <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                   <input type="hidden" name="idItems" value="${item.idItems}" />
+                                   </form>
+                               </td>
 
                            </tr>
                            </c:forEach>

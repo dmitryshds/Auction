@@ -27,7 +27,5 @@ public enum State {
 		return this.name();
 	}
 
-//	public void setState(String state) {
-//		this.state = state;
-//	}
+
 }

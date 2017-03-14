@@ -78,7 +78,7 @@ public class ItemController {
             }
             try {
                 String pathToImage = imageUtil.saveImage(user.getIdUsers(), itemId, files[i].getBytes(), i);
-                item.addPicture(pathToImage);
+                item.addPicture(pathToImage.replace(imageUtil.getRootFolder(),"").replace('\\', '/').replace('\\', '/'));
             } catch (IOException e) {
                 logger.info(e.getMessage());
             }
@@ -105,7 +105,7 @@ public class ItemController {
                 List<String> pictures = item.getPictures();
                 List<String> newPict = new ArrayList<>();
                 if (!pictures.isEmpty()) {
-                    newPict.add(pictures.get(0).replace(imageUtil.getRootFolder(), "").replace('\\', '/').replace('\\', '/'));
+                    newPict.add(pictures.get(0));
                     item.setPictures(newPict);
                 }
             }
@@ -125,19 +125,23 @@ public class ItemController {
                            ModelMap modelMap){
         logger.info("Get Item  Id = "+itemId);
         Item item = itemService.getById(itemId);
+
         logger.info("ITEM = "+item);
+        logger.info("ITEM pic = "+item.getPictures().toString());
 
-        if (item != null) {
-
-            List<String> pictures = item.getPictures();
-            logger.info("PICTURES = " + pictures);
-            if (!pictures.isEmpty() || pictures != null) {
-                for (int i = 0; i < pictures.size(); i++)
-                    pictures.set(i, pictures.get(i).replace(imageUtil.getRootFolder(), "").replace('\\', '/').replace('\\', '/'));
-            }
-            item.setPictures(pictures);
-            modelMap.addAttribute("item", item);
-        }
+//        if (item != null) {
+//
+//            List<String> pictures = item.getPictures();
+//            logger.info("PICTURES = " + pictures);
+//            if (!pictures.isEmpty() || pictures != null) {
+//                for (int i = 0; i < pictures.size(); i++)
+////                    pictures.set(i, pictures.get(i).replace(imageUtil.getRootFolder(), "").replace('\\', '/').replace('\\', '/'));
+//                    pictures.set(i, pictures.get(i));
+//            }
+//            item.setPictures(pictures);
+//
+//        }
+        modelMap.addAttribute("item", item);
         return "showItem";
     }
 

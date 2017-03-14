@@ -38,7 +38,9 @@
                     <div class="nav-collapse collapse">
                         <ul class="nav pull-right">
                             <li class="dropdown">
-                                <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-user"></i> Admin <i class="caret"></i>
+                                <i>Hello <sec:authentication property="principal.username" />
+                                <a href="${contextPath}/logout" role="button" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-user"></i> Log out<i class="caret"></i> </i>
+                                <%--<a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-user"></i> Admin account<i class="caret"></i>--%>
 
                                 </a>
 
@@ -57,14 +59,17 @@
                 <div class="span2" id="sidebar" >
                     <ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
                         <li class="active">
-                          <a href="index.html"><i class="icon-chevron-right"></i> Dashboard</a>
+                          <a href="/index"><i class="icon-chevron-right"></i> Main Auction</a>
                         </li>
 
                         <li>
-                            <a href="form.html"><i class="icon-chevron-right"></i> Forms</a>
+                            <a href="/admin"><i class="icon-chevron-right"></i> Forms</a>
                         </li>
                         <li>
-                            <a href="tables.html"><i class="icon-chevron-right"></i> Tables</a>
+                            <a href="#"><i class="icon-chevron-right"></i> Categories</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="icon-chevron-right"></i> User avatar</a>
                         </li>
 
                         <li>
@@ -103,6 +108,8 @@
                     </div>
 
                     <c:import url="userTables.jsp"/>
+                    <c:import url="categoryTables.jsp"/>
+                    <c:import url="userAvatar.jsp"/>
 
 
                     </div>

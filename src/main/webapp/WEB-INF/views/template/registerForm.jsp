@@ -359,7 +359,7 @@
 $('#login').change(function () {
     $('#err-login').hide();
     $('#corr-login').hide();
-    var patt =/^[a-z\s]+$/i;
+    var patt =/^[a-z0-9\s]+$/i;
     console.log("blur login");
     var text = $(this).val();
     if(text.length < 2)

@@ -53,11 +53,17 @@ public class Item {
     @JsonProperty("dateFinish")
     private Timestamp dateFinish;
 
+    private String state;
+
     @JsonIgnore
     private Set<Bid> bidSet = new ConcurrentSkipListSet<Bid>();
 
     @JsonIgnore
     private Order order;
+
+    public Item() {
+        state = State.ACTIVE.getState();
+    }
 
     @Id
     @Column(name = "ID_ITEMS")
@@ -205,6 +211,14 @@ public class Item {
 
     public void setOrder(Order order) {
         this.order = order;
+    }
+    @Column(name="STATE")
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     @Override

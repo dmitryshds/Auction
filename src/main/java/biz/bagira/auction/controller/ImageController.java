@@ -27,10 +27,19 @@ public class ImageController {
 
     @RequestMapping(value = "/image/{userId}/{imageId}", method = RequestMethod.GET)
     @ResponseBody
-    public byte[] helloWorld(@PathVariable Integer userId, @PathVariable String imageId) {
+    public byte[] dispalayImage(@PathVariable Integer userId, @PathVariable String imageId) {
 
         String fullPath = imageUtil.getRootFolder()+ File.separator+userId+File.separator+imageId+".jpg";
         logger.info("ImageController fullPath = "+fullPath);
         return imageUtil.downloadPicture(fullPath);
     }
+    @RequestMapping(value = "/show/{folder}/{pic}", method = RequestMethod.GET)
+    @ResponseBody
+    public byte[] dispalayUserAvatar(@PathVariable String folder, @PathVariable String pic) {
+
+        String fullPath = imageUtil.getRootFolder()+ File.separator+folder+File.separator+pic+".jpg";
+        logger.info("ImageController fullPath = "+fullPath);
+        return imageUtil.downloadPicture(fullPath);
+    }
+
 }

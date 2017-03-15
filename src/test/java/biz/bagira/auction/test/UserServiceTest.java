@@ -5,6 +5,7 @@ import biz.bagira.auction.configuration.HibernateConfiguration;
 import biz.bagira.auction.configuration.SecurityConfiguration;
 import biz.bagira.auction.service.*;
 import biz.bagira.auction.util.ImageUtil;
+import biz.bagira.auction.util.MailUtil;
 import org.hibernate.SessionFactory;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,8 @@ public class UserServiceTest {
 //    @Autowired
 //    @Qualifier("tokenDAO")
 //    TokenDAO tokenDAO;
+    @Autowired
+    MailUtil mailUtil;
 
     @Autowired
      private SessionFactory sessionFactory;
@@ -76,8 +79,12 @@ public class UserServiceTest {
 //
 //        System.out.println(avat.getAbsolutePath());
 //        System.out.println(avat.exists());
-
-
+//          String to ="0675009780@ukr.net";
+//          String subject ="Hello";
+//          File file = new File("C:\\Users\\Dmitriy\\Pictures\\Simpson.jpg");
+//
+////          mailUtil.sendMessageWithAttach(to,subject,subject,file);
+//        mailUtil.sendMail(to,subject);
     }
 
 }

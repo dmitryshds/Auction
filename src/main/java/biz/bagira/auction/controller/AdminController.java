@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Dmitriy on 09.03.2017.
@@ -140,4 +141,33 @@ public class AdminController {
         return "redirect: /admin";
     }
 
+    @RequestMapping(value = "/admin/sendMessage", method = RequestMethod.POST)
+    public String sendMessage(@RequestParam("address")String address,
+                              @RequestParam("theme") String theme,
+                              @RequestParam("select")String select,
+                              @RequestParam("textarea")String textarea,
+                              @RequestParam("file") MultipartFile file){
+        logger.info("Multifile = "+file);
+
+
+               if(select.equals("ALL_USERS")){
+                   Set<User> all = userService.getAll();
+                   for (User user : all) {
+                       mailUtil.sendMessageWithAttach(user.getEmail(),textarea,user.getTitle().getTitle(),user.getLogin(),theme,file);
+                   }
+               }
+               if (select.equals("ITEM_OWNERS"))
+               {
+                   Set<Item> all = itemService.getAll();
+                   for (Item item : all) {
+                       User owner = item.getOwner();
+                       mailUtil.sendMessageWithAttach(owner.getEmail(),textarea,owner.getTitle().getTitle(),owner.getLogin(),theme,file);
+
+                   }
+               }
+
+                  mailUtil.sendMessageWithAttach(address,textarea,"MR(MS)","USER",theme,file);
+
+       return "redirect: /admin";
+    }
 }

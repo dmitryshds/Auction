@@ -102,7 +102,7 @@ public class RegistrationController {
             }
         }
         userService.edit(user);
-        mailUtil.sendMailMessage(user);
+        mailUtil.sendConfirmMessage(user);
         request.getSession().setAttribute("loginName", user.getLogin());
         return "redirect:/login";
     }

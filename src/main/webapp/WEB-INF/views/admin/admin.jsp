@@ -40,7 +40,6 @@
                             <li class="dropdown">
                                 <i>Hello <sec:authentication property="principal.username" />
                                 <a href="${contextPath}/logout" role="button" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-user"></i> Log out<i class="caret"></i> </i>
-                                <%--<a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-user"></i> Admin account<i class="caret"></i>--%>
 
                                 </a>
 
@@ -110,6 +109,7 @@
                     <c:import url="userTables.jsp"/>
                     <c:import url="categoryTables.jsp"/>
                     <c:import url="userAvatar.jsp"/>
+                    <c:import url="userMessages.jsp"/>
 
 
                     </div>

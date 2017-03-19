@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<users id_users="1"	login="login1" password="$2a$06$Gj6oiYDTmsLX2S9rnlhM.uCoazM2aZhPsmQPTZLR9ZeI4FF3ZVg6m" first_name="FirstName1" last_name="LastName1" email="123@gmail.com" validate_email="0"/>
+	<users id_users="2"	login="login2" password="$2a$06$Gj6oiYDTmsLX2S9rnlhM.uCoazM2aZhPsmQPTZLR9ZeI4FF3ZVg6m" first_name="FirstName2" last_name="LastName2" email="12345@gmail.com" validate_email="1"/>
+</dataset>

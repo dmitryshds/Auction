@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "ORDERS")
 public class Order {
-    private int orderId;
+    private Integer orderId;
     private Boolean paid;
     private User winner;
     private Item item;
@@ -20,11 +20,11 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ORDER_ID")
-    public int getOrderId() {
+    public Integer getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(int orderId) {
+    public void setOrderId(Integer orderId) {
         this.orderId = orderId;
     }
 

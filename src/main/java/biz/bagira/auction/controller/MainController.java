@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,12 +34,19 @@ public class MainController {
     @Autowired
     PersistentTokenBasedRememberMeServices persistentTokenBasedRememberMeServices;
 
-    @RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
-    public ModelAndView index() {
+//    @RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
+//    public ModelAndView index() {
+//        List<Category> categories = categoryService.getAll();
+//        ModelAndView modelAndView = new ModelAndView("index");
+//        modelAndView.addObject("categories", categories);
+//        return modelAndView;
+//    }
+ @RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
+    public String index(Model model) {
         List<Category> categories = categoryService.getAll();
-        ModelAndView modelAndView = new ModelAndView("index");
-        modelAndView.addObject("categories", categories);
-        return modelAndView;
+
+        model.addAttribute("categories", categories);
+        return "index";
     }
 
 

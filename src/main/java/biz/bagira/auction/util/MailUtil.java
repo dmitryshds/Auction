@@ -1,8 +1,11 @@
 package biz.bagira.auction.util;
 
+import biz.bagira.auction.entities.Bid;
+import biz.bagira.auction.entities.Item;
 import biz.bagira.auction.entities.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.activation.DataHandler;
@@ -18,6 +21,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Properties;
+import java.util.TreeSet;
 
 /**
  * Created by Dmitriy on 27.02.2017.
@@ -63,9 +67,6 @@ public class MailUtil {
     public void sendConfirmMessage(User user)
     {
 
-//         logger.info("Props : "+props.getProperty("app.host"));
-//         logger.info("Props : "+props.getProperty("mail.from"));
-//         logger.info("Props : "+props.getProperty("mail.password"));
         String randomCode = user.getPassword().substring(7, 17).replace(".","").replace("/","");
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("<div><i>Dear ")
@@ -84,7 +85,7 @@ public class MailUtil {
         sendMail(user.getEmail(), stringBuffer.toString());
 
     }
-
+    @Async
     public void sendMessageWithAttach(String mailTo, String message,String userTitle, String userName, String subject, MultipartFile file) {
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
@@ -138,5 +139,22 @@ public class MailUtil {
         }
 
         return convFile;
+    }
+
+    public  User sendMessagesWhenItemsDateOff(Item item){
+
+        User owner = item.getOwner();
+        String ownerEmail = owner.getEmail();
+        TreeSet<Bid> bidSet = new TreeSet<Bid>(item.getBidSet());
+        Bid winner = bidSet.last();
+        User userBidder = winner.getUserBidder();
+        String winnerEmail = userBidder.getEmail();
+
+        logger.info("Biggest Bid = "+bidSet.last());
+        String messageToBidder = "Congratulations, your bet "+winner.getBid() +" wins on item = "+item.getName();
+        String messageToOwner = "Congratulations, your bidding is over, winner: "+userBidder.getLogin()+" bid : "+winner.getBid();
+        sendMail(ownerEmail,messageToOwner);
+        sendMail(winnerEmail,messageToBidder);
+        return userBidder;
     }
 }

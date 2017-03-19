@@ -10,7 +10,7 @@ import java.util.Comparator;
  */
 @Entity
 @Table(name = "BIDS")
-public class Bid implements Comparator<Bid>{
+public class Bid implements Comparable{
     private Integer idBid;
     private Item item;
     private User userBidder;
@@ -74,12 +74,6 @@ public class Bid implements Comparator<Bid>{
     }
 
 
-
-    @Override
-    public int compare(Bid o1, Bid o2) {
-        return o1.getBid().compareTo(o2.getBid());
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -99,5 +93,21 @@ public class Bid implements Comparator<Bid>{
         result = 31 * result + (bid != null ? bid.hashCode() : 0);
         result = 31 * result + (bidDate != null ? bidDate.hashCode() : 0);
         return result;
+    }
+
+
+
+    @Override
+    public int compareTo(Object o) {
+        Bid bid = (Bid) o;
+
+        return this.getBid().compareTo(bid.getBid());
+    }
+
+    @Override
+    public String toString() {
+        return "Bid{" +
+                "bid=" + bid +
+                '}';
     }
 }

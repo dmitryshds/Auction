@@ -26,7 +26,7 @@ public class ImageUtil {
     }
 
     public static boolean isValidString(String s) {
-        return s != null || !s.trim().equals("");
+        return s != null && !s.trim().equals("");
     }
 
 

@@ -1,5 +1,6 @@
 package biz.bagira.auction.configuration;
 
+import biz.bagira.auction.service.SheduledTasks;
 import biz.bagira.auction.util.ImageUtil;
 import biz.bagira.auction.util.MailUtil;
 import biz.bagira.auction.util.RoleToUserProfileConverter;
@@ -11,6 +12,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.LocaleResolver;
@@ -37,6 +39,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableWebMvc
+@EnableScheduling
 @ComponentScan(basePackages = "biz.bagira.auction")
 @PropertySource(value = "classpath:application.properties")
 public class ApplicationConfig extends WebMvcConfigurerAdapter {
@@ -165,8 +168,9 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter {
         return new MailUtil(properties());
     }
 
-//    @Bean
-//    RequestDumperFilter requestDumper() {
-//        return new RequestDumperFilter();
-//    }
+    @Bean
+    public SheduledTasks sheduller(){
+        return new SheduledTasks();
+    }
+
 }

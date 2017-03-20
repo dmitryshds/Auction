@@ -46,8 +46,23 @@ public class AdminController {
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String adminPage(ModelMap model){
       model.addAttribute("users",userService.getAll());
-      model.addAttribute("category",categoryService.getAll());
       return "/admin/admin";
+    }
+
+    @RequestMapping(value = "/admin/category", method = RequestMethod.GET)
+    public String adminCategory(ModelMap model) {
+        model.addAttribute("category", categoryService.getAll());
+        return "/admin/adminCategories";
+    }
+
+    @RequestMapping(value = "/admin/avat", method = RequestMethod.GET)
+    public String adminAvatar(ModelMap model) {
+        return "/admin/adminAvatar";
+    }
+
+    @RequestMapping(value = "/admin/messages", method = RequestMethod.GET)
+    public String adminMessages(ModelMap model) {
+        return "/admin/adminMessages";
     }
 
 
@@ -56,7 +71,7 @@ public class AdminController {
 
 
         modelMap.addAttribute("user",userService.getById(idUsers));
-        return "/admin/editUser";
+        return "/admin/adminEditUser";
     }
 
     @RequestMapping(value = "/admin/editUser", method = RequestMethod.POST)
@@ -106,9 +121,7 @@ public class AdminController {
         category.setType(editCategory);
         categoryService.edit(category);
 
-//        modelMap.addAttribute("users",userService.getAll());
-//        modelMap.addAttribute("category",categoryService.getAll());
-        return "redirect: /admin";
+        return "redirect: /admin/category";
     }
 
     @RequestMapping(value = "/admin/newCategory", method = RequestMethod.POST)
@@ -116,7 +129,7 @@ public class AdminController {
         Category category = new Category();
         category.setType(newCategory);
         categoryService.create(category);
-        return "redirect: /admin";
+        return "redirect: /admin/category";
     }
 
     @RequestMapping(value = "/admin/userAvatar", method = RequestMethod.POST)
@@ -138,7 +151,7 @@ public class AdminController {
             }
         }
 
-        return "redirect: /admin";
+        return "redirect: /admin/avat";
     }
 
     @RequestMapping(value = "/admin/sendMessage", method = RequestMethod.POST)
@@ -147,13 +160,14 @@ public class AdminController {
                               @RequestParam("select")String select,
                               @RequestParam("textarea")String textarea,
                               @RequestParam("file") MultipartFile file){
-        logger.info("Multifile = "+file);
-
 
                if(select.equals("ALL_USERS")){
                    Set<User> all = userService.getAll();
                    for (User user : all) {
-                       mailUtil.sendMessageWithAttach(user.getEmail(),textarea,user.getTitle().getTitle(),user.getLogin(),theme,file);
+                       if (user.getValidateEmail()) {
+                           logger.info("SEND MESSAGES FOR ALL_USERS " + user);
+                           mailUtil.sendMessageWithAttach(user.getEmail(), textarea, user.getTitle().getTitle(), user.getLogin(), theme, file);
+                       }
                    }
                }
                if (select.equals("ITEM_OWNERS"))
@@ -161,13 +175,17 @@ public class AdminController {
                    Set<Item> all = itemService.getAll();
                    for (Item item : all) {
                        User owner = item.getOwner();
-                       mailUtil.sendMessageWithAttach(owner.getEmail(),textarea,owner.getTitle().getTitle(),owner.getLogin(),theme,file);
+                       if (owner.getValidateEmail()) {
+                           mailUtil.sendMessageWithAttach(owner.getEmail(), textarea, owner.getTitle().getTitle(), owner.getLogin(), theme, file);
+                       }
 
                    }
                }
 
                   mailUtil.sendMessageWithAttach(address,textarea,"MR(MS)","USER",theme,file);
 
-       return "redirect: /admin";
+        return "redirect: /admin/messages";
+
+
     }
 }

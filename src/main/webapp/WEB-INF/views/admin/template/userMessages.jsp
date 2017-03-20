@@ -9,7 +9,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<fmt:requestEncoding value="utf-8"/>
+
+<div class="span9" id="content">
+<div class="row-fluid">
+
+    </div>
+<div class="row-fluid">
+    <!-- block -->
+
+</div>
 
 <div class="row-fluid">
                        <!-- block -->
@@ -23,7 +34,7 @@
                                      <fieldset>
                                        <%--<legend></legend>--%>
 
-                                         <form method="post" action="/admin/sendMessage" enctype="multipart/form-data">
+                                         <form method="post" action="/admin/sendMessage" enctype="multipart/form-data" accept-charset="UTF-8">
 
                                        <div class="control-group">
                                          <label class="control-label" for="typeahead">Enter e-mail address</label>
@@ -78,5 +89,8 @@
                            </div>
                        </div>
                        <!-- /block -->
+                   </div>
+                   </div>
+                   </div>
                    </div>
 

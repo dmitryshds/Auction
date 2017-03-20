@@ -19,6 +19,7 @@ import javax.mail.internet.MimeMultipart;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.Properties;
 import java.util.TreeSet;
@@ -37,8 +38,8 @@ public class MailUtil {
         this.props = props;
     }
 
-
-    public void sendMail(String mailTo, String message) {
+    @Async
+    public void sendMail(String mailTo, String message, String subject) {
 
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
@@ -53,17 +54,17 @@ public class MailUtil {
             msg.setFrom(new InternetAddress(mailTo));
             msg.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(mailTo));
-            msg.setSubject("Confirm your E-mail");
-            msg.setText(message, "utf-8", "html");
+            msg.setSubject(subject,"UTF-8");
+            msg.setText(message, "UTF-8", "text/html");
 
             Transport.send(msg);
             logger.info("Message sent to: "+mailTo);
 
-        } catch (MessagingException e) {
+        } catch (MessagingException  e) {
             logger.info("Message send fail: " + e.getMessage());
         }
     }
-
+    @Async
     public void sendConfirmMessage(User user)
     {
 
@@ -82,55 +83,65 @@ public class MailUtil {
                 .append(randomCode)
                 .append("' style='color:blue;'>Please click here</a></div>");
         logger.info(stringBuffer.toString());
-        sendMail(user.getEmail(), stringBuffer.toString());
+        sendMail(user.getEmail(), stringBuffer.toString(),"Confirm your E-mail");
 
     }
     @Async
-    public void sendMessageWithAttach(String mailTo, String message,String userTitle, String userName, String subject, MultipartFile file) {
+    public void sendMessageWithAttach(String mailTo, String message, String userTitle, String userName, String subject, MultipartFile file) {
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication(props.getProperty("mail.from"), props.getProperty("mail.password"));
                     }
                 });
-             message = "Dear "+userTitle+" "+userName+"! "+message;
-        try {
 
+            message = "Dear "+userTitle+" "+userName+"! "+message;
+
+        try {
+            message = new String(message.getBytes("ISO-8859-1"),"UTF-8");
+            subject = new String(subject.getBytes("ISO-8859-1"),"UTF-8");
             MimeMessage msg = new MimeMessage(session);
             msg.setFrom(new InternetAddress(mailTo));
             msg.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(mailTo));
-            msg.setSubject(subject);
+            msg.setHeader("Content-Type", "text/plain;charset=utf-8");
+            msg.setSubject(subject,"UTF-8");
             msg.setSentDate(new Date());
             Multipart multipart = new MimeMultipart();
+
             MimeBodyPart messageBodyPart = new MimeBodyPart();
-            messageBodyPart.setContent(message, "text/html");
+            messageBodyPart.setContent(message,"text/plain; charset=\"UTF-8\"");
+
             multipart.addBodyPart(messageBodyPart);
 
             if(!file.isEmpty()) {
                 MimeBodyPart attachPart = new MimeBodyPart();
+                attachPart.setHeader("Content-Type", "text/plain;charset=utf-8");
                 DataSource source = new FileDataSource(convert(file));
 
                 attachPart.setDataHandler(new DataHandler(source));
-                attachPart.setFileName(file.getOriginalFilename());
+                attachPart.setFileName(new String(file.getOriginalFilename().getBytes("windows-1251"),"UTF-8"));
+
                 multipart.addBodyPart(attachPart);
             }
 
-            msg.setContent(multipart);
+            msg.setContent(multipart,"text/plain; charset=\"UTF-8\"");
+
             logger.info("Sending message to "+mailTo);
 
             Transport.send(msg);
             logger.info("Done");
 
-        } catch (MessagingException e) {
+        } catch (MessagingException | UnsupportedEncodingException e) {
             logger.info(e.getMessage());
         }
     }
 
-    private File convert(MultipartFile file) {
-        File convFile = new File(file.getOriginalFilename());
+    private File convert(MultipartFile file) throws UnsupportedEncodingException {
+        File convFile = new File(new String(file.getOriginalFilename().getBytes("windows-1251"),"UTF-8"));
+        logger.info("FILE NAME "+convFile.getName());
         try {
-            convFile.createNewFile();
+
             FileOutputStream fos = new FileOutputStream(convFile);
             fos.write(file.getBytes());
             fos.close();
@@ -151,10 +162,10 @@ public class MailUtil {
         String winnerEmail = userBidder.getEmail();
 
         logger.info("Biggest Bid = "+bidSet.last());
-        String messageToBidder = "Congratulations, your bet "+winner.getBid() +" wins on item = "+item.getName();
+        String messageToBidder = "Congratulations, your bet "+winner.getBid() +" wins on auction item = "+item.getName();
         String messageToOwner = "Congratulations, your bidding is over, winner: "+userBidder.getLogin()+" bid : "+winner.getBid();
-        sendMail(ownerEmail,messageToOwner);
-        sendMail(winnerEmail,messageToBidder);
+        sendMail(ownerEmail,messageToOwner,"Auction ended");
+        sendMail(winnerEmail,messageToBidder,"You win on auction");
         return userBidder;
     }
 }

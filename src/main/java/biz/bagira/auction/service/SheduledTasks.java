@@ -39,7 +39,7 @@ public class SheduledTasks {
         Timestamp oneDayLeft = new Timestamp(currentDate.getTime() + DAY);
         for (Item item : all) {
             Timestamp dateFinish = item.getDateFinish();
-            if (dateFinish.before(oneDayLeft)) {
+            if (dateFinish.before(oneDayLeft) && item.getState().equals(State.ACTIVE.getState())) {
                 oneDayLeftItems.add(item);
             }
 

@@ -20,6 +20,15 @@
         console.log("NEXT = "+next);
     }
 </script>
+<!--/span-->
+       <div class="span9" id="content">
+           <div class="row-fluid">
+
+            </div>
+           <div class="row-fluid">
+               <!-- block -->
+
+           </div>
 
 			<div class="row-fluid row-width" >
                        <!-- block -->
@@ -76,6 +85,10 @@
                        </div>
                        <!-- /block -->
                    </div>
+           </div>
+
+               </div>
+               </div>
 <%--<spring:url value="/resources/js/jquery-3.1.1.js" var="jqueryJs"/>--%>
      <%--<script src="${jqueryJs}">--%>
         <%--$('.edit').click(function () {--%>

@@ -19,6 +19,14 @@
 
 <script src="${jqueryJs}"></script>
 
+<div class="span9" id="content">
+<div class="row-fluid">
+
+    </div>
+<div class="row-fluid">
+    <!-- block -->
+
+</div>
 <div class="row-fluid row-width">
     <!-- block -->
     <div class="block">
@@ -85,7 +93,7 @@
                                 </form>
                             </td>
                             <td>
-                                <img src="show/adm/avat.jpg">
+                                <img src="/show/adm/avat.jpg">
                             </td>
                         </tr>
 
@@ -96,6 +104,10 @@
     </div>
     <!-- /block -->
 </div>
+</div>
+</div>
+</div>
+
 <script>
 
     var maxFileSize = 2 * 1024 * 1024;

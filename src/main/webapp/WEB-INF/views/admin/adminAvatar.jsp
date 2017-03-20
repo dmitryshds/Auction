@@ -29,17 +29,9 @@
 
     <body>
 
-
                      <c:import url="template/header.jsp"/>
 
-
-
-                    <c:import url="template/userTables.jsp"/>
-                    <%--<c:import url="categoryTables.jsp"/>--%>
-                    <%--<c:import url="userAvatar.jsp"/>--%>
-                    <%--<c:import url="userMessages.jsp"/>--%>
-
-
+                    <c:import url="template/userAvatar.jsp"/>
 
                     <c:import url="template/footer.jsp"/>
 

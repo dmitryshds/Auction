@@ -11,6 +11,16 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
+
+<!--/span-->
+<div class="span9" id="content">
+	<div class="row-fluid">
+
+	</div>
+	<div class="row-fluid">
+		<!-- block -->
+
+	</div>
 			<div class="row-fluid row-width" >
                        <!-- block -->
                        <div class="block">
@@ -64,4 +74,7 @@
                        </div>
                        <!-- /block -->
                    </div>
+</div>
 
+</div>
+</div>

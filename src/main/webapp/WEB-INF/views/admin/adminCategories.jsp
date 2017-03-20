@@ -34,10 +34,8 @@
 
 
 
-                    <c:import url="template/userTables.jsp"/>
-                    <%--<c:import url="categoryTables.jsp"/>--%>
-                    <%--<c:import url="userAvatar.jsp"/>--%>
-                    <%--<c:import url="userMessages.jsp"/>--%>
+                    <c:import url="template/categoryTables.jsp"/>
+
 
 
 

@@ -12,6 +12,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
@@ -22,6 +24,8 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import java.nio.charset.Charset;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Properties;
 
@@ -60,6 +64,7 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter {
         viewResolver.setViewClass(JstlView.class);
         viewResolver.setPrefix("/WEB-INF/views/");
         viewResolver.setSuffix(".jsp");
+        viewResolver.setContentType("text/html; charset=UTF-8");
         registry.viewResolver(viewResolver);
     }
 
@@ -80,16 +85,6 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter {
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(roleToUserProfileConverter);
     }
-
-    /**
-     * Configure MessageSource to lookup any validation/error message in internationalized property files
-     */
-//    @Bean
-//    public MessageSource messageSource() {
-//        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-//        messageSource.setBasename("messages");
-//        return messageSource;
-//    }
 
 
     /**
@@ -159,6 +154,7 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter {
         props.put("mail.smtp.ssl.trust",environment.getProperty("mail.smtp.ssl.trust"));
         props.put("mail.password",environment.getProperty("mail.password"));
         props.put("app.host",environment.getProperty("app.host"));
+        props.put("mail.mime.charset", environment.getProperty("mail.mime.charset"));
         return props;
 
     }
@@ -171,6 +167,13 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter {
     @Bean
     public SheduledTasks sheduller(){
         return new SheduledTasks();
+    }
+
+    @Bean
+    public StringHttpMessageConverter stringHttpMessageConverter() {
+        StringHttpMessageConverter converter = new StringHttpMessageConverter();
+        converter.setSupportedMediaTypes(Arrays.asList(new MediaType("text", "plain", Charset.forName("UTF-8"))));
+        return converter;
     }
 
 }

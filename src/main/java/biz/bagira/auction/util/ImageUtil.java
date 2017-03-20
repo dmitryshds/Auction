@@ -76,8 +76,6 @@ public class ImageUtil {
 
 
     public  String saveAvatar(Integer userId, byte[] resByteArray) {
-//        createUserFolder(userId);
-//        String pathToUserDir = ROOT_FOLDER + File.separator + userId;
         String pathToUserDir =  createUserFolder(userId);
         String fileName = userId + "_avat.jpg";
         writeImage(resByteArray, fileName, pathToUserDir);

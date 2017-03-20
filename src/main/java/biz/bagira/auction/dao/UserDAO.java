@@ -21,6 +21,7 @@ import java.util.Set;
 public class UserDAO implements AbstractDAO<User> {
 
     private static final Logger logger = LoggerFactory.getLogger(UserDAO.class);
+
     @Autowired
     private SessionFactory sessionFactory;
 

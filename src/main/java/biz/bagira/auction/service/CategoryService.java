@@ -16,6 +16,7 @@ import java.util.List;
 @Service ("categoryService")
 @Transactional
 public class CategoryService {
+
     @Autowired
     @Qualifier(value = "categoryDAO")
     private CategoryDAO categoryDAO;

@@ -14,6 +14,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
@@ -39,10 +40,13 @@ import java.util.Properties;
  * @ComponentScan you need to add to autodetect classes and register the corresponding beans
  * To customize the default configuration in Java you simply implement the WebMvcConfigurer interface
  * or more likely extend the class WebMvcConfigurerAdapter and override the methods you need
+ * @EnableAsync enables Spring's asynchronous method execution capability
+ * @EnableScheduling enables Spring's scheduled task execution capability
  */
 
 @Configuration
 @EnableWebMvc
+@EnableAsync
 @EnableScheduling
 @ComponentScan(basePackages = "biz.bagira.auction")
 @PropertySource(value = "classpath:application.properties")

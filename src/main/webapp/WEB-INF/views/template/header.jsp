@@ -10,13 +10,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<%--<html>--%>
-    <%--<head>--%>
-		<%--<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>--%>
-        <%--<title>Title</title>--%>
-		<%----%>
-    <%--</head>--%>
-    <%--<body>--%>
+
        				 <!-- Header -->
         			<header class="row">
 
@@ -381,5 +375,3 @@
 
         			</header>
         			<!-- /Header -->
-    <%--</body>--%>
-<%--</html>--%>

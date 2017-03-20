@@ -38,9 +38,6 @@ public class BidController {
                         @NotNull @RequestParam("userName") String userName,
                         @NotNull @RequestParam("itemId") Integer itemId){
 
-        logger.info("BID = "+bid);
-        logger.info("USERNAME = "+userName);
-        logger.info("ITEM ID = "+itemId);
         User userBidder = userService.getByName(userName.trim());
         Item item = itemService.getById(itemId);
         Bid currentBid = new Bid();

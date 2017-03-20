@@ -29,7 +29,6 @@ public class Item {
     private User owner;
 
     @JsonIgnore
-//    private List<Category> categoryList = new ArrayList<Category>();
     private Category category;
 
     @JsonProperty("name")
@@ -98,23 +97,6 @@ public class Item {
         this.category = category;
     }
 
-//    @NotNull
-//    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-//    @JoinTable(name = "CATEGORY_ITEM", joinColumns = @JoinColumn(name = "ITEM_ID"), inverseJoinColumns = @JoinColumn(name = "CATEGORY_ID"))
-//    //@OrderBy("type")
-//    public Category getCategory() {
-//        return category;
-//    }
-//
-//    public void setCategory(Category category) {
-//        this.category = category;
-//    }
-
-//    public void addCategory(Category category)
-//    {
-//        categoryList.add(category);
-//
-//    }
     public void addBid(Bid bid) {
         bidSet.add(bid);
     }
@@ -202,7 +184,7 @@ public class Item {
     public void setBidSet(Set<Bid> bidSet) {
         this.bidSet = bidSet;
     }
-    ////???
+
     @OneToOne(mappedBy = "item" , fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
     public Order getOrder() {
@@ -248,8 +230,6 @@ public class Item {
     public String toString() {
         return "Item{" +
                 "idItems=" + idItems +
-
-
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", initialPrice=" + initialPrice +
@@ -257,7 +237,6 @@ public class Item {
                 ", dateStart=" + dateStart +
                 ", pictures='" + pictures + '\'' +
                 ", dateFinish=" + dateFinish +
-
                 '}';
     }
 }

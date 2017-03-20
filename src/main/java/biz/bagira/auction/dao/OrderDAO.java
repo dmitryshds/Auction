@@ -55,6 +55,7 @@ public class OrderDAO implements AbstractDAO<Order> {
     public Order getById(Integer id) {
         return (Order) sessionFactory.getCurrentSession().get(Order.class, id);
     }
+
     @SuppressWarnings("unchecked")
     public List<Order> getAll() {
         return sessionFactory.getCurrentSession().createQuery("from Order").list();

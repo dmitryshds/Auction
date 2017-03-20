@@ -19,6 +19,7 @@ import java.util.List;
 public class CategoryDAO implements AbstractDAO<Category> {
 
     private static final Logger logger = LoggerFactory.getLogger(CategoryDAO.class);
+
     @Autowired
     private SessionFactory sessionFactory;
 

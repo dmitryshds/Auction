@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,13 +33,6 @@ public class MainController {
     @Autowired
     PersistentTokenBasedRememberMeServices persistentTokenBasedRememberMeServices;
 
-//    @RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
-//    public ModelAndView index() {
-//        List<Category> categories = categoryService.getAll();
-//        ModelAndView modelAndView = new ModelAndView("index");
-//        modelAndView.addObject("categories", categories);
-//        return modelAndView;
-//    }
  @RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
     public String index(Model model) {
         List<Category> categories = categoryService.getAll();
@@ -88,24 +80,10 @@ public class MainController {
 
 
 
-    /**
-     * This method returns the principal[user-name] of logged-in user.
-     */
-    private String getPrincipal() {
-        String userName = null;
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        if (principal instanceof UserDetails) {
-            userName = ((UserDetails) principal).getUsername();
-        } else {
-            userName = principal.toString();
-        }
-        return userName;
-    }
-
-    /**
-     * This method returns true if users is already authenticated [logged-in], else false.
-     */
+//    /**
+//     * This method returns true if users is already authenticated [logged-in], else false.
+//     */
 //    private boolean isCurrentAuthenticationAnonymous() {
 //        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 //        return authenticationTrustResolver.isAnonymous(authentication);

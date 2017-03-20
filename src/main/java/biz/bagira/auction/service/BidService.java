@@ -15,6 +15,7 @@ import java.util.List;
 @Service("bidService")
 @Transactional
 public class BidService {
+
     @Autowired
     @Qualifier(value = "bidDAO")
     private BidDAO bidDAO;

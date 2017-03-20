@@ -52,9 +52,6 @@ public class Bid implements Comparable{
         this.userBidder = userBidder;
     }
 
-
-
-
     @Column(name = "BID")
     public BigDecimal getBid() {
         return bid;

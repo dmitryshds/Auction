@@ -50,17 +50,6 @@ public class Category {
         itemList.add(item);
     }
 
-//    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
-//    @JoinTable(name = "CATEGORY_ITEM", joinColumns = @JoinColumn(name = "CATEGORY_ID"), inverseJoinColumns = @JoinColumn(name = "ITEM_ID"))
-//   // @OrderBy("name")
-//    public List<Item> getItemList() {
-//        return itemList;
-//    }
-//
-//    public void setItemList(List<Item> itemList) {
-//        this.itemList = itemList;
-//    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

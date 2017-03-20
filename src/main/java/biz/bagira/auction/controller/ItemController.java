@@ -12,8 +12,6 @@ import biz.bagira.auction.util.ImageUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -48,6 +46,7 @@ public class ItemController {
         modelMap.addAttribute("category", categoryService.getAll());
         return "item";
     }
+
 
     @RequestMapping(value = "/newitem", method = {RequestMethod.POST})
     public String addItem(ModelMap model, RedirectAttributes redirectAttributes,
@@ -91,6 +90,7 @@ public class ItemController {
     }
 
 
+
     @RequestMapping(value = "/cat/{id}/{startPos}/{quantity}", method = RequestMethod.POST)
     public
     @ResponseBody
@@ -120,46 +120,33 @@ public class ItemController {
         return jsonItems;
     }
 
+
     @RequestMapping(value = "/showItem/{itemId}", method = RequestMethod.GET)
     public String showItem(@PathVariable("itemId") Integer itemId,
                            ModelMap modelMap){
         logger.info("Get Item  Id = "+itemId);
         Item item = itemService.getById(itemId);
-
-        logger.info("ITEM = "+item);
         logger.info("ITEM pic = "+item.getPictures().toString());
 
-//        if (item != null) {
-//
-//            List<String> pictures = item.getPictures();
-//            logger.info("PICTURES = " + pictures);
-//            if (!pictures.isEmpty() || pictures != null) {
-//                for (int i = 0; i < pictures.size(); i++)
-////                    pictures.set(i, pictures.get(i).replace(imageUtil.getRootFolder(), "").replace('\\', '/').replace('\\', '/'));
-//                    pictures.set(i, pictures.get(i));
-//            }
-//            item.setPictures(pictures);
-//
-//        }
         modelMap.addAttribute("item", item);
         return "showItem";
     }
 
 
 
-    /**
-     * This method returns the principal[user-name] of logged-in user.
-     */
-    private String getPrincipal() {
-        String userName = null;
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        if (principal instanceof UserDetails) {
-            userName = ((UserDetails) principal).getUsername();
-        } else {
-            userName = principal.toString();
-        }
-        return userName;
-    }
+//    /**
+//     * This method returns the principal[user-name] of logged-in user.
+//     */
+//    private String getPrincipal() {
+//        String userName = null;
+//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//
+//        if (principal instanceof UserDetails) {
+//            userName = ((UserDetails) principal).getUsername();
+//        } else {
+//            userName = principal.toString();
+//        }
+//        return userName;
+//    }
 
 }

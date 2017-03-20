@@ -30,9 +30,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     private UserService userService;
 
 
-
-
-
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         logger.info("user service = " + userService);

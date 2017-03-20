@@ -18,6 +18,7 @@ import java.util.concurrent.ConcurrentSkipListSet;
  * Created by Dmitriy on 16.03.2017.
  */
 public class SheduledTasks {
+
     private static final Logger logger = LoggerFactory.getLogger(SheduledTasks.class);
 
     private static final long DAY = 1000 * 60 * 60 * 24;

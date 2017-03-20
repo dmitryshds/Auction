@@ -259,18 +259,6 @@ public class User implements Serializable {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
-//                ", country='" + country + '\'' +
-//                ", zip='" + zip + '\'' +
-//                ", city='" + city + '\'' +
-//                ", street='" + street + '\'' +
-//                ", homeNumber='" + homeNumber + '\'' +
-//                ", validateEmail=" + validateEmail +
-//                ", picture='" + picture + '\'' +
-//                ", itemList=" + itemList +
-//                ", bidList=" + bidList +
-//                ", orderList=" + orderList +
-//                ", state='" + state + '\'' +
-//                ", userProfiles=" + userProfiles +
                 '}';
     }
 }

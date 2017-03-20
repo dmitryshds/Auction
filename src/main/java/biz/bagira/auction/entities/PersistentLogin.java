@@ -12,7 +12,7 @@ import java.util.Date;
 @Table(name="PERSISTENT_LOGINS")
 public class PersistentLogin {
 
-    @Id
+        @Id
     	private String series;
 
     	@Column(name="USERNAME", unique=true, nullable=false)

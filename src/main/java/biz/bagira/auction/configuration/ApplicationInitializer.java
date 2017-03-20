@@ -40,7 +40,6 @@ public class ApplicationInitializer extends AbstractAnnotationConfigDispatcherSe
     protected void customizeRegistration(ServletRegistration.Dynamic registration) {
         // upload temp file will put here
         File uploadDirectory = new File(System.getProperty("java.io.tmpdir"));
-
         // register a MultipartConfigElement
         MultipartConfigElement multipartConfigElement =
                 new MultipartConfigElement(uploadDirectory.getAbsolutePath(),

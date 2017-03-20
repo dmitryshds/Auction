@@ -113,9 +113,7 @@
                                     <div class="col-lg-8 col-md-8 col-sm-8 product-single-info full-size">
 
                                         <h2>${item.name}</h2>
-                                        <%--<div class="rating-box">--%>
-                                        <%----%>
-                                        <%--</div>--%>
+
                                         <table>
                                         	<tr>
                                                 <td>Owner:</td>
@@ -143,10 +141,7 @@
                                                 <td>Added</td>
                                                 <td><fmt:formatDate type="both" value="${item.dateStart}"/></td>
                                             </tr>
-                                            <%--<tr>--%>
-                                            <%--<td>Fineshed</td>--%>
-                                            <%--<td><fmt:formatDate type="both" value="${item.dateFinish}"/></td>--%>
-                                            <%--</tr>--%>
+
                                             <tr>
                                                 <td>Left :</td>
                                                 <td id="demo"></td>
@@ -215,11 +210,7 @@
 
         		<!-- JavaScript -->
 
-        <%--<script src="${zoom4}"></script>--%>
         <script type="text/javascript" src="${zoom4}">
-//            $('bid').click(function () {
-//                   console.log("CLICK JQUERY");
-//            });
 
         </script>
         <script src="${zoom5}"></script>
@@ -239,7 +230,6 @@
         <script src="${zoom8}"></script>
 
         		<!-- SelectJS !!!-->
-        <%--<script src="${zoom-2}" type="text/javascript"></script>--%>
         <script src="${zoom2}"></script>
 
                 <!-- Main JS -->
@@ -312,11 +302,7 @@
          }
          function checkBid(e) {
            var latestBid =  document.getElementById('latest-price').textContent;
-//           var latestBid =  document.getElementById('latest-price');
-//            latestBid =  latestBid.value;
-//           var firstBid =  document.getElementById('first-price').textContent;
              console.log("latestBid = "+latestBid);
-//             console.log("firstBid = "+firstBid);
            var price = parseFloat(latestBid);
            var bid = parseFloat(e);
              if (price < bid){

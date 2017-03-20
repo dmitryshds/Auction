@@ -21,7 +21,6 @@ public class ProfileService {
     @Qualifier(value = "profileDAO")
     private ProfileDAO profileDAO;
 
-
     public void create(UserProfile entity) {
         profileDAO.create(entity);
 

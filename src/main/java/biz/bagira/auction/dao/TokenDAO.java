@@ -23,6 +23,7 @@ import java.util.List;
 public class TokenDAO implements PersistentTokenRepository {
 
     private static final Logger logger = LoggerFactory.getLogger(TokenDAO.class);
+
     @Autowired
     private SessionFactory sessionFactory;
 

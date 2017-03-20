@@ -354,8 +354,6 @@
      var emailValid;
      var termsValid;
 
-//$('#login').on("change",function () {
-//$('section').on('change','#login',function () {
 $('#login').change(function () {
     $('#err-login').hide();
     $('#corr-login').hide();

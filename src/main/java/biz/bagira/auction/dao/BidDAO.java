@@ -17,7 +17,9 @@ import java.util.List;
 
 @Repository("bidDAO")
 public class BidDAO implements AbstractDAO<Bid> {
+
     private static final Logger logger = LoggerFactory.getLogger(BidDAO.class);
+
     @Autowired
     private SessionFactory sessionFactory;
 

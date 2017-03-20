@@ -29,15 +29,9 @@
 
     <body>
 
-
                      <c:import url="template/header.jsp"/>
 
-
-
                     <c:import url="template/categoryTables.jsp"/>
-
-
-
 
                     <c:import url="template/footer.jsp"/>
 

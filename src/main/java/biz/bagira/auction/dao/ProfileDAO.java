@@ -17,6 +17,7 @@ import java.util.List;
 public class ProfileDAO implements AbstractDAO<UserProfile> {
 
     private static final Logger logger = LoggerFactory.getLogger(ProfileDAO.class);
+
     @Autowired
     private SessionFactory sessionFactory;
 

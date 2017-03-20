@@ -61,10 +61,7 @@ public class UserService  {
             user.setHomeNumber(entity.getHomeNumber());
             user.setTitle(entity.getTitle());
             userDAO.edit(user);
-
         }
-
-
     }
 
     public User getById(Integer id) {

@@ -33,6 +33,8 @@ public class ImageController {
         logger.info("ImageController fullPath = "+fullPath);
         return imageUtil.downloadPicture(fullPath);
     }
+
+
     @RequestMapping(value = "/show/{folder}/{pic}", method = RequestMethod.GET)
     @ResponseBody
     public byte[] dispalayUserAvatar(@PathVariable String folder, @PathVariable String pic) {

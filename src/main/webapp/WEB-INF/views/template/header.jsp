@@ -11,6 +11,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
+
+
+
        				 <!-- Header -->
         			<header class="row">
 
@@ -31,9 +34,9 @@
 
         									</sec:authorize>
 
-												<li><a href="orders_list.html">List Order</a></li>
+												<li><a href="#"><spring:message code="List Order"/></a></li>
 
-        										<li><a href="order_info.html">Checkout</a></li>
+        										<li><a href="#"><spring:message code="Your bids"/></a></li>
 
 											<sec:authorize access="isAuthenticated()">
 
@@ -41,12 +44,12 @@
 
 											</sec:authorize>
 
-        										<li><a href="text_page.html">About Us</a></li>
+        										<li><a href="#"><spring:message code="About Us"/></a></li>
 
-        										<li><a href="contact.html">Contact</a></li>
+        										<li><a href="#"><spring:message code="Contact"/></a></li>
 											<sec:authorize access="hasRole('ADMIN')">
 
-												<li><a href="${contextPath}/admin">Admin page</a></li>
+												<li><a href="${contextPath}/admin"><spring:message code="Admin page"/></a></li>
 
 											</sec:authorize>
 
@@ -70,7 +73,7 @@
         										<li><a href="${contextPath}/register">
 
 
-													<i class="icons icon-lock"></i> Create an Account</a></li>
+													<i class="icons icon-lock"></i><spring:message code="Create an Account"/> </a></li>
 
 											</sec:authorize>
 
@@ -82,7 +85,7 @@
 
 												<li><a href="${contextPath}/logout">
 
-															<i class="icons icon-lock"></i>Log out</a></li>
+															<i class="icons icon-lock"></i><spring:message code="Log out"/></a></li>
 
 											</sec:authorize>
 
@@ -110,30 +113,9 @@
 
         								<ul class="pull-right">
 
-        									<li class="blue">
-
-        										<a href="compare_products.html"><i class="icons icon-docs"></i>0 Items</a>
-
-                                            </li>
-
-        									<li class="red">
-
-        										<a href="wishlist.html"><i class="icons icon-heart-empty"></i>2 Items</a>
-
-                                            </li>
-
-        									<li class="orange"><a href="order_info.html"><i class="icons icon-basket-2"></i>17 Items</a>
-
-                                            	<ul id="cart-dropdown" class="box-dropdown parent-arrow">
-
-
-        										</ul>
-
-                                            </li>
-
         									<li>
 
-												<a class="flag" href="#"><span class="english-flag"></span>English</a>
+												<a class="flag" href="#"><span class="english-flag"></span><spring:message code="English"/></a>
 
                                             	<ul class="box-dropdown parent-arrow">
 
@@ -147,7 +129,7 @@
 
                                                                 	<td class="flag"><span class="english-flag"></span></td>
 
-                                                                    <td class="country"><a href="?language=en">English</a></td>
+                                                                    <td class="country"><a href="?language=en"><spring:message code="English"/></a></td>
 
                                                                 </tr>
 
@@ -155,7 +137,7 @@
 
                                                                 	<td class="flag"><span class="spanish-flag"></span></td>
 
-                                                                    <td class="country"><a href="?language=ru">Russian</a></td>
+                                                                    <td class="country"><a href="?language=ru"><spring:message code="Russian"/></a></td>
 
                                                                 </tr>
 
@@ -171,7 +153,7 @@
 
         									<li>
 
-												<a href="#"><i class="icons icon-dollar"></i>US Dollar</a>
+												<%--<a href="#"><i class="icons icon-dollar"></i>US Dollar</a>--%>
 
                                             	<ul class="box-dropdown parent-arrow">
 
@@ -181,17 +163,17 @@
 
                                                             <table class="currency-table">
 
-                                                            	<tr>
+                                                            	<%--<tr>--%>
 
-                                                                	<td><a href="#">₴ UAH</a></td>
+                                                                	<%--<td><a href="#">₴ UAH</a></td>--%>
 
-                                                                </tr>
+                                                                <%--</tr>--%>
 
-        														<tr>
+        														<%--<tr>--%>
 
-                                                                	<td><a href="#">$ US Dollar</a></td>
+                                                                	<%--<td><a href="#">$ US Dollar</a></td>--%>
 
-                                                                </tr>
+                                                                <%--</tr>--%>
 
                                                             </table>
 
@@ -238,7 +220,7 @@
 
         							<li class="red">
 
-        								<a href="category_v1.html">
+        								<a href="#">
 
         									<i class="icons icon-camera-7"></i>
 
@@ -252,7 +234,7 @@
 
         							<li class="blue">
 
-        								<a href="category_v2.html">
+        								<a href="#">
 
         									<i class="icons icon-desktop-3"></i>
 
@@ -266,7 +248,7 @@
 
         							<li class="orange">
 
-        								<a href="category_v1.html">
+        								<a href="#">
 
         									<i class="icons icon-mobile-6"></i>
 
@@ -279,7 +261,7 @@
 
         							<li class="green">
 
-        								<a href="blog.html">
+        								<a href="#">
 
         									<i class="icons icon-pencil-7"></i>
 
@@ -293,7 +275,7 @@
 
         							<li class="purple">
 
-        								<a href="contact.html">
+        								<a href="#">
 
         									<i class="icons icon-location-7"></i>
 
@@ -375,3 +357,4 @@
 
         			</header>
         			<!-- /Header -->
+

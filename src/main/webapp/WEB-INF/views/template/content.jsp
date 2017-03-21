@@ -8,21 +8,26 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<html>
-    <head>
-        <title>Title</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<c:url var="home" value="/" scope="request" />
-		<spring:url value="/resources/js/jquery-3.1.1.js" var="jqueryJs" />
 
-		<meta name="_csrf" content="${_csrf.token}"/>
-		<meta name="_csrf_header" content="${_csrf.headerName}"/>
+<c:url var="home" value="/" scope="request" />
+<spring:url value="/resources/js/jquery-3.1.1.js" var="jqueryJs" />
+<spring:url value="/resources/js/jquery-3.1.1.js" var="jqueryJs"/>
+<spring:url value="/resources/js/jquery-ui.js" var="jqueryUI"/>
+<spring:url value="/resources/js/zoom/bootstrap.min.js" var="zoom1"/>
+<spring:url value="/resources/js/zoom/chosen.jquery.min.js" var="zoom2"/>
+<spring:url value="/resources/js/zoom/flexslider.min.js" var="zoom3"/>
+<spring:url value="/resources/js/zoom/jquery-1.11.0.min.js" var="zoom4"/>
+<spring:url value="/resources/js/zoom/jquery-ui.min.js" var="zoom5"/>
+<spring:url value="/resources/js/zoom/main-script.js" var="zoom6"/>
+<spring:url value="/resources/js/zoom/perfect-scrollbar.min.js" var="zoom7"/>
+<spring:url value="/resources/js/zoom/zoomsl-3.0.min.js" var="zoom8"/>
+<script src="${jqueryUI}"> </script>
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
 
-		<script src="${jqueryJs}"></script>
+<script src="${jqueryJs}"></script>
 
-    </head>
 
-    <body>
     			    <!-- Content -->
         			<div class="row content" >
 
@@ -276,5 +281,17 @@
             });
 
 		</script>
-    </body>
-</html>
+
+		<script type="text/javascript" src="${zoom4}"></script>
+		<script src="${zoom5}"></script>
+				<!-- Scroll Bar !!!-->
+		<script src="${zoom7}"></script>
+				<!-- FlexSlider!!! -->
+		<script defer src="${zoom3}"></script>
+				<!-- Cloud Zoom!!! -->
+		<script src="${zoom8}"></script>
+				<!-- SelectJS !!!-->
+		<script src="${zoom2}"></script>
+				<!-- Main JS -->
+		<script defer src="${zoom1}"></script>
+		<script src="${zoom6}"></script>

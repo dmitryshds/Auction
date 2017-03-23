@@ -21,6 +21,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.Properties;
 import java.util.TreeSet;
 
@@ -55,13 +56,17 @@ public class MailUtil {
             msg.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(mailTo));
             msg.setSubject(subject,"UTF-8");
-            msg.setText(message, "UTF-8", "text/html");
-
+            msg.setText(message, "UTF-8","html");
+            Enumeration allHeaders = msg.getAllHeaders();
+           while (allHeaders.hasMoreElements()){
+               logger.info("header: "+allHeaders.nextElement().toString());
+           }
             Transport.send(msg);
             logger.info("Message sent to: "+mailTo);
 
         } catch (MessagingException  e) {
             logger.info("Message send fail: " + e.getMessage());
+            e.printStackTrace();
         }
     }
     @Async
@@ -71,7 +76,7 @@ public class MailUtil {
         String randomCode = user.getPassword().substring(7, 17).replace(".","").replace("/","");
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("<div><i>Dear ")
-                .append(user.getTitle())
+                .append(user.getTitle().getTitle())
                 .append(" ")
                 .append(user.getFirstName())
                 .append(", to complete the registration please confirm your E-mail</i>")
@@ -81,7 +86,7 @@ public class MailUtil {
                 .append(user.getLogin())
                 .append("/")
                 .append(randomCode)
-                .append("' style='color:blue;'>Please click here</a></div>");
+                .append(" 'style='color:blue;'>Please click here</a></div>");
         logger.info(stringBuffer.toString());
         sendMail(user.getEmail(), stringBuffer.toString(),"Confirm your E-mail");
 

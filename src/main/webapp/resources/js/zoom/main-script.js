@@ -6,8 +6,8 @@ function include(url){
 }
 
 
-include('twitter/jquery.tweet.js'); // Twitter widget */
-include('js/tinynav.min.js'); // Tiny nav
+// include('twitter/jquery.tweet.js'); // Twitter widget */
+// include('js/tinynav.min.js'); // Tiny nav
 
 
 
@@ -85,12 +85,12 @@ $(document).ready(function(){
 	
 	
 	/* Twitter WIdget */
-	$('#twitter-widget').tweet({
-		modpath: 'twitter/',
-		count: 2,
-		loading_text: 'loading twitter feed...',
-	})
-	
+	// $('#twitter-widget').tweet({
+	// 	modpath: 'twitter/',
+	// 	count: 2,
+	// 	loading_text: 'loading twitter feed...',
+	// })
+	//
 	
 	
 	
@@ -101,41 +101,41 @@ $(document).ready(function(){
 	
 	
 	// TinyNav.js 1
-	$('#main-navigation>ul').tinyNav({
-		active: 'current-item',
-		header: 'Navigation',
-		indent: '→',
-		label: 'Menu'
-	});
-	
+	// $('#main-navigation>ul').tinyNav({
+	// 	active: 'current-item',
+	// 	header: 'Navigation',
+	// 	indent: '→',
+	// 	label: 'Menu'
+	// });
+	//
 	
 	
 	
 	
 	/* Revolutions Slider */
-	jQuery('.tp-banner').revolution({
-		delay:9000,
-		startwidth:1170,
-		startheight:500,
-		hideThumbs:10,
-		navigationType:"none"
-	});
+	// jQuery('.tp-banner').revolution({
+	// 	delay:9000,
+	// 	startwidth:1170,
+	// 	startheight:500,
+	// 	hideThumbs:10,
+	// 	navigationType:"none"
+	// });
+	//
 	
 	
 	
-	
-	/* IOS Slider */
-	$('.iosSlider').iosSlider({
-		scrollbar: true,
-		snapToChildren: true,
-		desktopClickDrag: true,
-		scrollbarMargin: '5px 40px 0 40px',
-		scrollbarBorderRadius: 0,
-		scrollbarHeight: '2px',
-		navPrevSelector: $('.prevButton'),
-		navNextSelector: $('.nextButton')
-	});
-	
+	// /* IOS Slider */
+	// $('.iosSlider').iosSlider({
+	// 	scrollbar: true,
+	// 	snapToChildren: true,
+	// 	desktopClickDrag: true,
+	// 	scrollbarMargin: '5px 40px 0 40px',
+	// 	scrollbarBorderRadius: 0,
+	// 	scrollbarHeight: '2px',
+	// 	navPrevSelector: $('.prevButton'),
+	// 	navNextSelector: $('.nextButton')
+	// });
+	//
 	
 	
 	
@@ -170,21 +170,21 @@ $(document).ready(function(){
 	/* Rating */
 	
 	// Read Only
-	$('.rating.readonly-rating').raty({ 
-		readOnly: true,
-		path:'js/img',
-		score: function() {
-			return $(this).attr('data-score');
-		}
-	 });
+	// $('.rating.readonly-rating').raty({
+	// 	readOnly: true,
+	// 	path:'js/img',
+	// 	score: function() {
+	// 		return $(this).attr('data-score');
+	// 	}
+	//  });
 	 
 	// Rate
-	$('.rating.rate').raty({ 
-		path:'js/img',
-		score: function() {
-			return $(this).attr('data-score');
-		}
-	});
+	// $('.rating.rate').raty({
+	// 	path:'js/img',
+	// 	score: function() {
+	// 		return $(this).attr('data-score');
+	// 	}
+	// });
 	
 	
 	
@@ -328,7 +328,7 @@ $(document).ready(function(){
 		
 		
 		/* FancyBox */
-		$(".fancybox").fancybox();
+		// $(".fancybox").fancybox();
 		
 		
 	}

@@ -1,9 +1,18 @@
 package biz.bagira.auction.entities;
 
+import biz.bagira.auction.service.IndexInterceptor;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
+import org.apache.lucene.analysis.core.StopFilterFactory;
+import org.apache.lucene.analysis.ngram.NGramFilterFactory;
+import org.apache.lucene.analysis.standard.StandardFilterFactory;
+import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Parameter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -19,6 +28,19 @@ import java.util.concurrent.ConcurrentSkipListSet;
  */
 
 @Entity
+@Indexed (interceptor = IndexInterceptor.class)
+@AnalyzerDef(name = "ngram",
+  tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class ),
+  filters = {
+    @TokenFilterDef(factory = StandardFilterFactory.class),
+    @TokenFilterDef(factory = LowerCaseFilterFactory.class),
+    @TokenFilterDef(factory = StopFilterFactory.class),
+    @TokenFilterDef(factory = NGramFilterFactory.class,
+      params = {
+        @Parameter(name = "minGramSize", value = "3"),
+        @Parameter(name = "maxGramSize", value = "3") } )
+  }
+)
 @Table(name = "ITEMS")
 public class Item {
 
@@ -30,6 +52,7 @@ public class Item {
 
     @JsonIgnore
     private Category category;
+
 
     @JsonProperty("name")
     private String name;
@@ -66,6 +89,7 @@ public class Item {
 
     @Id
     @Column(name = "ID_ITEMS")
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getIdItems() {
         return idItems;
@@ -102,6 +126,7 @@ public class Item {
     }
 
     @NotNull
+    @Field(analyzer=@Analyzer(definition="ngram"))
     @Column(name = "NAME")
     public String getName() {
         return name;
@@ -111,6 +136,7 @@ public class Item {
         this.name = name;
     }
 
+    @Field(analyzer=@Analyzer(definition="ngram"))
     @Column(name = "DESCRIPTION")
     public String getDescription() {
         return description;
@@ -237,6 +263,7 @@ public class Item {
                 ", dateStart=" + dateStart +
                 ", pictures='" + pictures + '\'' +
                 ", dateFinish=" + dateFinish +
+                ", state=" + state +
                 '}';
     }
 }

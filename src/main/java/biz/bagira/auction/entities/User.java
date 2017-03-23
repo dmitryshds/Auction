@@ -33,7 +33,7 @@ public class User implements Serializable {
     private Boolean validateEmail;
     private String picture;
     private Set<Item> itemList = new LinkedHashSet<>();
-    private Set<Bid> bidList = new LinkedHashSet<Bid>();
+    private Set<Bid> bidSet = new LinkedHashSet<Bid>();
     private Set<Order> orderList = new LinkedHashSet<Order>();
     private String state;
     private List<UserProfile> userProfiles = new ArrayList<UserProfile>();
@@ -186,12 +186,12 @@ public class User implements Serializable {
     }
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "userBidder")
-    public Set<Bid> getBidList() {
-        return bidList;
+    public Set<Bid> getBidSet() {
+        return bidSet;
     }
 
-    public void setBidList(Set<Bid> bidList) {
-        this.bidList = bidList;
+    public void setBidSet(Set<Bid> bidList) {
+        this.bidSet = bidList;
     }
 
 

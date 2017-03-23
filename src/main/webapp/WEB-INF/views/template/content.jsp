@@ -10,7 +10,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <c:url var="home" value="/" scope="request" />
-<spring:url value="/resources/js/jquery-3.1.1.js" var="jqueryJs" />
+
+<spring:url value="/resources/js/renderAjax.js" var="renderAJAX"/>
 <spring:url value="/resources/js/jquery-3.1.1.js" var="jqueryJs"/>
 <spring:url value="/resources/js/jquery-ui.js" var="jqueryUI"/>
 <spring:url value="/resources/js/zoom/bootstrap.min.js" var="zoom1"/>
@@ -66,7 +67,7 @@
 
         										<i class="icons icon-folder-open-empty"></i>
 
-												<h4>Categories</h4>
+												<h4><spring:message code="Categories"/></h4>
 
         								</div>
 
@@ -94,13 +95,12 @@
         			</div>
         			<!-- /Content -->
 
-		<script>
+		<script >
             var id;
             var count = 0;
             var start;
             var quantity;
             var page = 1;
-
             $('.category').click(function () {
                 id = parseInt(this.id);
                 start = 0;
@@ -108,6 +108,7 @@
                 renderViaAjax(this.id, start, quantity);
 
             });
+
 
 
             function renderViaAjax(id, start, quantity) {

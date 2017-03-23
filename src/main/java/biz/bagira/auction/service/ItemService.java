@@ -59,5 +59,18 @@ public class ItemService {
         return itemDAO;
     }
 
+    public void index(){
+        try {
+            itemDAO.indexItems();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    public List<Item> search(String text,Integer from, Integer rows){
+        return itemDAO.searchForItems(text,from,rows);
+    }
 
+    public Integer getCountItemsBySearch(String text){
+        return itemDAO.getCountItemsBySearch(text);
+    }
 }

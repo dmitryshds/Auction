@@ -21,7 +21,7 @@ public class UserTest {
         assertNull(user.getPassword());
         assertNull(user.getFirstName());
         assertNull(user.getLastName());
-        assertTrue(user.getBidList().isEmpty());
+        assertTrue(user.getBidSet().isEmpty());
         assertFalse(user.getValidateEmail());
         assertEquals(user.getState(),State.ACTIVE.getState());
     }

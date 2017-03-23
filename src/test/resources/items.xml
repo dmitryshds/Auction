@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<items id_items = "1"  name="item1" description="new item" initial_price="10.20" buynow_price="100.00" date_start="2017-03-10 21:35:40.226093" category_id="1" date_finish="2017-03-30 21:35:40.226093" state="Active"/>
+	<items id_items = "2"   name="call" description="new item" initial_price="20.20" buynow_price="200.00" date_start="2017-03-09 21:35:40.226093" category_id="1" date_finish="2017-03-30 20:35:40.226093" state="Active"/>
+	<items id_items = "3"  name="item3" description="new item for users" initial_price="30.20" buynow_price="300.00" date_start="2017-03-08 21:35:40.226093" category_id="2" date_finish="2017-03-30 22:35:40.226093" state="Active"/>
+	<items id_items = "4"  name="item4" description="old item " initial_price="40.20" buynow_price="150.00" date_start="2017-03-07 21:35:40.226093" category_id="2" date_finish="2017-03-30 23:35:40.226093" state="Active"/>
+</dataset>

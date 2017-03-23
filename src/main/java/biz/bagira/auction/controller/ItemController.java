@@ -120,6 +120,35 @@ public class ItemController {
         return jsonItems;
     }
 
+  @RequestMapping(value = "/search/{startPos}/{quantity}/{text}", method = RequestMethod.POST)
+    public
+    @ResponseBody
+    JSONItems getItemsBySearch(@PathVariable("text") String text,
+                                 @PathVariable("startPos") Integer startPos,
+                                 @PathVariable("quantity") Integer quantity) {
+        List<Item> items = itemService.search(text, startPos, quantity);
+        logger.info("List Items = " + items);
+        logger.info(">>>>>>>>>List SIZE = " + items.size());
+        if (items.size() > 0) {
+            for (Item item : items) {
+                List<String> pictures = item.getPictures();
+                List<String> newPict = new ArrayList<>();
+                if (!pictures.isEmpty()) {
+                    newPict.add(pictures.get(0));
+                    item.setPictures(newPict);
+                }
+            }
+        }
+        Integer count = itemService.getCountItemsBySearch(text);
+        logger.info(items.toString());
+        JSONItems jsonItems = new JSONItems();
+        jsonItems.setCountItemsByCategory(count);
+        jsonItems.setItemList(items);
+        jsonItems.setStart(startPos);
+        jsonItems.setQuantity(quantity);
+        return jsonItems;
+    }
+
 
     @RequestMapping(value = "/showItem/{itemId}", method = RequestMethod.GET)
     public String showItem(@PathVariable("itemId") Integer itemId,

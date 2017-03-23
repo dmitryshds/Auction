@@ -12,8 +12,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<html>
-    <head>
+
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta name="_csrf" content="${_csrf.token}"/>
@@ -43,8 +42,7 @@
 		<c:set var="owner" value="${item.owner}"/>
         <c:set var="picture" value="${item.pictures}"/>
         <c:set var="bids" value="${item.bidSet}"/>
-    </head>
-    <body>
+
         <!-- Container -->
         		<div class="container">
 
@@ -310,9 +308,14 @@
                  return false;
              }
          }
+
+
+
+
+
+
         </script>
 
 
         
-    </body>
-</html>
+

@@ -50,10 +50,6 @@
 
                             </div>
 
-
-
-                            <form:form method="post"  modelAttribute="user" action="changeuser">
-
                                 <div class="page-content">
 
                                     <div class="row">
@@ -117,12 +113,26 @@
                                             <div class="col-lg-8 col-md-8 col-sm-8">
 
                                                 <b>${user.email}</b>
+                                                <c:set var="validate" value="${user.validateEmail}"/>
+                                                <c:choose>
+                                                 <c:when test="${validate}">
+                                                     <b style="color: #00a847">Confirmed</b>
+                                                 </c:when>
+                                                    <c:otherwise>
+                                                        <b style="color: #ff0000;">Not Condirmed</b>
+                                                        <form method="post" action="re-confirmation">
+                                                            <input type="hidden" name="userId" value="${user.idUsers}">
+                                                            <input  type="submit" value="Re-confirm" style="background-color: darkgrey;color: #1b6d85;" />
+                                                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
+                                                        </form>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </div>
 
                                         </div>
 
-
+                                    <form:form method="post"  modelAttribute="user" action="changeuser">
                                            <div class="row">
 
                                                   <div class="col-lg-4 col-md-4 col-sm-4">

@@ -4,6 +4,9 @@ import biz.bagira.auction.entities.Item;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
+import org.hibernate.search.query.dsl.QueryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+
+
 /**
  * Created by Dmitriy on 24.01.2017.
  */
@@ -22,8 +27,16 @@ public class ItemDAO implements AbstractDAO<Item> {
 
     private static final Logger logger = LoggerFactory.getLogger(ItemDAO.class);
 
+
+
     @Autowired
     private SessionFactory sessionFactory;
+
+    public void indexItems() throws InterruptedException {
+        FullTextSession fullTextSession = Search.getFullTextSession(sessionFactory.getCurrentSession());
+        fullTextSession.createIndexer().startAndWait();
+        logger.info("Hibernate search indexed ");
+    }
 
     public Integer create(Item entity) {
         Integer id = (Integer) sessionFactory.getCurrentSession().save(entity);
@@ -90,5 +103,30 @@ public class ItemDAO implements AbstractDAO<Item> {
         return ((BigInteger) query.uniqueResult()).intValue();
     }
 
-
+    public List<Item> searchForItems(String searchText,Integer from, Integer rows) {
+//        try {
+//            indexItems();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+        Session currentSession = sessionFactory.getCurrentSession();
+        FullTextSession fullTextSession = Search.getFullTextSession(currentSession);
+        QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Item.class).get();
+        org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().onFields("name","description").matching(searchText).createQuery();
+        logger.info("ItemDAO luceneQuery = "+luceneQuery);
+        // wrap Lucene query in a javax.persistence.Query
+        org.hibernate.Query fullTextQuery = fullTextSession.createFullTextQuery(luceneQuery, Item.class);
+        logger.info("ItemDAO fullTextQuery = "+fullTextQuery);
+        fullTextQuery.setFirstResult(from); //start from
+        fullTextQuery.setMaxResults(rows); //return  elements
+        return fullTextQuery.list();
+    }
+    public Integer getCountItemsBySearch(String searchText){
+        Session currentSession = sessionFactory.getCurrentSession();
+        FullTextSession fullTextSession = Search.getFullTextSession(currentSession);
+        QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Item.class).get();
+        org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().onFields("name","description").matching(searchText).createQuery();
+        org.hibernate.Query fullTextQuery = fullTextSession.createFullTextQuery(luceneQuery, Item.class);
+        return fullTextQuery.list().size();
+    }
 }

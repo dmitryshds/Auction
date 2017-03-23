@@ -153,5 +153,14 @@ public class RegistrationController {
         return "account";
     }
 
+
+    @RequestMapping(value = "/re-confirmation", method = RequestMethod.POST)
+    public String reConfirmEmail(@RequestParam("userId")Integer userId){
+        logger.info("reConfirmEmail userId: "+userId);
+        User user = userService.getById(userId);
+        mailUtil.sendConfirmMessage(user);
+        return "redirect: /account";
+    }
+
 }
 

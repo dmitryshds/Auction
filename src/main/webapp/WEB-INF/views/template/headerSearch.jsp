@@ -291,11 +291,11 @@
 
         							</li>
 
-        							<%--<li class="nav-search">--%>
+        							<li class="nav-search">
 
-                                        	<%--<i class="icons icon-search-1"></i>--%>
+                                        	<i class="icons icon-search-1"></i>
 
-        							<%--</li>--%>
+        							</li>
 
         						</ul>
 

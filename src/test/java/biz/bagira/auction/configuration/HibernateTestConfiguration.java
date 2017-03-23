@@ -54,6 +54,9 @@ public class HibernateTestConfiguration {
         Properties properties = new Properties();
         properties.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
         properties.put("hibernate.hbm2ddl.auto", "create-drop");
+        properties.put("hibernate.show_sql", "true");
+        properties.put("hibernate.search.default.directory_provider", "filesystem");
+        properties.put("hibernate.search.default.indexBase", "C:\\DB_Test_Indexes");
         return properties;
     }
 

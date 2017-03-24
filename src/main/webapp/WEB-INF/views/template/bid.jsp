@@ -13,7 +13,7 @@
                     <tr>
                         <th>Item:</th>
                         <th>Your bid:</th>
-                        <td>Date: </td>
+                        <th>Date: </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -26,8 +26,7 @@
                                 ${bid.bid}
                              </td>
                             <td>
-                                <c:set var="date" value="${bid.bidDate}"/>
-                                <fmt:formatDate type="both" value="${date}"/>
+                                <fmt:formatDate type="both" value="${bid.bidDate}"/>
                             </td>
 
                         </tr>

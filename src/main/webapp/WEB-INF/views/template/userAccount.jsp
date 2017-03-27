@@ -10,22 +10,22 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<html>
-    <head>
+
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="_csrf" content="${_csrf.token}"/>
         <meta name="_csrf_header" content="${_csrf.headerName}"/>
         <title>Title</title>
 
-        <c:url var="home" value="/" scope="request"/>
+<c:url var="home" value="/" scope="request"/>
 
-        <spring:url value="/resources/js/jquery-3.1.1.js" var="jqueryJs"/>
+<spring:url value="/resources/js/jquery-3.1.1.js" var="jqueryJs"/>
+<spring:url value="/resources/js/bootstrap-filestyle.min.js" var="fileStyle"/>
 
         <script src="${jqueryJs}"></script>
+<script src="${fileStyle}"></script>
 
-    </head>
-    <body>
+
             <div class="row content">
 
                 <div class="col-lg-12 col-md-12 col-sm-12">
@@ -63,23 +63,37 @@
                                     </div>
 
                                     <div class="row">
+                                        <form method="post" action="changeAvatar" enctype="multipart/form-data">
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
 
-                                        <div class="col-lg-4 col-md-4 col-sm-4">
-
-                                            <img src="<c:url value="image${user.picture}"/>" style="width: 150px; height:150px;  ">
-
-                                        </div>
-
-                                        <div class="col-lg-8 col-md-8 col-sm-8" >
-
-
+                                                <img src="<c:url value="image${user.picture}"/>" style="width: 150px; height:150px;" id="img-avatar">
 
                                         </div>
+
+                                            <div class="col-lg-8 col-md-8 col-sm-8" style=" height: 150px; ">
+
+
+
+                                                <input class="filestyle" type="file" name="file" id="upload-avatar" accept=".png, .jpg, .gif, .jpeg" data-icon="false"/><br/>
+
+                                                <input type="hidden" name="userId" value="${user.idUsers}"/>
+
+                                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
+                                                <div>
+                                                    <input class="big" type="submit" value="Upload Avatar" style="background-color: #DDD;color: #999;" disabled="disabled" id="save-avat"/>
+
+                                                    <input class="big" type="reset" value="Reset" id="remove-image" hidden="hidden"/>
+                                                </div>
+                                                <p id="error-len" style="color: #ff0000;" hidden="hidden"></p>
+                                        </div>
+
+                                        </form>
 
                                     </div>
 
 
-                                     <div class="row">
+                                    <div class="row">
 
                                         <div class="col-lg-4 col-md-4 col-sm-4">
 
@@ -97,6 +111,8 @@
                                         <div class="col-lg-8 col-md-8 col-sm-8">
 
                                             <b>${user.login}</b>
+                                            <span style="color: red; float: right; margin-right: 70px; display: none;" id="err-email"> Incorrect e-mail</span>
+
 
                                         </div>
 
@@ -117,6 +133,7 @@
                                                 <c:choose>
                                                  <c:when test="${validate}">
                                                      <b style="color: #00a847">Confirmed</b>
+                                                     <input type="text" name="email" id="email" value="${user.email}" class="input-align-right" hidden="hidden">
                                                  </c:when>
                                                     <c:otherwise>
                                                         <b style="color: #ff0000;">Not Condirmed</b>
@@ -132,7 +149,7 @@
 
                                         </div>
 
-                                    <form:form method="post"  modelAttribute="user" action="changeuser">
+                                    <form:form method="post" action="changeUser">
                                            <div class="row">
 
                                                   <div class="col-lg-4 col-md-4 col-sm-4">
@@ -143,12 +160,18 @@
 
                                                   <div class="col-lg-8 col-md-8 col-sm-8">
 
-                                                               <b>${user.firstName}</b>
+                                                      <b>${user.firstName}</b>
+                                                      <input type="text" name="firstName" value="${user.firstName}" class="input-align-right" hidden="hidden">
                                                   </div>
+                                               <div class="col-lg-12 col-md-12 col-sm-12">
 
-                                          </div>
 
-                                          <div class="row">
+
+                                               </div>
+
+                                           </div>
+
+                                        <div class="row">
 
                                                   <div class="col-lg-4 col-md-4 col-sm-4">
 
@@ -158,7 +181,8 @@
 
                                                   <div class="col-lg-8 col-md-8 col-sm-8">
 
-                                                          <b>${user.lastName}</b>
+                                                      <b>${user.lastName}</b>
+                                                      <input type="text" name="lastName" value="${user.lastName}" class="input-align-right" hidden="hidden">
                                                   </div>
 
                                           </div>
@@ -173,7 +197,8 @@
 
                                                   <div class="col-lg-8 col-md-8 col-sm-8">
 
-                                                          <b>${user.zip}</b>
+                                                      <b>${user.zip}</b>
+                                                      <input type="text" name="zip" value="${user.zip}" class="input-align-right" hidden="hidden">
                                                   </div>
 
                                           </div>
@@ -189,6 +214,7 @@
                                                   <div class="col-lg-8 col-md-8 col-sm-8">
 
                                                       <b>${user.city}</b>
+                                                      <input type="text" name="city" value="${user.city}" class="input-align-right" hidden="hidden">
                                                   </div>
 
                                           </div>
@@ -204,6 +230,7 @@
                                                   <div class="col-lg-8 col-md-8 col-sm-8">
 
                                                       <b>${user.country}</b>
+                                                      <input type="text" name="country" value="${user.country}" class="input-align-right" hidden="hidden">
 
                                                   </div>
 
@@ -220,6 +247,7 @@
                                                   <div class="col-lg-8 col-md-8 col-sm-8">
 
                                                       <b>${user.street}</b>
+                                                      <input type="text" name="street" value="${user.street}" class="input-align-right" hidden="hidden">
 
                                                   </div>
 
@@ -236,6 +264,7 @@
                                                   <div class="col-lg-8 col-md-8 col-sm-8">
 
                                                       <b>${user.homeNumber}</b>
+                                                      <input type="text" name="homeNumber" value="${user.homeNumber}" class="input-align-right" hidden="hidden">
 
                                                   </div>
 
@@ -253,11 +282,15 @@
 
                                             </div>
 
+                                            <input type="hidden" name="new-email" value="" id="new-email"/>
+                                            <input type="hidden" name="userId" value="${user.idUsers}"/>
+
                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
                                             <div class="col-lg-12 col-md-12 col-sm-12">
 
-                                                <input class="big" type="submit" value="Register" style="background-color: #DDD;color: #999;" id="register" disabled="disabled" />
+                                                <input class="big" type="button" value="Edit" id="edit" style="background-color: green;color: #999;"/>
+                                                <input class="big" type="submit" value="Save changes" id="save-changes" style="background-color: #DDD;color: #999;" disabled="disabled"/>
 
                                                 <input class="big" type="reset" value="Reset"  id="reset" />
 
@@ -271,15 +304,100 @@
 
                 </div>
 
-
+                    </div>
                  </section>
             <!-- /Main Content -->
              </div>
-
         <script>
 
         </script>
 
-    </body>
+<script>
 
-</html>
+    $(":file").filestyle({input: false});
+
+
+    $('#reset').click(function () {
+        $('.input-align-right').hide();
+        $('#save-changes').attr("style", "background-color: #DDD;color: #999;").attr("disabled", "disabled");
+    });
+
+    $('#edit').click(function () {
+
+        $('.input-align-right').show();
+        $('#save-changes').removeAttr("style").removeAttr("disabled");
+
+
+    });
+
+    $('#email').change(function () {
+        $('#err-email').hide();
+        var pattern = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+        var mail = $(this).val();
+        if (!pattern.test(mail)) {
+            $('#err-email').show();
+            $('#save-changes').attr("style", "background-color: #DDD;color: #999;").attr("disabled", "disabled");
+
+        } else {
+            var email = $('#email').val();
+            $('#new-email').val(email);
+            $('#save-changes').removeAttr("style").removeAttr("disabled");
+        }
+    });
+
+    var maxFileSize = 2 * 1024 * 1024;
+
+    $('#upload-avatar').change(function () {
+
+        var file = $(this)[0].files;
+
+        if (errorMsg = validateFile(file)) {
+
+            $('#error-len').html(errorMsg).show();
+
+            return;
+        }
+        $('#error-len').html(errorMsg).hide();
+
+        var img = readURL(this);
+
+        readURL(img);
+    });
+
+    function readURL(input) {
+        if (input) {
+
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+
+                $('#img-avatar').removeAttr('src')
+
+                        .attr('src', e.target.result);
+                $('#save-avat').removeAttr('disabled', 'disabled').removeAttr("style");
+
+                $('#remove-image').show();
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    function validateFile(file) {
+        if (file[0].size > maxFileSize) {
+
+            return 'Image size more then 2Mb';
+
+        }
+    }
+    ;
+    $(document).on("click", "#remove-image", function () {
+
+        $('#img-avatar').removeAttr('src');
+
+        $('#save-avat').attr('disabled', 'disabled').attr("style", "background-color: #DDD;color: #999;");
+
+        $('#remove-image').hide();
+    })
+
+
+</script>

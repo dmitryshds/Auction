@@ -4672,11 +4672,20 @@ input[type="submit"]:hover{
 	background:#21bf64;
 }
 
-input[type="submit"].big, input[type="reset"].big{
+input[type="submit"].big, input[type="reset"].big, input[type="button"].big {
 	height:40px;
 	padding:7px 20px;
 	font-size:16px;
 }
+
+input[type="text"].input-align-right {
+
+	width: 200px;
+	float: right;
+	margin-right: 70px;
+}
+
+
 
 /*noinspection CssUnusedSymbol,CssUnusedSymbol*/
 input[type="submit"].huge, input[type="reset"].huge{

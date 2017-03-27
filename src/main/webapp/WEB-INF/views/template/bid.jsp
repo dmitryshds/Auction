@@ -7,8 +7,7 @@
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 
 
-        <div>
-            <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered">
+            <table id="bids-table" cellspacing="0"  class="table table-striped table-bordered" width="100%">
                 <thead>
                     <tr>
                         <th>Item:</th>
@@ -38,5 +37,14 @@
 
 
 
-        </div>
 
+<script src="<c:url value="/resources/js/adm/jquery-1.9.1.min.js"/>"></script>
+
+<script src="<c:url value="/resources/js/jquery.dataTables.min.js"/>"></script>
+
+<script src="<c:url value="/resources/js/dataTables.bootstrap.min.js"/>"></script>
+    <script>
+        $(document).ready(function() {
+            $('#bids-table').DataTable();
+        } );
+    </script>

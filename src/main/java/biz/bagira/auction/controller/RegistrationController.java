@@ -162,5 +162,69 @@ public class RegistrationController {
         return "redirect: /account";
     }
 
+    @RequestMapping(value = "/changeUser", method = {RequestMethod.POST})
+    public String changeUser(@NotNull @RequestParam("userId") Integer userId,
+                             @RequestParam("new-email") String email,
+                             @RequestParam("firstName") String firstName,
+                             @RequestParam("lastName") String lastName,
+                             @RequestParam("zip") String zip,
+                             @RequestParam("city") String city,
+                             @RequestParam("country") String country,
+                             @RequestParam("street") String street,
+                             @RequestParam("homeNumber") String homeNumber
+    ) {
+
+        User user = userService.getById(userId);
+        if (ImageUtil.isValidString(email)) {
+            user.setEmail(email);
+            user.setValidateEmail(false);
+        } else if (ImageUtil.isValidString(firstName)) {
+            user.setFirstName(firstName);
+        } else if (ImageUtil.isValidString(lastName)) {
+            user.setLastName(lastName);
+        } else if (ImageUtil.isValidString(zip)) {
+            user.setZip(zip);
+        } else if (ImageUtil.isValidString(city)) {
+            user.setCity(city);
+        } else if (ImageUtil.isValidString(country)) {
+            user.setCountry(country);
+        } else if (ImageUtil.isValidString(street)) {
+            user.setStreet(street);
+        } else if (ImageUtil.isValidString(homeNumber)) {
+            user.setHomeNumber(homeNumber);
+        }
+         userService.edit(user);
+        logger.info("user edited userId = "+userId);
+
+        return "redirect: /account";
+    }
+
+
+    @RequestMapping(value = "/changeAvatar", method = RequestMethod.POST)
+        public String changeAvatar(@RequestParam Integer userId,
+                                   @RequestParam("file") MultipartFile file,
+                                   HttpServletRequest request) {
+            String pathToFile = "";
+            User user = userService.getById(userId);
+            if (!file.isEmpty()) {
+                try {
+                    byte[] bytes = file.getBytes();
+
+                    pathToFile = imageUtil.saveAvatar(userId, bytes);
+
+                    if (ImageUtil.isValidString(pathToFile)) {
+                        user.setPicture(pathToFile);
+                    }
+                } catch (IOException e) {
+                    logger.info(e.getMessage());
+                }
+            }
+
+            userService.edit(user);
+
+
+            return "redirect: /account";
+        }
+
 }
 

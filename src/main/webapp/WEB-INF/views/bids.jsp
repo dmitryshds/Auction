@@ -14,7 +14,10 @@
         <link type="text/css" rel="stylesheet" href="<c:url value="/resources/css/style.css" />"/>
         <link type="text/css" rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css" />"/>
         <link type="text/css" rel="stylesheet" href="<c:url value="/resources/css/fontello.css" />"/>
-        <link type="text/css" rel="stylesheet" href="<c:url value="/resources/css/jquery-ui.css" />"/>
+        <%--<link type="text/css" rel="stylesheet" href="<c:url value="/resources/css/jquery-ui.css" />"/>--%>
+		<%--<link type="text/css" rel="stylesheet" href="<c:url value="/resources/css/admin/bootstrap-responsive.min.css"/>"/>--%>
+
+		<link type="text/css" rel="stylesheet" href="<c:url value="/resources/css/dataTables.bootstrap.min.css" />"/>
 
     </head>
     <body>

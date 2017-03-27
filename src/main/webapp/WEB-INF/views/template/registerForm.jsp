@@ -341,7 +341,7 @@
                     </div>
 
                 </div>
-
+                    </div>
 
                  </section>
             <!-- /Main Content -->

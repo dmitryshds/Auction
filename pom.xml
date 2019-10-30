@@ -13,7 +13,7 @@
     <properties>
         <spring-framework-version>4.2.5.RELEASE</spring-framework-version>
         <springsecurity-version>4.0.4.RELEASE</springsecurity-version>
-        <jackson.version>2.9.9.2</jackson.version>
+        <jackson.version>2.10.0</jackson.version>
         <slf4j-version>1.6.1</slf4j-version>
         <hibernate-version>4.3.8.Final</hibernate-version>
         <mysqlconnector-version>5.1.38</mysqlconnector-version>
